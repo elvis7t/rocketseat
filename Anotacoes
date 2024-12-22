@@ -1,0 +1,10 @@
+tools httpie.io
+http localhost:3333
+http GET localhost:3333/users
+http POST localhost:3333/users
+
+npm init -y
+node src/server.js 
+node --watch src/server.js 
+npm run dev
+node streams/fundamentals.js

@@ -1,27 +1,29 @@
 import { buildRoutePath } from './utils/build-route-path.js';
-import { randomUUID } from 'node:crypto';
-import users from './db/users.js';
-const userList = users;
+import usersModel from './model/usersModel.js';
+const listUsers = new usersModel();
+
 export const routes = [
     {
         method: 'GET',
         path: buildRoutePath('/users'),
         handler: (request, response) => {
+            const
+            const users = listUsers.select();
             return response
-                .end(JSON.stringify(userList));
+                .end(JSON.stringify(users));
         }
     },
     {
         method: 'POST',
         path: buildRoutePath('/users'),
-        handler: (request, response) => {           
+        handler: (request, response) => {
             const { name, email } = request.body;
-            
-            userList.push({
-                id: randomUUID(),
+
+            listUsers.insert({
                 name,
                 email
             });
+
             return response.writeHead(201).end(JSON.stringify(request.body));
         }
     },
@@ -30,13 +32,7 @@ export const routes = [
         path: buildRoutePath('/users/:id'),
         handler: (request, response) => {
             const { id } = request.params;
-            const userIndex = userList.findIndex(user => user.id === id);
-            if (userIndex > -1) {
-                const user = userList[userIndex];
-                const userName = user ? user.name : null;
-                userList.splice(userIndex, 1);
-                console.log(userName);                           
-            }
+            listUsers.delete(id);
             return response.writeHead(204).end();
         }
     }

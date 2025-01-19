@@ -18,3 +18,6 @@ em node identicamos parametros dimamicos com /user/:id
 regexreview
 const regex = /:([a-zA-Z]+)/g //g de global
 204 sucesso sem conteudo
+
+
+https://app.rocketseat.com.br/classroom/projeto-01-1/group/rotas-da-aplicacao-1/lesson/remocao-de-registros

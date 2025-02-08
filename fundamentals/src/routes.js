@@ -6,8 +6,7 @@ export const routes = [
     {
         method: 'GET',
         path: buildRoutePath('/users'),
-        handler: (request, response) => {
-            const
+        handler: (request, response) => {            
             const users = listUsers.select();
             return response
                 .end(JSON.stringify(users));

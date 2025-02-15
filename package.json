@@ -11,7 +11,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "axios": "^1.7.9",
     "csv-parse": "^5.6.0",
-    "gitignore": "^0.7.0"
+    "gitignore": "^0.7.0",
+    "save": "^2.9.0"
   }
 }

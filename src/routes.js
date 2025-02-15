@@ -86,5 +86,27 @@ export const routes = [
                 }));
             }
         }
+    },
+    {
+        method: 'POST',
+        path: buildRoutePath('/tasks'),
+        handler: async (request, response) => {
+            try {
+                const { title, description } = request.body;
+                if (!description || !title) {
+                    return response.writeHead(400).end(JSON.stringify({
+                        error: 'Task title and description are required'
+                    }));
+                }
+                const newTask = await Task.addTask({
+                    title,
+                    description
+                });
+                return response.writeHead(201).end(JSON.stringify(newTask));
+            } catch (error) {
+                console.error('Error creating task:', error);
+                return response.writeHead(500).end(JSON.stringify({ error: 'Failed to create task' }));
+            }
+        }
     }
 ];

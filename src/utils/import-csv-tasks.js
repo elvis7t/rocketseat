@@ -28,6 +28,6 @@ async function importTasks(filePath) {
     }
 }
 
-importTasks('../files/csv-file.csv').then(result => {
+importTasks('src/files/tasks.csv').then(result => {
     console.log('Result:', result);
 });;

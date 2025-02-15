@@ -1,6 +1,6 @@
 import http from 'node:http';
 import { config } from 'dotenv';
-import { parseJsonRequestBody } from './middlewares/parseJsonRequestBody.js';
+import { parseJsonRequestBody } from './middlewares/parse-json-request-body.js';
 import { routes } from './routes/main.js';
 import { extractQueryParams } from './utils/extract-query-params.js';
 config();

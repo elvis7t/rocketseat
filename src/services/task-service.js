@@ -1,4 +1,4 @@
-import TaskModel from '../model/task.js';
+import TaskModel from '../models/task.js';
 
 export default class TaskService {
   constructor() {
@@ -18,6 +18,6 @@ export default class TaskService {
   }
 
   async updateTask(task) {
-    return this.taskModel.updateByIdTask(task);
+    return this.taskModel.updateTask(task);
   }
 }

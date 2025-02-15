@@ -24,6 +24,10 @@ export class Task {
                     return task[key].toLowerCase().includes(value.toLowerCase())
                 })
             });
+
+            if (data.length === 0) {
+                throw new Error('Task not found');
+            }
         }
 
         return data;
@@ -55,6 +59,7 @@ export class Task {
         if (!id) {
             throw new Error('Task ID is required');
         }
+        
         const tasks = await this.getAllTasks();
         const taskExists = tasks.some(task => task.id === id);
 
@@ -66,7 +71,7 @@ export class Task {
         await this.#initialize();
     }
 
-    async updateByIdTask(task) {
+    async updateTask(task) {
         if (!task.id) {
             throw new Error('Task ID is required');
         }

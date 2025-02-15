@@ -4,7 +4,7 @@ import axios from 'axios';
 
 async function importTasks(filePath) {
     const parser = fs.createReadStream(filePath).pipe(parse({ columns: true }));
-
+    const errors = [];
     for await (const record of parser) {
         const { title, description } = record;
 
@@ -16,9 +16,17 @@ async function importTasks(filePath) {
 
             console.log(`Task created: ${response.data.id}`);
         } catch (error) {
-            console.error(`Failed to create task: ${title}`, error);
+            errors.push({ error: `Failed to create task:`, details: error.message });
         }
+    }
+
+    if (errors.length > 0) {
+        return JSON.stringify({ errors });
+    } else {
+        return JSON.stringify({ message: 'All tasks created successfully' });
     }
 }
 
-importTasks('./csv-file.csv');
+importTasks('../data/csv-file.csv').then(result => {
+    console.log('Result:', result);
+});;

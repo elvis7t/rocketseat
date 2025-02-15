@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { Database } from '../db/database.js';
+import { Database } from './database.js';
 const db = new Database();
 
-export class TaskModel {
+export class Task {
     #tasks;
 
     constructor() {
@@ -83,4 +83,4 @@ export class TaskModel {
     }
 }
 
-export default TaskModel;
+export default Task;

@@ -1,11 +1,13 @@
-import http from 'node:http'
-import { json } from './middlewares/json.js';
-import { routes } from './routes.js';
+import http from 'node:http';
+import { config } from 'dotenv';
+import { parseJsonRequestBody } from './middlewares/parseJsonRequestBody.js';
+import { routes } from './routes/main.js';
 import { extractQueryParams } from './utils/extract-query-params.js';
+config();
 
 const server = http.createServer(async (request, response) => {
     const { method, url } = request    
-    await json(request, response);
+    await parseJsonRequestBody(request, response);
 
     const route = routes.find(route => (
         route.method === method && route.path.test(url)
@@ -22,4 +24,7 @@ const server = http.createServer(async (request, response) => {
     return response.writeHead(404).end();
 });
 
-server.listen(3333);
+const PORT = process.env.PORT || 2222;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

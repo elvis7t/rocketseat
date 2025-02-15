@@ -5,6 +5,7 @@ import axios from 'axios';
 async function importTasks(filePath) {
     const parser = fs.createReadStream(filePath).pipe(parse({ columns: true }));
     const errors = [];
+
     for await (const record of parser) {
         const { title, description } = record;
 
@@ -27,6 +28,6 @@ async function importTasks(filePath) {
     }
 }
 
-importTasks('../data/csv-file.csv').then(result => {
+importTasks('../files/csv-file.csv').then(result => {
     console.log('Result:', result);
 });;

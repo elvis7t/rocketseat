@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^1.7.9",
     "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.7",
     "gitignore": "^0.7.0",
     "save": "^2.9.0"
   }

@@ -1,4 +1,4 @@
-export async function json(request, response) {
+export async function parseJsonRequestBody(request, response) {
     const buffers = [];
     for await (const chunk of request) {
         buffers.push(chunk);

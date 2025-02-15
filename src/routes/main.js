@@ -1,5 +1,5 @@
-import { buildRoutePath } from './utils/build-route-path.js';
-import TaskModel from './model/taskModel.js';
+import { buildRoutePath } from '../utils/build-route-path.js';
+import TaskModel from '../model/task.js';
 
 const Task = new TaskModel();
 
@@ -47,7 +47,7 @@ export const routes = [
             try {
                 const { id } = request.params;
                 await Task.deleteTask(id);
-                return response.writeHead(204).end(JSON.stringify({
+                return response.writeHead(201).end(JSON.stringify({
                     success: "true",
                     message: "Task deleted successfully"
                 }));

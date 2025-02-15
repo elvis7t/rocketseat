@@ -97,12 +97,23 @@ Após concluir o desafio, você deve enviar a URL do seu código no GitHub para 
 Além disso, que tal fazer um post no LinkedIn compartilhando o seu aprendizado e contando como foi a experiência?
 É uma excelente forma de demonstrar seus conhecimentos e atrair novas oportunidades!
 
-Feito com 💜 por Rocketseat 👋
 
-## Repositório de consulta
+## 🚀 Documentação de entrega
 
-Antes de acessar o repositório com o desafio concluído, recomendamos fortemente que tente realizar o desafio.
+### ✔️ Prerequisites
 
-Caso tenha dúvidas/dificuldades técnicas, temos o fórum para te ajudar.
+* Node 22 instalado
+* Git instalado e configurado
 
-[GitHub - rocketseat-education/ignite-nodejs-01-fundamentos-nodejs-challenge: Desafio do módulo Fundamentos do Node.js](https://github.com/rocketseat-education/ignite-nodejs-01-fundamentos-nodejs-challenge)
+### 1. *Configuring the dashboard* 📶
+Rodar a aplicação:
+```bash
+npm run start
+```
+Importar o arquivo CSV:
+```bash
+npm run import-csv
+```
+
+
+Feito com 💜 por [Elvis Leite](https://gist.github.com/elvis7t) 😊

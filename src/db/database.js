@@ -46,4 +46,36 @@ export class Database {
         await this.#persist();
         return data;
     }
+
+    async update(table, data) {
+
+
+        await this.#loadPromise;
+
+        const index = this.#database[table].findIndex(item => item.id === data.id);
+
+        if (index > -1) {
+            const task = this.#database[table][index];                        
+            const getTask = {
+                id: task.id,
+                title: data.title ?? task.title,
+                description: data.description ?? task.description,
+                createdAt: task.createdAt,
+                completedAt: Boolean(data.completedAt ?? task.completed),
+                updatedAt: new Date(),
+            };            
+            
+            this.#database[table][index] = getTask;            
+            await this.#persist();
+            return data;
+        }
+
+        return null;
+    }
+
+    async delete(table, id) {
+        await this.#loadPromise;
+        this.#database[table].splice(id, 1);
+        await this.#persist();
+    }
 }

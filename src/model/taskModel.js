@@ -13,14 +13,34 @@ export class TaskModel {
         this.#tasks = await db.select('tasks');
     }
 
-    async getAllTasks() {
+    async getAllTasks(search) {
         await this.#initialize();
-        return this.#tasks;
+
+        let data = this.#tasks;
+
+        if (search && Object.keys(search).length > 0) {
+            data = data.filter(task => {
+                return Object.entries(search).some(([key, value]) => {
+                    return task[key].toLowerCase().includes(value.toLowerCase())
+                })
+            });
+        }
+
+        return data;
+
     }
 
     async addTask(task) {
+
+        if (!task.description) {
+            throw new Error('Task description is required');
+        }
+        if (!task.title) {
+            throw new Error('Task title is required');
+        }
         const newTask = {
             id: randomUUID(),
+            title: task.title,
             description: task.description,
             createdAt: new Date(),
             completedAt: null,
@@ -32,11 +52,34 @@ export class TaskModel {
     }
 
     async deleteTask(id) {
-        const taskIndex = this.#tasks.findIndex(task => task.id === id);
-
-        if (taskIndex > -1) {
-            this.#tasks.splice(taskIndex, 1);
+        if (!id) {
+            throw new Error('Task ID is required');
         }
+        const tasks = await this.getAllTasks();
+        const taskExists = tasks.some(task => task.id === id);
+
+        if (!taskExists) {
+            throw new Error('Task not found');
+        }
+
+        await db.delete('tasks', { id });
+        await this.#initialize();
+    }
+
+    async updateByIdTask(task) {
+        if (!task.id) {
+            throw new Error('Task ID is required');
+        }
+
+        const tasks = await this.getAllTasks();
+        const taskExists = tasks.some(item => item.id === task.id);
+
+        if (!taskExists) {
+            throw new Error('Task not found');
+        }
+
+        await db.update('tasks', task);
+        await this.#initialize();
     }
 }
 

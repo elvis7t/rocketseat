@@ -105,7 +105,6 @@ Além disso, que tal fazer um post no LinkedIn compartilhando o seu aprendizado 
 * Node 22 instalado
 * Git instalado e configurado
 
-### 1. *Configuring the dashboard* 📶
 Rodar a aplicação:
 ```bash
 npm run start
@@ -113,6 +112,10 @@ npm run start
 Importar o arquivo CSV:
 ```bash
 npm run import-csv
+```
+Testes unitarios:
+```bash
+npm test
 ```
 
 

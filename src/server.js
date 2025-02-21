@@ -1,13 +1,19 @@
 import http from 'node:http';
 import { config } from 'dotenv';
-import { parseJsonRequestBody } from './middlewares/parse-json-request-body.js';
 import { routes } from './routes/main.js';
 import { extractQueryParams } from './utils/extract-query-params.js';
+import { parseJsonRequestBody } from './middlewares/parse-json-request-body.js';
+
 config();
 
 const server = http.createServer(async (request, response) => {
     const { method, url } = request    
-    await parseJsonRequestBody(request, response);
+    
+    // Only parse JSON if content-type is application/json
+    const contentType = request.headers['content-type'] || '';
+    if (contentType.includes('application/json')) {
+        await parseJsonRequestBody(request, response);
+    }
 
     const route = routes.find(route => (
         route.method === method && route.path.test(url)

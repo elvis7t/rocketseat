@@ -1,5 +1,6 @@
 import { buildRoutePath } from '../utils/build-route-path.js';
 import TaskController from '../controllers/task-controller.js';
+import { upload } from '../middlewares/upload.js';
 
 const taskController = new TaskController();
 
@@ -23,5 +24,25 @@ export const routes = [
     method: 'PUT',
     path: buildRoutePath('/tasks/:id'),
     handler: (req, res) => taskController.updateTask(req, res)
+  },
+  {
+    method: 'POST',
+    path: buildRoutePath('/tasks/import-csv'),
+    handler: async (req, res) => {
+      try {
+        await new Promise((resolve, reject) => {
+          upload.single('file')(req, res, (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+        });
+        
+        return taskController.importTasksFromCsv(req, res);
+      } catch (error) {
+        return res.writeHead(400).end(JSON.stringify({
+          error: error.message || 'Failed to process file upload'
+        }));
+      }
+    }
   }
 ];

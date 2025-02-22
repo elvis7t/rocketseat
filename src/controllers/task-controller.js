@@ -1,7 +1,9 @@
 import TaskService from '../services/task-service.js';
+import ImportCsvTasksService from '../services/import-csv-tasks-service.js';
 import ApiError from '../utils/api-error.js';
 
 const taskService = new TaskService();
+const importCsvService = new ImportCsvTasksService();
 
 export default class TaskController {
   async getAllTasks(request, response) {
@@ -51,6 +53,25 @@ export default class TaskController {
       const task = { id, title, description, completedAt };
       await taskService.updateTask(task);
       return this.sendSuccessResponse(response, 200, null, "Task updated successfully");
+    } catch (error) {
+      return this.handleError(error, response);
+    }
+  }
+
+  async importTasksFromCsv(request, response) {
+    try {
+      if (!request.file) {
+        throw new ApiError('No CSV file uploaded', 400);
+      }
+
+      const result = await importCsvService.importTasks(request.file.path);
+      const parsedResult = JSON.parse(result);
+
+      if (parsedResult.errors) {
+        return this.sendErrorResponse(response, 400, parsedResult.errors);
+      }
+
+      return this.sendSuccessResponse(response, 200, parsedResult);
     } catch (error) {
       return this.handleError(error, response);
     }

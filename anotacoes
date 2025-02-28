@@ -1,18 +1,23 @@
 gitignore node
+//TS
  npm i -D typescript 
- npm tsc --init
- npm i fastify
+ npm install typescript@4.3.5
+ npm tsc --init 
  npm install -D @types/node // para o typescript reconhecer o node
  npm install tsx -D // para executar o arquivo ts
  npx tsc src/server.ts // converte o arquivo ts para js
-time node src/server.js// executa medindo o tempo de execucao
-time tsx src/server.ts // executa medindo o tempo de execucao
+ time node src/server.js// executa medindo o tempo de execucao
+ time tsx src/server.ts // executa medindo o tempo de execucao
+
+
+// fastify
+ npm i fastify
+
+//eslint
 npm i eslint // para padronizar o codigo
 npm i eslint @rocketseat/eslint-config -D // para padronizar o codigo
 npx eslint --init // para criar o arquivo de configuracao do eslint
-npm install knex sqlite3 // para o banco de dados
 
-////eslint
 /C:/Users/elvis/AppData/Roaming/Code/User/settings.json // arquivo de configuracao do vscode
 adicionar essa linha ele vai corrigir o codigo automaticamente
 "editor.codeActionsOnSave": {
@@ -22,8 +27,18 @@ adicionar essa linha ele vai corrigir o codigo automaticamente
 // BANCO DE DADOS
 3 formas de se conectar com o banco de dados
 # Drivers nativos, são ferramentas de baixo nível que permitem a comunicação direta com o banco de dados
-Exemplo: node-mssql2, node-postgres, node-mssql
+    Exemplo: node-mssql2, node-postgres, node-mssql
 # Query Builders, são ferramentas de nível médio que permitem a criação de queries SQL de forma mais fácil
-Exemplo: Knex.js, TypeORM, Prisma
+    Exemplo: Knex.js, TypeORM, Prisma
 # ORM (Object Relational Mapping), são ferramentas de alto nível que permitem a criação de queries SQL de forma mais fácil
-Exemplo: TypeORM, Sequelize, Prisma
+    Exemplo: TypeORM, Sequelize, Prisma
+
+//knex 
+npm install knex sqlite3 // para o banco de dados
+npx knex init // para criar o arquivo de configuracao do knex, mude pra knexfile.ts
+npx knex migrate:make create_users // para criar a tabela
+npm run knex -- migrate:make create_documents // a sintaze -- é para passar parametros para o pacote
+npx knex migrate:latest // para criar a tabela
+npx knex migrate:rollback // para deletar a tabela
+npx knex seed:make seed_users // para criar um seed
+npx knex seed:run // para rodar o seed

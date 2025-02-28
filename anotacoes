@@ -42,3 +42,13 @@ npx knex migrate:latest // para criar a tabela
 npx knex migrate:rollback // para deletar a tabela
 npx knex seed:make seed_users // para criar um seed
 npx knex seed:run // para rodar o seed
+
+//dotenv
+npm install dotenv --force
+
+//dotenv
+npm install gitignore -g // para criar o gitignore
+gitignore node // para criar o gitignore
+
+//zod
+ npm i zod --force // para validar os dados

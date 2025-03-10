@@ -2,7 +2,7 @@ gitignore node
 //TS
  npm i -D typescript 
  npm install typescript@4.3.5
- npm tsc --init 
+ npm tsc --init // cria o arquivo tsconfig.json
  npm install -D @types/node // para o typescript reconhecer o node
  npm install tsx -D // para executar o arquivo ts
  npx tsc src/server.ts // converte o arquivo ts para js
@@ -55,3 +55,5 @@ gitignore node // para criar o gitignore
 
 //zod
  npm i zod --force // para validar os dados
+
+ fnm

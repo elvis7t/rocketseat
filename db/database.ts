@@ -1,4 +1,4 @@
-import { Knex } from 'knex'
+import { Knex, knex as setUpKnex } from 'knex'
 import { env } from '../src/env'
 const config: Knex.Config = {
   client: 'sqlite3',
@@ -12,4 +12,4 @@ const config: Knex.Config = {
   },
 }
 
-export default config
+export const database = setUpKnex(config)

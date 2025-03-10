@@ -42,7 +42,10 @@ npx knex migrate:latest // para criar a tabela
 npx knex migrate:rollback // para deletar a tabela
 npx knex seed:make seed_users // para criar um seed
 npx knex seed:run // para rodar o seed
+ 
 
+ //typescript
+ 
 //dotenv
 npm install dotenv --force
 

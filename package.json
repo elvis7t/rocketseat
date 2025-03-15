@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@fastify/cookie": "^11.0.2",
     "dotenv": "^16.4.7",
     "fastify": "^5.2.1",
     "gitignore": "^0.7.0",

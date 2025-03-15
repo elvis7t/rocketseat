@@ -12,6 +12,7 @@ gitignore node
 
 // fastify
  npm i fastify
+ npm i @fastify/cookie
 
 //eslint
 npm i eslint // para padronizar o codigo
@@ -57,3 +58,4 @@ gitignore node // para criar o gitignore
  npm i zod --force // para validar os dados
 
  fnm
+

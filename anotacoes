@@ -58,4 +58,10 @@ gitignore node // para criar o gitignore
  npm i zod --force // para validar os dados
 
  fnm
-
+a pasta @types
+Usada para criar interfaces de bibliotecas que não possuem tipos
+usar .d.ts. Veja que a extensão não é .ts, é .d.ts, que vem de
+definição de tipos. Um arquivo .d.ts é um arquivo que ele não vai ter código
+javascript dentro dele, somente código typescript, ou seja, somente código que o
+próprio typescript entende. Aqui dentro, o que a gente vai fazer? Quando eu quero
+sobrescrever um tipo que vem de dentro de uma biblioteca,

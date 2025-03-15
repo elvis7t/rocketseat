@@ -31,7 +31,6 @@ export async function transactionsRoutes(app: FastifyInstance) {
         id,
         session_id: sessionId,
       })
-
       .first()
 
     return { transaction }

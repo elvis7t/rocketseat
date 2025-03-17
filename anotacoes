@@ -65,3 +65,12 @@ definição de tipos. Um arquivo .d.ts é um arquivo que ele não vai ter códig
 javascript dentro dele, somente código typescript, ou seja, somente código que o
 próprio typescript entende. Aqui dentro, o que a gente vai fazer? Quando eu quero
 sobrescrever um tipo que vem de dentro de uma biblioteca,
+
+
+// Teste
+// Unitario: testa uma unidade da aplição, uma função, um componente
+// Integracao: testa a comunicação entre duas ou mais unidades da aplicação
+// E2E: testa a aplicação como um todo, como se fosse um usuario
+
+npm i vitest -D 
+npm i supertest -D 

@@ -1,16 +1,20 @@
-import { test, beforeAll, afterAll, describe, expect } from 'vitest'
+import { test, beforeAll, afterAll, describe, expect, beforeEach } from 'vitest'
 import { execSync } from 'node:child_process'
 import request from 'supertest'
 import { app } from '../src/app'
 
 describe('Transactions routes', () => {
   beforeAll(async () => {
-    execSync('npm run knex migrate:latest')
     await app.ready()
   })
 
   afterAll(async () => {
     await app.close()
+  })
+
+  beforeEach(async () => {
+    execSync('npm run knex migrate:rollback --all')
+    execSync('npm run knex migrate:latest')
   })
 
   test('user can create a new transaction', async () => {
@@ -33,7 +37,7 @@ describe('Transactions routes', () => {
         type: 'credit',
       })
 
-    const cookies = createTransactionResponse.get('set-cookie')
+    const cookies = createTransactionResponse.get('Set-Cookie')
     const listTransactionsResponse = await request(app.server)
       .get('/transactions')
       .set('Cookie', cookies)

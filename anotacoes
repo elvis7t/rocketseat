@@ -73,4 +73,16 @@ sobrescrever um tipo que vem de dentro de uma biblioteca,
 // E2E: testa a aplicação como um todo, como se fosse um usuario
 
 npm i vitest -D 
+
 npm i supertest -D 
+para rodar com ts
+npm i @types/supertest -D --force
+
+
+testaMacetes
+it?test.skip pula o test
+it?test.todo deixa o test pendente
+it?test.only executa somente o test
+
+//Nunca escrever um teste que dependa de outro teste
+teste e2e precisa se abster de qualquer contexto

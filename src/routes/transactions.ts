@@ -1,8 +1,11 @@
 import { FastifyInstance } from 'fastify'
-import { database } from '../../db/database'
+import { knex } from 'knex'
+import databaseConfig from '../../db/database'
 import { z } from 'zod'
 import crypto from 'node:crypto'
 import { checkSessionIdExists } from '../middleware/check-session-id-exists'
+
+const database = knex(databaseConfig)
 
 export async function transactionsRoutes(app: FastifyInstance) {
   app.get('/', { preHandler: [checkSessionIdExists] }, async (request) => {
@@ -71,7 +74,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     await database('transactions').insert({
       id: crypto.randomUUID(),
       title,
-      amount: type === 'debit' ? amount : amount * -1,
+      amount: type === 'debit' ? amount : amount * 1,
       session_id: sessionId,
     })
 

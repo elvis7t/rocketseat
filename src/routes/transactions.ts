@@ -1,17 +1,14 @@
 import { FastifyInstance } from 'fastify'
-import { knex } from 'knex'
-import databaseConfig from '../../db/database'
+import { knex } from '../../db/database'
 import { z } from 'zod'
 import crypto from 'node:crypto'
 import { checkSessionIdExists } from '../middleware/check-session-id-exists'
-
-const database = knex(databaseConfig)
 
 export async function transactionsRoutes(app: FastifyInstance) {
   app.get('/', { preHandler: [checkSessionIdExists] }, async (request) => {
     const { sessionId } = request.cookies
 
-    const transactions = await database('transactions')
+    const transactions = await knex('transactions')
       .where({ session_id: sessionId })
       .select('*')
 
@@ -29,7 +26,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
 
     const { sessionId } = request.cookies
 
-    const transaction = await database('transactions')
+    const transaction = await knex('transactions')
       .where({
         id,
         session_id: sessionId,
@@ -44,7 +41,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     { preHandler: [checkSessionIdExists] },
     async (request) => {
       const { sessionId } = request.cookies
-      const summary = await database('transactions')
+      const summary = await knex('transactions')
         .where({ session_id: sessionId })
         .sum('amount', { as: 'amount' })
         .first()
@@ -71,7 +68,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
         maxAge: 60 * 60 * 24 * 7, // 1 week
       })
     }
-    await database('transactions').insert({
+    await knex('transactions').insert({
       id: crypto.randomUUID(),
       title,
       amount: type === 'debit' ? amount : amount * 1,

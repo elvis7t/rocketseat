@@ -1,4 +1,3 @@
-import config from './db/database'
-console.log(config)
+import { config } from './db/database'
 
 export default config

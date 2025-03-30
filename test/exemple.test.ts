@@ -2,7 +2,6 @@ import { test, beforeAll, afterAll, describe, expect, beforeEach } from 'vitest'
 import { execSync } from 'node:child_process'
 import request from 'supertest'
 import { app } from '../src/app'
-import { aM } from 'vitest/dist/chunks/reporters.d.CqBhtcTq'
 
 describe('Transactions routes', () => {
   beforeAll(async () => {

@@ -86,3 +86,14 @@ it?test.only executa somente o test
 
 //Nunca escrever um teste que dependa de outro teste
 teste e2e precisa se abster de qualquer contexto
+
+
+//compilar build
+npm i tsup -D
+node build/server.js
+
+Deploy 
+
+render.com
+fly.io
+railway.com

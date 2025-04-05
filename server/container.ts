@@ -1,5 +1,5 @@
 import { container } from 'tsyringe'
-import { EnvConfig, FastifyConfig, MysqlConfig } from './configs'
+import { EnvConfig, FastifyConfig, SqliteConfig } from './configs'
 import { Router as RouterInterface } from '@/interfaces'
 import { Router } from '@/routes/router'
 import { MainController } from './controllers/main.controller'
@@ -10,4 +10,4 @@ container.registerSingleton<FastifyConfig>('FastifyConfig', FastifyConfig)
 container.registerSingleton<RouterInterface>('Router', Router)
 container.registerSingleton<RouterInterface>('MainRouter', MainRouter)
 container.registerSingleton<MainController>('MainController', MainController)
-container.registerSingleton<MysqlConfig>('MysqlConfig', MysqlConfig)
+container.registerSingleton<SqliteConfig>('SqliteConfig', SqliteConfig)

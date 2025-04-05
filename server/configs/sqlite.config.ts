@@ -4,20 +4,18 @@ import knex from 'knex'
 import { EnvConfig } from '@/configs/env.config'
 
 @injectable()
-export class MysqlConfig {
+export class SqliteConfig {
     private knexInstance: Knex
 
     constructor(@inject('EnvConfig') private readonly env: EnvConfig) {
+        const connectionConfig =
+            this.env.DATABASE_CLIENT === 'sqlite3'
+                ? { filename: this.env.DATABASE_URL }
+                : this.env.DATABASE_URL
+
         this.knexInstance = knex({
-            client: env.DATABASE_CLIENT,
-            connection: {
-                host: this.env.DB_HOST,
-                user: this.env.DB_USER,
-                password: this.env.DB_PASSWORD,
-                database: this.env.DB_NAME,
-                port: this.env.DB_PORT,
-            },
-            pool: { min: 0, max: 10 },
+            client: this.env.DATABASE_CLIENT,
+            connection: connectionConfig,
             useNullAsDefault: true,
             migrations: {
                 extension: 'ts',

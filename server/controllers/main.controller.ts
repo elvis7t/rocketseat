@@ -1,11 +1,11 @@
 import { injectable, inject } from "tsyringe";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { MysqlConfig } from "@/configs";
+import { SqliteConfig } from "@/configs";
 
 @injectable()
 export class MainController {
   constructor(
-    @inject("MysqlConfig") private readonly mysqlConfig: MysqlConfig
+    @inject("SqliteConfig") private readonly mysqlConfig: SqliteConfig
   ) { }
 
   public async getIndex(request: FastifyRequest, reply: FastifyReply) {

@@ -1,0 +1,99 @@
+gitignore node
+//TS
+ npm i -D typescript 
+ npm install typescript@4.3.5
+ npm tsc --init // cria o arquivo tsconfig.json
+ npm install -D @types/node // para o typescript reconhecer o node
+ npm install tsx -D // para executar o arquivo ts
+ npx tsc src/server.ts // converte o arquivo ts para js
+ time node src/server.js// executa medindo o tempo de execucao
+ time tsx src/server.ts // executa medindo o tempo de execucao
+
+
+// fastify
+ npm i fastify
+ npm i @fastify/cookie
+
+//eslint
+npm i eslint // para padronizar o codigo
+npm i eslint @rocketseat/eslint-config -D // para padronizar o codigo
+npx eslint --init // para criar o arquivo de configuracao do eslint
+
+/C:/Users/elvis/AppData/Roaming/Code/User/settings.json // arquivo de configuracao do vscode
+adicionar essa linha ele vai corrigir o codigo automaticamente
+"editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+
+// BANCO DE DADOS
+3 formas de se conectar com o banco de dados
+# Drivers nativos, são ferramentas de baixo nível que permitem a comunicação direta com o banco de dados
+    Exemplo: node-mssql2, node-postgres, node-mssql
+# Query Builders, são ferramentas de nível médio que permitem a criação de queries SQL de forma mais fácil
+    Exemplo: Knex.js, TypeORM, Prisma
+# ORM (Object Relational Mapping), são ferramentas de alto nível que permitem a criação de queries SQL de forma mais fácil
+    Exemplo: TypeORM, Sequelize, Prisma
+
+//knex 
+npm install knex sqlite3 // para o banco de dados
+npx knex init // para criar o arquivo de configuracao do knex, mude pra knexfile.ts
+npx knex migrate:make create_users // para criar a tabela
+npm run knex -- migrate:make create_documents // a sintaze -- é para passar parametros para o pacote
+npx knex migrate:latest // para criar a tabela
+npx knex migrate:rollback // para deletar a tabela
+npx knex seed:make seed_users // para criar um seed
+npx knex seed:run // para rodar o seed
+ 
+
+ //typescript
+ 
+//dotenv
+npm install dotenv --force
+
+//dotenv
+npm install gitignore -g // para criar o gitignore
+gitignore node // para criar o gitignore
+
+//zod
+ npm i zod --force // para validar os dados
+
+ fnm
+a pasta @types
+Usada para criar interfaces de bibliotecas que não possuem tipos
+usar .d.ts. Veja que a extensão não é .ts, é .d.ts, que vem de
+definição de tipos. Um arquivo .d.ts é um arquivo que ele não vai ter código
+javascript dentro dele, somente código typescript, ou seja, somente código que o
+próprio typescript entende. Aqui dentro, o que a gente vai fazer? Quando eu quero
+sobrescrever um tipo que vem de dentro de uma biblioteca,
+
+
+// Teste
+// Unitario: testa uma unidade da aplição, uma função, um componente
+// Integracao: testa a comunicação entre duas ou mais unidades da aplicação
+// E2E: testa a aplicação como um todo, como se fosse um usuario
+
+npm i vitest -D 
+
+npm i supertest -D 
+para rodar com ts
+npm i @types/supertest -D --force
+
+
+testaMacetes
+it?test.skip pula o test
+it?test.todo deixa o test pendente
+it?test.only executa somente o test
+
+//Nunca escrever um teste que dependa de outro teste
+teste e2e precisa se abster de qualquer contexto
+
+
+//compilar build
+npm i tsup -D
+node build/server.js
+
+Deploy 
+
+render.com
+fly.io
+railway.com

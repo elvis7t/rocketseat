@@ -37,7 +37,7 @@ adicionar essa linha ele vai corrigir o codigo automaticamente
 //knex 
 npm install knex sqlite3 // para o banco de dados
 npx knex init // para criar o arquivo de configuracao do knex, mude pra knexfile.ts
-npx knex migrate:make create_users // para criar a tabela
+npm knex migrate:make create_users // para criar a tabela
 npm run knex -- migrate:make create_documents // a sintaze -- é para passar parametros para o pacote
 npx knex migrate:latest // para criar a tabela
 npx knex migrate:rollback // para deletar a tabela

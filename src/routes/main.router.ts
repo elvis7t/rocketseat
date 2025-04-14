@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { inject, injectable } from 'tsyringe'
 import { Router } from '@/interfaces'
 import { MainController } from '@/controllers/main.controller'
-import { CheckSessionMiddleware } from '@/middlewares/checksession.middleware'
+import { CheckSessionMiddleware, AuthMiddleware } from '@/middlewares'
 
 @injectable()
 export class MainRouter implements Router {
@@ -11,6 +11,8 @@ export class MainRouter implements Router {
     private readonly mainController: MainController,
     @inject('CheckSessionMiddleware')
     private readonly checkSessionMiddleware: CheckSessionMiddleware,
+    @inject('AuthMiddleware')
+    private readonly authMiddleware: AuthMiddleware,
   ) {}
 
   public registerRoutes(
@@ -60,6 +62,18 @@ export class MainRouter implements Router {
     app.post('/', async (request, reply) => {
       return this.mainController.createTransaction(request, reply)
     })
+
+    app.get(
+      '/test',
+      {
+        preHandler: [
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.mainController.getTest(request, reply)
+      },
+    )
 
     if (done) {
       done()

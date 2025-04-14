@@ -16,7 +16,6 @@ export class SqliteConfig {
       useNullAsDefault: true,
       migrations: {
         extension: 'ts',
-        // directory: './db/migrations',
         directory: resolve(process.cwd(), 'db', 'migrations'),
       },
     })

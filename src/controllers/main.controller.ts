@@ -92,4 +92,8 @@ export class MainController {
       .first()
     return { summary }
   }
+
+  public async getTest(request: FastifyRequest, reply: FastifyReply) {
+    return 'Hello World'
+  }
 }

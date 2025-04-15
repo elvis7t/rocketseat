@@ -9,8 +9,8 @@ export class UserRouter implements Router {
   constructor(
     @inject('UserController')
     private readonly userController: UserController,
-    @inject('CheckSessionMiddleware')
-    private readonly AuthMiddleware: AuthMiddleware,
+    @inject('AuthMiddleware')
+    private readonly authMiddleware: AuthMiddleware,
   ) {}
 
   public registerRoutes(
@@ -25,9 +25,9 @@ export class UserRouter implements Router {
     app.post(
       '/user',
       {
-        // preHandler: [
-        //   (request, reply) => this.AuthMiddleware.handle(request, reply),
-        // ],
+        preHandler: [
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
       },
       async (request, reply) => {
         return this.userController.create(request, reply)

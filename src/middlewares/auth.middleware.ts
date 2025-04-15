@@ -9,15 +9,17 @@ export class AuthMiddleware {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
-    const sessionId =
-      request.cookies?.sessionId || request.headers.authorization
+  public async handle(
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ): Promise<void> {
+    const sessionId = request.headers.authorization
 
     if (!sessionId || typeof sessionId !== 'string') {
       return reply.status(401).send({ error: 'Não autenticado.' })
     }
 
-    const user = await this.userRepository.findById(sessionId)
+    const user = await this.userRepository.findByEmail(sessionId)
 
     if (!user) {
       return reply.status(401).send({ error: 'Sessão inválida.' })

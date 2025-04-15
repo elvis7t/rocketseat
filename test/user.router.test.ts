@@ -24,12 +24,24 @@ describe('UserRouter', () => {
   test('user can create a new User', async () => {
     await request(app.server)
       .post('/v1/user')
+      .set('Authorization', 'admin@email.com')
       .send({
         name: 'Elvis',
-        email: 'elvisss3@gmail.com',
+        email: 'elvis@gmail.com',
         password: '123123',
       })
       .expect(201)
+  })
+
+  test('user the unauthenticated user', async () => {
+    await request(app.server)
+      .post('/v1/user')
+      .send({
+        name: 'Admin',
+        email: 'admin@email.com',
+        password: '123123',
+      })
+      .expect(401)
   })
 
   // test.skip('should register POST /users route', () => {

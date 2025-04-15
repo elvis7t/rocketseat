@@ -1,5 +1,7 @@
-import { injectable } from 'tsyringe'
+import { inject, injectable } from 'tsyringe'
 import { randomUUID } from 'crypto'
+import { SqliteConfig } from '@/configs'
+import { z } from 'zod'
 
 interface User {
   id: string
@@ -11,13 +13,22 @@ interface User {
 
 @injectable()
 export class UserRepository {
-  private users: User[] = []
+  constructor(
+    @inject('SqliteConfig') private readonly sqliteConfig: SqliteConfig,
+  ) {}
 
-  async findAll(): Promise<User[]> {
-    return this.users
+  public async findAll(): Promise<User[]> {
+    const knex = this.sqliteConfig.getConnection()
+
+    const users = await knex<User>('users').select('*')
+    return users
   }
 
-  async create(name: string, email: string, password: string): Promise<User> {
+  public async create(
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<User> {
     const user: User = {
       id: randomUUID(),
       name,
@@ -25,16 +36,21 @@ export class UserRepository {
       password,
       created_at: new Date(),
     }
-
-    this.users.push(user)
+    const knex = this.sqliteConfig.getConnection()
+    await knex<User>('users').insert(user)
     return user
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
-    return this.users.find((user) => user.email === email)
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const knex = this.sqliteConfig.getConnection()
+    const user = await knex('users').where({ email }).first()
+    return user
   }
 
-  async findById(id: string): Promise<User | undefined> {
-    return this.users.find((user) => user.id === id)
+  public async findById(id: string): Promise<User | undefined> {
+    const knex = this.sqliteConfig.getConnection()
+
+    const user = await knex<User>('users').where({ id }).first()
+    return user
   }
 }

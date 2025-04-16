@@ -25,12 +25,25 @@ describe('UserRouter', () => {
     await request(app.server)
       .post('/v1/user')
       .set('Authorization', 'admin@email.com')
+      .set('Cookie', 'sessionId=123')
       .send({
         name: 'Elvis',
         email: 'elvis@gmail.com',
         password: '123123',
       })
       .expect(201)
+  })
+
+  test('user the Unauthorized user', async () => {
+    await request(app.server)
+      .post('/v1/user')
+      .set('Cookie', 'sessionId=123')
+      .send({
+        name: 'Admin',
+        email: 'admin@email.com',
+        password: '123123',
+      })
+      .expect(401)
   })
 
   test('user the unauthenticated user', async () => {

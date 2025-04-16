@@ -17,7 +17,7 @@ O aprendizado daqui é muito importante e com certeza você conseguirá sair com
 Nesse desafio desenvolveremos uma API para controle de dieta diária, a Daily Diet API.
 ### Regras da aplicação
 
-- []  Deve ser possível criar um usuário
+- [X]  Deve ser possível criar um usuário
 - []  Deve ser possível identificar o usuário entre as requisições
 - []  Deve ser possível registrar uma refeição feita, com as seguintes informações:
     

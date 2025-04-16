@@ -20,5 +20,6 @@ export class CheckSessionMiddleware {
         message: 'Unauthorized',
       })
     }
+    request.sessionId = sessionId
   }
 }

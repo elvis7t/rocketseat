@@ -1,15 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import { randomUUID } from 'crypto'
 import { SqliteConfig } from '@/configs'
-import { z } from 'zod'
-
-interface User {
-  id: string
-  name: string
-  email: string
-  password: string
-  created_at: Date
-}
+import { User } from '@/interfaces'
 
 @injectable()
 export class UserRepository {

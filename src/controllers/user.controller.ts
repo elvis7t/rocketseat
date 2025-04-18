@@ -3,23 +3,26 @@ import { injectable, inject } from 'tsyringe'
 import { UserRepository } from '@/repository/user.repository'
 import { randomUUID } from 'crypto'
 import { CreateUserBody } from '@/interfaces/users/user.interface'
+import { UserService } from '@/services'
 
 @injectable()
 export class UserController {
   constructor(
     @inject('UserRepository')
     private readonly userRepository: UserRepository,
+    @inject('UserService')
+    private readonly userService: UserService,
   ) {}
 
   async getAllUsers(
     request: FastifyRequest,
     reply: FastifyReply,
   ): Promise<void> {
-    const users = await this.userRepository.findAll()
-    if (!users) {
-      reply.status(404).send({ error: 'Nenhum usuário encontrado.' })
-      return
-    }
+    const users = await this.userService.findAll()
+    // if (!users) {
+    //   reply.status(404).send({ error: 'Nenhum usuário encontrado.' })
+    //   return
+    // }
     reply.send({ users })
   }
 
@@ -39,7 +42,7 @@ export class UserController {
 
     const sessionId = randomUUID()
 
-    await this.userRepository.create(name, email, password)
+    await this.userService.create(name, email, password)
 
     // Armazenar sessionId no cookie
     reply

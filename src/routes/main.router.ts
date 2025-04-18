@@ -29,7 +29,7 @@ export class MainRouter implements Router {
         ],
       },
       async (request, reply) => {
-        return this.mainController.getIndex(request, reply)
+        return this.mainController.getAllUsers(request, reply)
       },
     )
 

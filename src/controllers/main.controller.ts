@@ -2,24 +2,23 @@ import { injectable, inject } from 'tsyringe'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { SqliteConfig } from '@/configs'
 import { z } from 'zod'
+import { MealService } from '@/services'
 
 @injectable()
 export class MainController {
   constructor(
     @inject('SqliteConfig') private readonly sqliteConfig: SqliteConfig,
+    @inject('MealService') private readonly mealService: MealService,
   ) {}
 
-  public async getIndex(request: FastifyRequest, reply: FastifyReply) {
+  public async getAllUsers(
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ): Promise<void> {
     try {
-      const knex = this.sqliteConfig.getConnection()
+      const meals = await this.mealService.findAll()
 
-      const { sessionId } = request.cookies
-
-      const transactions = await knex('transactions')
-        .where({ session_id: sessionId })
-        .select('*')
-
-      return reply.send({ total: 200, transactions })
+      return reply.send({ total: 200, meals })
     } catch (error) {
       console.error('Erro na consulta:', error)
       return reply.status(500).send({ error: 'Internal Server Error' })

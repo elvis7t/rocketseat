@@ -17,6 +17,25 @@ export class UserService {
     return user
   }
 
-  // Outros métodos relacionados a lógica de usuário podem vir aqui
-  // como createUser, updateUser, deleteUser, etc.
+  public async findAll(): Promise<User[]> {
+    const users = await this.userRepository.findAll()
+    if (!users) {
+      throw new Error('No users found')
+    }
+    return users
+  }
+
+  public async create(
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<User> {
+    const existingUser = await this.userRepository.findByEmail(email)
+    if (existingUser) {
+      throw new Error(`User with email ${email} already exists`)
+    }
+
+    const user = await this.userRepository.create(name, email, password)
+    return user
+  }
 }

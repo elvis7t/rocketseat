@@ -1,4 +1,4 @@
-import { test, beforeAll, afterAll, describe, beforeEach } from 'vitest'
+import { test, beforeAll, afterAll, describe, expect, beforeEach } from 'vitest'
 import { execSync } from 'node:child_process'
 import request from 'supertest'
 import { main } from '../src/app'
@@ -57,25 +57,30 @@ describe('UserRouter', () => {
       .expect(401)
   })
 
-  // test.skip('should register POST /users route', () => {
-  //   userRouter.registerRoutes(mockApp)
+  test('should be able to list all users', async () => {
+    const createUsersResponse = await request(app.server)
+      .post('/v1/user')
+      .set('Authorization', 'admin@email.com')
+      .set('Cookie', 'sessionId=123')
+      .send({
+        name: 'Elvis',
+        email: 'elvis7@gmail.com',
+        password: '123123',
+      })
 
-  //   expect(mockApp.post).toHaveBeenCalledWith('/users', expect.any(Function))
-  // })
-
-  // test.skip('should register GET /users/profile route', () => {
-  //   userRouter.registerRoutes(mockApp)
-
-  //   expect(mockApp.get).toHaveBeenCalledWith(
-  //     '/users/profile',
-  //     expect.any(Function),
-  //   )
-  // })
-
-  // test.skip('should call done callback if provided', () => {
-  //   const done = vi.fn()
-  //   userRouter.registerRoutes(mockApp, undefined, done)
-
-  //   expect(done).toHaveBeenCalled()
-  // })
+    const cookies = createUsersResponse.get('Set-Cookie')
+    const listTransactionsResponse = await request(app.server)
+      .get('/v1/users')
+      .set('Cookie', cookies || [])
+      .expect(200)
+    const users = listTransactionsResponse.body.users
+    expect(users).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          email: 'elvis7@gmail.com',
+          name: 'Elvis',
+        }),
+      ]),
+    )
+  })
 })

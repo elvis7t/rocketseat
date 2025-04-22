@@ -4,7 +4,6 @@ import { SqliteConfig } from '@/configs'
 import { Meal } from '@/interfaces'
 
 @injectable()
-@injectable()
 export class MealRepository {
   constructor(
     @inject('SqliteConfig') private readonly sqliteConfig: SqliteConfig,
@@ -12,36 +11,42 @@ export class MealRepository {
 
   public async findAll(): Promise<Meal[]> {
     const knex = this.sqliteConfig.getConnection()
-    const meals = await knex<Meal>('meals').select('*')
-    return meals
+    return await knex<Meal>('meals').select('*')
   }
 
   public async create(meal: Omit<Meal, 'id'>): Promise<Meal> {
-    const newMeal = { ...meal, id: randomUUID() }
-    this.meals.push(newMeal)
+    const knex = this.sqliteConfig.getConnection()
+    const newMeal: Meal = { ...meal, id: randomUUID() }
+
+    await knex<Meal>('meals').insert(newMeal)
     return newMeal
   }
 
   public async findByUser(userId: string): Promise<Meal[]> {
-    return this.meals.filter((m) => m.user_id === userId)
+    const knex = this.sqliteConfig.getConnection()
+    return await knex<Meal>('meals').where({ user_id: userId })
   }
 
   public async findById(id: string): Promise<Meal | undefined> {
-    return this.meals.find((m) => m.id === id)
+    const knex = this.sqliteConfig.getConnection()
+    const result = await knex<Meal>('meals').where({ id }).first()
+    return result
   }
 
   public async update(
     id: string,
     updateData: Partial<Meal>,
   ): Promise<Meal | null> {
-    const index = this.meals.findIndex((m) => m.id === id)
-    if (index === -1) return null
+    const knex = this.sqliteConfig.getConnection()
+    const existing = await this.findById(id)
+    if (!existing) return null
 
-    this.meals[index] = { ...this.meals[index], ...updateData }
-    return this.meals[index]
+    await knex<Meal>('meals').where({ id }).update(updateData)
+    return { ...existing, ...updateData }
   }
 
   public async delete(id: string): Promise<void> {
-    this.meals = this.meals.filter((m) => m.id !== id)
+    const knex = this.sqliteConfig.getConnection()
+    await knex<Meal>('meals').where({ id }).delete()
   }
 }

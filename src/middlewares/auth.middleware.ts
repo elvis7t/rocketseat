@@ -31,6 +31,7 @@ export class AuthMiddleware {
     if (!user) {
       return reply.status(401).send({ error: 'Sessão inválida.' })
     }
+
     request.user = user
   }
 }

@@ -10,7 +10,7 @@ export async function up(knex: Knex): Promise<void> {
   })
 
   await knex('users').insert({
-    id: 'default-user-id',
+    id: '8f845ec1-035d-4b56-a5e5-314951daa259',
     name: 'Admin',
     email: 'admin@email.com',
     password: '123456',

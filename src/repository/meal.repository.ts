@@ -38,11 +38,17 @@ export class MealRepository {
     updateData: Partial<Meal>,
   ): Promise<Meal | null> {
     const knex = this.sqliteConfig.getConnection()
-    const existing = await this.findById(id)
-    if (!existing) return null
 
-    await knex<Meal>('meals').where({ id }).update(updateData)
-    return { ...existing, ...updateData }
+    const affectedRows = await knex<Meal>('meals')
+      .where({ id })
+      .update(updateData)
+
+    if (affectedRows === 0) {
+      return null // Nenhum registro foi atualizado (ID pode não existir)
+    }
+
+    const updatedMeal = await knex<Meal>('meals').where({ id }).first()
+    return updatedMeal || null
   }
 
   public async delete(id: string): Promise<void> {

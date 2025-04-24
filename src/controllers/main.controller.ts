@@ -21,21 +21,40 @@ export class MainController {
   }
 
   public async createMeal(request: FastifyRequest, replay: FastifyReply) {
-    const { name, description, is_on_diet } = request.body
-    const user = request.user
+    const { title, description, is_on_diet } = request.body
+    const userId = request.user.id
+
     const mealTransaction = {
-      name,
+      title,
       description,
       is_on_diet,
-      user_id: user.id,
+      user_id: userId,
     }
 
-    if (!name || !description) {
-      return replay
-        .status(400)
-        .send({ error: 'Name and description are required' })
-    }
     const meal = this.mealService.create(mealTransaction)
+
+    return replay.status(201).send({ meal })
+  }
+
+  public async updateMeal(request: FastifyRequest, replay: FastifyReply) {
+    const { id } = request.params
+    const { title, description, is_on_diet } = request.body
+    const userId = request.user.id
+
+    const mealTransaction = {
+      id,
+      title,
+      description,
+      is_on_diet,
+      user_id: userId,
+    }
+
+    // if (!name || !description) {
+    //   return replay
+    //     .status(400)
+    //     .send({ error: 'Name and description are required' })
+    // }
+    const meal = this.mealService.update(mealTransaction)
 
     return replay.status(201).send({ meal })
   }

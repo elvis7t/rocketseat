@@ -89,6 +89,19 @@ export class MainRouter implements Router {
         return this.mainController.getAllMealByUser(request, reply)
       },
     )
+    app.get(
+      '/meal/:id',
+      {
+        preHandler: [
+          (request, reply) =>
+            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.mainController.getMealById(request, reply)
+      },
+    )
 
     if (done) {
       done()

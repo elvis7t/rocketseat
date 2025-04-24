@@ -80,6 +80,23 @@ export class MainController {
     }
   }
 
+  public async getMealById(request: FastifyRequest, reply: FastifyReply) {
+    const { id } = request.params
+    const userId = request.user.id
+
+    if (!id) {
+      return reply.status(400).send({ error: 'Id is required' })
+    }
+
+    const meal = await this.mealService.findById(id)
+
+    if (!meal) {
+      return reply.status(404).send({ error: 'Meal not found' })
+    }
+
+    return reply.send({ meal })
+  }
+
   // public async getIndex2(request: FastifyRequest, reply: FastifyReply) {
   //   return ':)'
   // }

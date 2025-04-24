@@ -61,4 +61,14 @@ export class MealService {
       throw error
     }
   }
+
+  public async delete(id: string): Promise<void> {
+    const existingMeal = await this.mealRepository.findById(id)
+
+    if (!existingMeal) {
+      throw new Error(`Meal with id ${id} not found`)
+    }
+
+    await this.mealRepository.delete(id)
+  }
 }

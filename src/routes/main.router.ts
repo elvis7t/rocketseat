@@ -61,47 +61,19 @@ export class MainRouter implements Router {
       },
     )
 
-    // app.get(
-    //   '/:id',
-    //   {
-    //     preHandler: [
-    //       (request, reply) =>
-    //         this.checkSessionMiddleware.checkSessionIdExists(request, reply),
-    //     ],
-    //   },
-    //   async (request, reply) => {
-    //     return this.mainController.getransactionById(request, reply)
-    //   },
-    // )
-
-    // app.get(
-    //   '/summary',
-    //   {
-    //     preHandler: [
-    //       (request, reply) =>
-    //         this.checkSessionMiddleware.checkSessionIdExists(request, reply),
-    //     ],
-    //   },
-    //   async (request, reply) => {
-    //     return this.mainController.getSummary(request, reply)
-    //   },
-    // )
-
-    // app.post('/', async (request, reply) => {
-    //   return this.mainController.createTransaction(request, reply)
-    // })
-
-    // app.get(
-    //   '/test',
-    //   {
-    //     preHandler: [
-    //       (request, reply) => this.authMiddleware.handle(request, reply),
-    //     ],
-    //   },
-    //   async (request, reply) => {
-    //     return this.mainController.getTest(request, reply)
-    //   },
-    // )
+    app.delete(
+      '/meal/:id',
+      {
+        preHandler: [
+          (request, reply) =>
+            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.mainController.deleteMeal(request, reply)
+      },
+    )
 
     if (done) {
       done()

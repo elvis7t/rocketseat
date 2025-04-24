@@ -59,6 +59,17 @@ export class MainController {
     return replay.status(201).send({ meal })
   }
 
+  public async deleteMeal(request: FastifyRequest, replay: FastifyReply) {
+    const { id } = request.params
+
+    if (!id) {
+      return replay.status(400).send({ error: 'Id is required' })
+    }
+    const meal = this.mealService.delete(id)
+
+    return replay.status(201).send({ meal })
+  }
+
   // public async getIndex2(request: FastifyRequest, reply: FastifyReply) {
   //   return ':)'
   // }

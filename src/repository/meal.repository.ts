@@ -55,4 +55,9 @@ export class MealRepository {
     const knex = this.sqliteConfig.getConnection()
     await knex<Meal>('meals').where({ id }).delete()
   }
+
+  public async getAllMealByUserId(userId: string): Promise<Meal[]> {
+    const knex = this.sqliteConfig.getConnection()
+    return await knex<Meal>('meals').where({ user_id: userId })
+  }
 }

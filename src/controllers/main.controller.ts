@@ -70,6 +70,16 @@ export class MainController {
     return replay.status(201).send({ meal })
   }
 
+  public async getAllMealByUser(request: FastifyRequest, reply: FastifyReply) {
+    const userId = request.user.id
+    try {
+      const meals = await this.mealService.findByUserId(userId)
+      return reply.send({ meals })
+    } catch (error: any) {
+      return reply.status(500).send({ error: error.message })
+    }
+  }
+
   // public async getIndex2(request: FastifyRequest, reply: FastifyReply) {
   //   return ':)'
   // }

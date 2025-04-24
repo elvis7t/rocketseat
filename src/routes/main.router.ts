@@ -33,6 +33,7 @@ export class MainRouter implements Router {
         return this.mainController.getAll(request, reply)
       },
     )
+
     app.post(
       '/meal',
       {
@@ -72,6 +73,20 @@ export class MainRouter implements Router {
       },
       async (request, reply) => {
         return this.mainController.deleteMeal(request, reply)
+      },
+    )
+
+    app.get(
+      '/meals/user',
+      {
+        preHandler: [
+          (request, reply) =>
+            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.mainController.getAllMealByUser(request, reply)
       },
     )
 

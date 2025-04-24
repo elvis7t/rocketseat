@@ -71,4 +71,14 @@ export class MealService {
 
     await this.mealRepository.delete(id)
   }
+
+  public async findById(id: string): Promise<Meal | null> {
+    const meal = await this.mealRepository.findById(id)
+    return meal
+  }
+
+  public async findByUserId(userId: string): Promise<Meal[]> {
+    const meals = await this.mealRepository.getAllMealByUserId(userId)
+    return meals
+  }
 }

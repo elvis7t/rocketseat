@@ -65,13 +65,12 @@ export class MealRepository {
 
   public async getMealOnDietbyUser(
     userId: string,
-    diet: bool,
+    diet: boolean,
   ): Promise<Meal[]> {
     const knex = this.sqliteConfig.getConnection()
-    return await knex<Meal>('meals').where({
-      user_id: userId,
-      is_on_diet: diet,
-    })
+    return await knex<Meal>('meals')
+      .where('user_id', userId)
+      .andWhere('is_on_diet', diet)
   }
 
   public async getLongestDietSequence(userId: string): Promise<number> {

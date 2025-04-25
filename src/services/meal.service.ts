@@ -43,6 +43,9 @@ export class MealService {
   public async update(input: MealInput): Promise<Meal> {
     const validatedInput = mealSchema.parse(input)
     try {
+      if (!validatedInput.id) {
+        throw new Error('Meal ID is required')
+      }
       const existingMeal = await this.mealRepository.findById(validatedInput.id)
 
       if (!existingMeal) {
@@ -53,6 +56,9 @@ export class MealService {
         validatedInput.id,
         validatedInput,
       )
+      if (!updatedMeal) {
+        throw new Error(`Failed to update meal with id ${validatedInput.id}`)
+      }
       return updatedMeal
     } catch (error) {
       if (error instanceof ZodError) {
@@ -76,7 +82,7 @@ export class MealService {
 
   public async findById(id: string): Promise<Meal | null> {
     const meal = await this.mealRepository.findById(id)
-    return meal
+    return meal ?? null
   }
 
   public async findByUserId(userId: string): Promise<Meal[]> {
@@ -86,7 +92,7 @@ export class MealService {
 
   public async findMealOnDietbyUser(
     userId: string,
-    diet: bool,
+    diet: boolean,
   ): Promise<Meal[]> {
     const meals = await this.mealRepository.getMealOnDietbyUser(userId, diet)
     return meals

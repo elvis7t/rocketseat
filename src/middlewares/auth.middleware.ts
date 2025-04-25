@@ -14,7 +14,6 @@ export class AuthMiddleware {
     reply: FastifyReply,
   ): Promise<void> {
     const { sessionId } = request
-    console.log('sessionId', sessionId)
 
     const email = request.headers.authorization
 

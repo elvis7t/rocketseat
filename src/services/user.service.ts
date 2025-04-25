@@ -8,7 +8,9 @@ export class UserService {
   constructor(
     @inject('UserRepository')
     private readonly userRepository: UserRepository,
-  ) {}
+  ) {
+    this.userRepository = userRepository
+  }
 
   public async findUserByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findByEmail(email)

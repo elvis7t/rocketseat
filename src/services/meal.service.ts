@@ -9,7 +9,9 @@ export class MealService {
   constructor(
     @inject('MealRepository')
     private readonly mealRepository: MealRepository,
-  ) {}
+  ) {
+    this.mealRepository = mealRepository
+  }
 
   public async findAll(): Promise<Meal[]> {
     const meals = await this.mealRepository.findAll()

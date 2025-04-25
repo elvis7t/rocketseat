@@ -7,7 +7,9 @@ import cookie from '@fastify/cookie'
 
 @injectable()
 export class FastifyConfig {
-  constructor(@inject('EnvConfig') private readonly env: EnvConfig) {}
+  constructor(@inject('EnvConfig') private readonly env: EnvConfig) {
+    this.env = env
+  }
 
   public app() {
     const app = Fastify()

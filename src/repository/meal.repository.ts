@@ -7,7 +7,9 @@ import { Meal } from '@/interfaces'
 export class MealRepository {
   constructor(
     @inject('SqliteConfig') private readonly sqliteConfig: SqliteConfig,
-  ) {}
+  ) {
+    this.sqliteConfig = sqliteConfig
+  }
 
   public async findAll(): Promise<Meal[]> {
     const knex = this.sqliteConfig.getConnection()

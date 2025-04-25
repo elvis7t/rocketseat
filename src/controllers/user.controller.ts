@@ -12,7 +12,10 @@ export class UserController {
     private readonly userRepository: UserRepository,
     @inject('UserService')
     private readonly userService: UserService,
-  ) {}
+  ) {
+    this.userRepository = userRepository
+    this.userService = userService
+  }
 
   async getAllUsers(
     request: FastifyRequest,

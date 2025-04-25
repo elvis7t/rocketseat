@@ -7,7 +7,9 @@ import { User } from '@/interfaces'
 export class UserRepository {
   constructor(
     @inject('SqliteConfig') private readonly sqliteConfig: SqliteConfig,
-  ) {}
+  ) {
+    this.sqliteConfig = sqliteConfig
+  }
 
   public async findAll(): Promise<User[]> {
     const knex = this.sqliteConfig.getConnection()

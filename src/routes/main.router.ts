@@ -13,7 +13,11 @@ export class MainRouter implements Router {
     private readonly checkSessionMiddleware: CheckSessionMiddleware,
     @inject('AuthMiddleware')
     private readonly authMiddleware: AuthMiddleware,
-  ) {}
+  ) {
+    this.mainController = mainController
+    this.checkSessionMiddleware = checkSessionMiddleware
+    this.authMiddleware = authMiddleware
+  }
 
   public registerRoutes(
     app: FastifyInstance,

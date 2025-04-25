@@ -7,7 +7,9 @@ export class CheckSessionMiddleware {
   constructor(
     @inject('EnvConfig')
     private readonly env: EnvConfig,
-  ) {}
+  ) {
+    this.env = env
+  }
 
   public async checkSessionIdExists(
     request: FastifyRequest,

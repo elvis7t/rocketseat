@@ -8,7 +8,10 @@ export class MainController {
   constructor(
     @inject('SqliteConfig') private readonly sqliteConfig: SqliteConfig,
     @inject('MealService') private readonly mealService: MealService,
-  ) {}
+  ) {
+    this.sqliteConfig = sqliteConfig
+    this.mealService = mealService
+  }
 
   public async getAll(req: FastifyRequest, reply: FastifyReply): Promise<void> {
     try {

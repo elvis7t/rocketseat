@@ -9,7 +9,10 @@ export class Router implements RouterInterface {
     private mainRouter: RouterInterface,
     @inject('UserRouter')
     private userRouter: RouterInterface,
-  ) {}
+  ) {
+    this.mainRouter = mainRouter
+    this.userRouter = userRouter
+  }
 
   public registerRoutes(
     app: FastifyInstance,

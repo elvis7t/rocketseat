@@ -7,7 +7,9 @@ export class AuthMiddleware {
   constructor(
     @inject('UserService')
     private readonly userService: UserService,
-  ) {}
+  ) {
+    this.userService = userService
+  }
 
   public async handle(
     request: FastifyRequest,

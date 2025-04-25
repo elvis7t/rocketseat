@@ -30,7 +30,7 @@ export class UserService {
     try {
       const validatedInput = userSchema.parse(input)
       const existingUser = await this.userRepository.findByEmail(
-        validatedInput.name,
+        validatedInput.email,
       )
       if (existingUser) {
         throw new Error(

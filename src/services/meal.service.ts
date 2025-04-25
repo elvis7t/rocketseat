@@ -81,4 +81,16 @@ export class MealService {
     const meals = await this.mealRepository.getAllMealByUserId(userId)
     return meals
   }
+
+  public async findMealOnDietbyUser(
+    userId: string,
+    diet: bool,
+  ): Promise<Meal[]> {
+    const meals = await this.mealRepository.getMealOnDietbyUser(userId, diet)
+    return meals
+  }
+
+  public async getLongestDietSequence(userId: string): Promise<number> {
+    return this.mealRepository.getLongestDietSequence(userId)
+  }
 }

@@ -101,4 +101,62 @@ export class MainController {
       return reply.status(500).send({ error: error.message })
     }
   }
+
+  public async getMealSumaryByUser(
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ) {
+    const userId = request.user.id
+
+    try {
+      const meals = await this.mealService.findByUserId(userId)
+
+      return reply.send({ total: meals.length })
+    } catch (error: any) {
+      return reply.status(500).send({ error: error.message })
+    }
+  }
+
+  public async getMealOnDietByUser(
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ) {
+    const userId = request.user.id
+
+    try {
+      const meals = await this.mealService.findMealOnDietbyUser(userId, true)
+      return reply.send({ totals: meals.length })
+    } catch (error: any) {
+      return reply.status(500).send({ error: error.message })
+    }
+  }
+
+  public async getMealOffDietByUser(
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ) {
+    const userId = request.user.id
+
+    try {
+      const meals = await this.mealService.findMealOnDietbyUser(userId, false)
+      return reply.send({ totals: meals.length })
+    } catch (error: any) {
+      return reply.status(500).send({ error: error.message })
+    }
+  }
+
+  public async getLongestDietSequence(
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ) {
+    const userId = request.user.id
+
+    try {
+      const longestSequence =
+        await this.mealService.getLongestDietSequence(userId)
+      return reply.send({ longestSequence })
+    } catch (error: any) {
+      return reply.status(500).send({ error: error.message })
+    }
+  }
 }

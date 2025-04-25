@@ -32,32 +32,98 @@ Nesse desafio desenvolveremos uma API para controle de dieta diária, a Daily Di
 - [X] Deve ser possível apagar uma refeição
 - [X] Deve ser possível listar todas as refeições de um usuário
 - [X] Deve ser possível visualizar uma única refeição
-- [] Deve ser possível recuperar as métricas de um usuário
-    - [] Quantidade total de refeições registradas
-    - [] Quantidade total de refeições dentro da dieta
-    - [] Quantidade total de refeições fora da dieta
-    - [] Melhor sequência de refeições dentro da dieta
-- []  O usuário só pode visualizar, editar e apagar as refeições o qual ele criou
+- [x] Deve ser possível recuperar as métricas de um usuário
+    - [X] Quantidade total de refeições registradas
+    - [X] Quantidade total de refeições dentro da dieta
+    - [X] Quantidade total de refeições fora da dieta
+    - [X] Melhor sequência de refeições dentro da dieta
+- [x]  O usuário só pode visualizar, editar e apagar as refeições o qual ele criou
 
-## 🚀 Documentação de entrega
+# 🚀 Guia de Execução do Projeto
 
-### ✔️ Prerequisites
+Este guia fornece instruções para configurar, executar e testar o projeto **Daily Diet API**.
 
-* Node 22 instalado
-* Git instalado e configurado
+## ✔️ Pré-requisitos
 
-Rodar a aplicação:
+Certifique-se de que os seguintes itens estão instalados e configurados no seu ambiente:
+
+- **Node.js** (versão 22 ou superior)
+- **Git** (qualquer versão recente)
+
+## 📦 Configuração do Ambiente
+
+1. **Clone o repositório**:
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   cd <NOME_DO_REPOSITORIO>
+   ```
+
+2. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+
+3. **Configure as variáveis de ambiente**:
+   - Copie o arquivo `.env.exemple` para `.env`:
+     ```bash
+     cp .env.exemple .env
+     ```
+   - Ajuste os valores no arquivo `.env` conforme necessário.
+
+4. **Execute as migrações do banco de dados**:
+   ```bash
+   npm run knex migrate:latest
+   ```
+
+5. **(Opcional) Execute os seeds do banco de dados**:
+   ```bash
+   npm run knex seed:run
+   ```
+
+## ▶️ Executando a Aplicação
+
+Para iniciar o servidor, execute:
 ```bash
-npm run start
+npm run dev
 ```
-Importar o arquivo CSV:
-```bash
-npm run import-csv
-```
-Testes unitarios:
+
+A API estará disponível no endereço: `http://localhost:<PORTA>` (a porta padrão é `3000`, mas pode ser configurada no arquivo `.env`).
+
+Certifique-se de que o arquivo CSV está no formato esperado pela aplicação.
+
+## 🧪 Testes
+
+### Testes Unitários e de Integração
+
+Para executar os testes, utilize:
 ```bash
 npm test
 ```
 
+### Observações sobre os testes:
+- Certifique-se de que o ambiente de teste está configurado corretamente no arquivo `.env.test`.
+- O banco de dados de teste será resetado antes de cada execução de teste.
 
-Feito com 💜 por [Elvis Leite](https://gist.github.com/elvis7t) 😊
+## 🛠️ Build para Produção
+
+Para compilar o projeto para produção, execute:
+```bash
+npm run build
+```
+
+Os arquivos compilados estarão disponíveis na pasta `build`.
+
+## 🌐 Endpoints da API
+
+A documentação completa dos endpoints da API pode ser encontrada no arquivo `routes` ou em uma ferramenta de documentação como Postman ou Swagger (se configurada).
+
+## 🛡️ Boas Práticas
+
+- Sempre utilize um ambiente isolado para desenvolvimento e produção.
+- Não compartilhe o arquivo `.env` publicamente.
+- Utilize ferramentas como `eslint` para manter a qualidade do código:
+  ```bash
+  npm run lint
+  ```
+
+Feito com 💜 por [Elvis Leite](https://gist.github.com/elvis7t) 😊

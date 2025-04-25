@@ -19,10 +19,6 @@ export class UserController {
     reply: FastifyReply,
   ): Promise<void> {
     const users = await this.userService.findAll()
-    // if (!users) {
-    //   reply.status(404).send({ error: 'Nenhum usuário encontrado.' })
-    //   return
-    // }
     reply.send({ users })
   }
 
@@ -34,16 +30,15 @@ export class UserController {
       return
     }
 
-    const existing = await this.userRepository.findByEmail(email)
-    if (existing) {
-      reply.status(400).send({ error: 'E-mail já cadastrado.' })
-      return
+    const User = {
+      name,
+      email,
+      password,
     }
 
+    await this.userService.create(User)
+
     const sessionId = randomUUID()
-
-    await this.userService.create(name, email, password)
-
     // Armazenar sessionId no cookie
     reply
       .setCookie('sessionId', sessionId, {

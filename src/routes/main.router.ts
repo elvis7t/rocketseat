@@ -86,9 +86,10 @@ export class MainRouter implements Router {
         ],
       },
       async (request, reply) => {
-        return this.mainController.getAllMealByUser(request, reply)
+        return this.mainController.getMealSumaryByUser(request, reply)
       },
     )
+
     app.get(
       '/meal/:id',
       {
@@ -100,6 +101,61 @@ export class MainRouter implements Router {
       },
       async (request, reply) => {
         return this.mainController.getMealById(request, reply)
+      },
+    )
+
+    app.get(
+      '/meal/sumary',
+      {
+        preHandler: [
+          (request, reply) =>
+            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.mainController.getMealSumaryByUser(request, reply)
+      },
+    )
+
+    app.get(
+      '/meal/ondiet',
+      {
+        preHandler: [
+          (request, reply) =>
+            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.mainController.getMealOnDietByUser(request, reply)
+      },
+    )
+
+    app.get(
+      '/meal/offdiet',
+      {
+        preHandler: [
+          (request, reply) =>
+            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.mainController.getMealOffDietByUser(request, reply)
+      },
+    )
+    app.get(
+      '/meals/longest-diet-sequence',
+      {
+        preHandler: [
+          (request, reply) =>
+            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.mainController.getLongestDietSequence(request, reply)
       },
     )
 

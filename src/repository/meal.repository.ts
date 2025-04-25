@@ -60,4 +60,38 @@ export class MealRepository {
     const knex = this.sqliteConfig.getConnection()
     return await knex<Meal>('meals').where({ user_id: userId })
   }
+
+  public async getMealOnDietbyUser(
+    userId: string,
+    diet: bool,
+  ): Promise<Meal[]> {
+    const knex = this.sqliteConfig.getConnection()
+    return await knex<Meal>('meals').where({
+      user_id: userId,
+      is_on_diet: diet,
+    })
+  }
+
+  public async getLongestDietSequence(userId: string): Promise<number> {
+    const knex = this.sqliteConfig.getConnection()
+    const result = await knex.raw(
+      `
+      SELECT MAX(sequence) as longest_sequence FROM (
+        SELECT COUNT(*) as sequence
+        FROM (
+          SELECT 
+            is_on_diet,
+            ROW_NUMBER() OVER (ORDER BY created_at) - 
+            ROW_NUMBER() OVER (PARTITION BY is_on_diet ORDER BY created_at) as grp
+          FROM meals
+          WHERE user_id = ? AND is_on_diet = true
+        ) subquery
+        GROUP BY grp
+      ) final_query
+      `,
+      [userId],
+    )
+
+    return result[0]?.longest_sequence || 0
+  }
 }

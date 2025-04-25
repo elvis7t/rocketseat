@@ -1,7 +1,8 @@
 import { injectable, inject } from 'tsyringe'
 import { UserRepository } from '@/repository/user.repository'
 import { User } from '@/interfaces'
-
+import { userSchema, UserInput } from '../validators'
+import { ZodError } from 'zod'
 @injectable()
 export class UserService {
   constructor(
@@ -25,17 +26,32 @@ export class UserService {
     return users
   }
 
-  public async create(
-    name: string,
-    email: string,
-    password: string,
-  ): Promise<User> {
-    const existingUser = await this.userRepository.findByEmail(email)
-    if (existingUser) {
-      throw new Error(`User with email ${email} already exists`)
-    }
+  public async create(input: UserInput): Promise<User> {
+    try {
+      const validatedInput = userSchema.parse(input)
+      const existingUser = await this.userRepository.findByEmail(
+        validatedInput.name,
+      )
+      if (existingUser) {
+        throw new Error(
+          `User with email ${validatedInput.email} already exists`,
+        )
+      }
 
-    const user = await this.userRepository.create(name, email, password)
-    return user
+      const user = await this.userRepository.create(
+        validatedInput.name,
+        validatedInput.email,
+        validatedInput.password,
+      )
+
+      return user
+    } catch (error) {
+      if (error instanceof ZodError) {
+        throw new Error(
+          `Validation failed: ${error.errors.map((e) => e.message).join(', ')}`,
+        )
+      }
+      throw error
+    }
   }
 }

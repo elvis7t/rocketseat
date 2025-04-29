@@ -4,6 +4,7 @@ import { UserRepository } from '@/repository/user.repository'
 import { randomUUID } from 'crypto'
 import { CreateUserBody } from '@/interfaces/users/user.interface'
 import { UserService } from '@/services'
+import { HttpStatusCodeEnum } from '../constants';
 
 @injectable()
 export class UserController {
@@ -22,7 +23,7 @@ export class UserController {
     reply: FastifyReply,
   ): Promise<void> {
     const users = await this.userService.findAll()
-    reply.send({ users })
+    reply.code(HttpStatusCodeEnum.OK).send({ users })
   }
 
   async create(request: FastifyRequest, reply: FastifyReply): Promise<void> {
@@ -50,7 +51,7 @@ export class UserController {
         sameSite: true,
         maxAge: 60 * 60 * 24 * 7, // 7 dias
       })
-      .status(201)
+      .code(HttpStatusCodeEnum.CREATED)
       .send({ message: 'Usuário criado com sucesso.' })
   }
 

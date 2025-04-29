@@ -24,5 +24,3 @@
 - [ ] Os dados d aplicação precisam estar persistidos em um banco PostgresSQL;
 - [ ] Todas listas de dados precisam estar paginadas com 20 itens por página;
 - [ ] O usuario deve ser odentificado por um JWT;
-Clover add coluna de bloquear transação
-Puxar as tarefas de coletada de coletas de dados dos consumidores

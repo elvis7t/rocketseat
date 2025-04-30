@@ -4,7 +4,7 @@ import { UserRepository } from '@/repository/user.repository'
 import { randomUUID } from 'crypto'
 import { CreateUserBody } from '@/interfaces/users/user.interface'
 import { UserService } from '@/services'
-import { HttpStatusCodeEnum } from '../constants';
+import { HttpStatusCodeEnum } from '../constants'
 
 @injectable()
 export class UserController {
@@ -30,7 +30,9 @@ export class UserController {
     const { name, email, password } = request.body as CreateUserBody
 
     if (!name || !email || !password) {
-      reply.status(400).send({ error: 'Nome e e-mail são obrigatórios.' })
+      reply
+        .code(HttpStatusCodeEnum.BAD_REQUEST)
+        .send({ error: 'Nome e e-mail são obrigatórios.' })
       return
     }
 

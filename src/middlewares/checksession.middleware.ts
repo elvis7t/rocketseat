@@ -1,6 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { inject, injectable } from 'tsyringe'
 import { EnvConfig } from '@/configs'
+import { HttpStatusCodeEnum } from '../constants'
+import { HttpError } from '../errors'
 
 @injectable()
 export class CheckSessionMiddleware {
@@ -18,7 +20,8 @@ export class CheckSessionMiddleware {
     const { sessionId } = request.cookies
 
     if (!sessionId) {
-      return replay.status(401).send({
+      throw new HttpError({
+        statusCode: HttpStatusCodeEnum.UNAUTHORIZED,
         message: 'Unauthorized',
       })
     }

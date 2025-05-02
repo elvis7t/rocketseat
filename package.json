@@ -26,6 +26,7 @@
     "knex": "node --import tsx ./node_modules/.bin/knex",
     "lint": "eslint src --ext .ts --fix",
     "build": "tsup src --out-dir build",
+    "start": "node build/index.js",
     "test": "vitest"
   },
   "author": "",

@@ -22,7 +22,7 @@ export class EnvConfig {
       NODE_ENV: z
         .enum(['development', 'test', 'production'])
         .default('development'),
-      API_PORT: z.string().default('3000'),
+      API_PORT: z.coerce.number().default(3333),
       CORS_ORIGIN: z.string().default('*'),
       DATABASE_CLIENT: z.string().default('sqlite3'),
       DATABASE_URL: z.string().default('./db/app.db'),
@@ -39,7 +39,7 @@ export class EnvConfig {
     }
 
     this.NODE_ENV = envVars.data.NODE_ENV
-    this.API_PORT = parseInt(envVars.data.API_PORT, 10)
+    this.API_PORT = envVars.data.API_PORT
     this.CORS_ORIGIN = envVars.data.CORS_ORIGIN
     this.DATABASE_CLIENT = envVars.data.DATABASE_CLIENT
     this.DATABASE_URL = envVars.data.DATABASE_URL

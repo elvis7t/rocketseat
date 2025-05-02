@@ -55,7 +55,7 @@ export class AuthMiddleware {
     const validationResult = authInputSchema.safeParse(inputToValidate)
 
     if (!validationResult.success) {
-      return reply.status(400).send({
+      return reply.status(401).send({
         error: 'Dados de autenticação inválidos ou ausentes.',
         issues: validationResult.error.flatten().fieldErrors,
       })

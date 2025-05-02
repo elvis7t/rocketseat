@@ -1,4 +1,4 @@
-export { StatusCodes as HttpStatusCodeEnum } from 'http-status-codes';
+export { StatusCodes as HttpStatusCodeEnum } from 'http-status-codes'
 
 export enum NodeEnvEnum {
   Development = 'development',
@@ -18,5 +18,3 @@ export enum HttpMethodsEnum {
   GET = 'GET',
   PUT = 'PUT',
 }
-
-

@@ -1,5 +1,5 @@
 import { container } from 'tsyringe'
-import { EnvConfig, FastifyConfig, SqliteConfig } from './configs'
+import { EnvConfig, FastifyConfig, SqliteConfig, PrismaConfig } from './configs'
 import { Router as RouterInterface } from '@/interfaces'
 import { Router } from './routes/router'
 import { MainController, UserController } from './controllers'
@@ -17,6 +17,7 @@ container.registerSingleton<RouterInterface>('UserRouter', UserRouter)
 container.registerSingleton<MainController>('MainController', MainController)
 container.registerSingleton<UserController>('UserController', UserController)
 container.registerSingleton<SqliteConfig>('SqliteConfig', SqliteConfig)
+container.registerSingleton<PrismaConfig>('PrismaConfig', PrismaConfig)
 container.registerSingleton<CheckSessionMiddleware>(
   'CheckSessionMiddleware',
   CheckSessionMiddleware,

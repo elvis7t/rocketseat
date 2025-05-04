@@ -97,3 +97,14 @@ Deploy
 render.com
 fly.io
 railway.com
+
+
+//Prisma ORM
+npm i prisma -D
+npx prisma init // para criar o arquivo de configuracao do prisma
+npx prisma generate // para gerar os tipos do prisma
+npm i @prisma/client // para instalar o cliente do prisma
+adicionar linha no /C:/Users/elvis/AppData/Roaming/Code/User/settings.json
+ "[prisma]": {
+        "editor.formatOnSave": "true"
+},

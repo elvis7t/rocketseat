@@ -104,6 +104,8 @@ npm i prisma -D
 npx prisma init // para criar o arquivo de configuracao do prisma
 npx prisma generate // para gerar os tipos do prisma
 npm i @prisma/client // para instalar o cliente do prisma
+npx prisma migrate dev --name init // para criar a tabela
+npx prisma migrate deploy // para aplicar as migrações em produção
 adicionar linha no /C:/Users/elvis/AppData/Roaming/Code/User/settings.json
  "[prisma]": {
         "editor.formatOnSave": "true"

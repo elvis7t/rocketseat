@@ -26,6 +26,10 @@ export class EnvConfig {
       CORS_ORIGIN: z.string().default('*'),
       DATABASE_CLIENT: z.string().default('sqlite3'),
       DATABASE_URL: z.string().default('./db/app.db'),
+      DATABASE_PORT: z.coerce.number().default(5432),
+      DATABASE_USERNAME: z.string().default('root'),
+      DATABASE_PASSWORD: z.string().default(''),
+      DATABASE_NAME: z.string().default('apisolid'),
     })
 
     const envVars = configSchema.safeParse(process.env)
@@ -43,5 +47,9 @@ export class EnvConfig {
     this.CORS_ORIGIN = envVars.data.CORS_ORIGIN
     this.DATABASE_CLIENT = envVars.data.DATABASE_CLIENT
     this.DATABASE_URL = envVars.data.DATABASE_URL
+    this.DATABASE_PORT = envVars.data.DATABASE_PORT
+    this.DATABASE_USERNAME = envVars.data.DATABASE_USERNAME
+    this.DATABASE_PASSWORD = envVars.data.DATABASE_PASSWORD
+    this.DATABASE_NAME = envVars.data.DATABASE_NAME
   }
 }

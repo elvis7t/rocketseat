@@ -124,9 +124,72 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
-  password: 'password',
+  password_hash: 'password_hash',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CheckInScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  checkInAt: 'checkInAt',
+  validatedAt: 'validatedAt'
+};
+
+exports.Prisma.GymScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  phone: 'phone',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CheckInGymScalarFieldEnum = {
+  id: 'id',
+  checkInId: 'checkInId',
+  gymId: 'gymId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserGymScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  gymId: 'gymId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserCheckInScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  checkInId: 'checkInId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserGymCheckInScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  gymId: 'gymId',
+  checkInId: 'checkInId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserGymCheckInHistoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  gymId: 'gymId',
+  checkInId: 'checkInId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserGymCheckInHistoryDetailScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  gymId: 'gymId',
+  checkInId: 'checkInId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -146,7 +209,15 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  CheckIn: 'CheckIn',
+  Gym: 'Gym',
+  CheckInGym: 'CheckInGym',
+  UserGym: 'UserGym',
+  UserCheckIn: 'UserCheckIn',
+  UserGymCheckIn: 'UserGymCheckIn',
+  UserGymCheckInHistory: 'UserGymCheckInHistory',
+  UserGymCheckInHistoryDetail: 'UserGymCheckInHistoryDetail'
 };
 
 /**

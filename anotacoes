@@ -98,61 +98,96 @@ render.com
 fly.io
 railway.com
 
+--
 
-//Prisma ORM
-npm i prisma -D
-npx prisma init // para criar o arquivo de configuracao do prisma
-npx prisma generate // para gerar os tipos do prisma
-npm i @prisma/client // para instalar o cliente do prisma
-npx prisma migrate dev --name init // para criar a tabela
-npx prisma migrate deploy // para aplicar as migrações em produção
-adicionar linha no /C:/Users/elvis/AppData/Roaming/Code/User/settings.json
- "[prisma]": {
-        "editor.formatOnSave": "true"
-},
+### **Prisma ORM**
+#### **Instalação e configuração**
+```sh
+npm i prisma -D  # Instala Prisma como dependência de desenvolvimento
+npx prisma init  # Cria o arquivo de configuração do Prisma
+npx prisma generate  # Gera os tipos do Prisma
+npm i @prisma/client  # Instala o cliente do Prisma
+```
 
-npx prisma studio // para abrir o banco de dados
+#### **Migração do banco de dados**
+```sh
+npx prisma migrate dev  # Cria a tabela compara o schema.prisma com o banco de dados
+npx prisma migrate dev --name init  # Cria a tabela com o nome 'init'
+npx prisma migrate deploy  # Aplica as migrações em produção, não faz comparação 
+```
 
-PG
+#### **Configuração do editor**
+Adicionar no arquivo `/C:/Users/elvis/AppData/Roaming/Code/User/settings.json`:
+```json
+"[prisma]": {
+    "editor.formatOnSave": "true"
+}
+```
+
+#### **Gerenciamento do banco de dados**
+```sh
+npx prisma studio  # Abre o banco de dados via Prisma Studio
+```
+
+---
+
+### **PostgreSQL (Docker)**
+#### **Acessar containers e banco de dados**
+```sh
 docker exec -it pg_container psql -U user -h db -d apisolid
-
-
 docker exec -it app_container psql -U user -h db -d apisolid
+```
 
-#Teste conexão dentro do container
+#### **Testar conexão dentro do container**
+```sh
 docker exec -it app_container psql -h pg_container -U user -d apisolid
 docker exec -it app_container nc -zv pg_container 5432
+```
 
-
+#### **Ações no PostgreSQL**
+```sh
 docker exec -it pg_container psql -U postgres
-
 psql -U postgres -d apisolid
-
 psql -U postgres -h localhost -d apisolid
-docker exec -it pg_container service postgresql status
+docker exec -it pg_container service postgresql status  # Ver status do PostgreSQL
+docker exec -it pg_container service postgresql start  # Iniciar PostgreSQL
+docker exec -it pg_container pg_createcluster 17 main --start  # Criar cluster PostgreSQL
+docker exec -it pg_container bash  # Acessar container PostgreSQL
+```
 
-docker exec -it pg_container service postgresql start
-docker exec -it pg_container pg_createcluster 17 main --start
-docker exec -it pg_container bash
-
+#### **Operações de banco de dados**
+```sh
 docker exec -it app_container psql -U user -h db -d apisolid
 ping pg_container
+```
 
+---
 
+### **Prisma - Migração e Listagem**
+```sh
 npx prisma generate
 npx prisma migrate dev
 npx prisma migrate deploy
+```
 
-#- Listar as tabelas dentro do banco PostgreSQL
+#### **PostgreSQL - Consultas no banco**
+```sh
+# Listar tabelas
 docker exec -it pg_container psql -U user -d apisolid -c "\dt"
-#- Listar os dados dentro da tabela users
+
+# Listar dados da tabela 'users'
 docker exec -it pg_container psql -U user -d apisolid -c "SELECT * FROM users;"
-#- Criar um novo usuário na tabela users
+
+# Criar um novo usuário na tabela 'users'
 docker exec -it pg_container psql -U user -d apisolid -c "INSERT INTO users (name, email) VALUES ('Elvis', 'elvis@example.com');"
-#
+
+# Criar nova migração adicionando autoincrement
 npx prisma migrate dev --name add_autoincrement
-docker compose logs -f db
+```
+
+#### **Gerenciar logs e serviços**
+```sh
+docker compose logs -f db  # Ver logs do banco de dados
 docker exec -it pg_container psql -U user -d apisolid -c "SELECT * FROM users;"
-
-
-docker-compose up --build
+docker-compose up --build  # Iniciar e construir containers
+```

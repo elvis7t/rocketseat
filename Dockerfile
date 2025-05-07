@@ -1,20 +1,24 @@
 # Imagem base
 FROM node:22.14.0-alpine
 
-# Diretório de trabalho no container
+# Diretório de trabalho
 WORKDIR /home/node/app
 
-# Copia os arquivos de dependências
+# Copia arquivos de dependência
 COPY package*.json ./
 
-# Instala as dependências
+# Instala dependências
 RUN npm install
 
-# Copia o restante do projeto
+# Copia o restante da aplicação
 COPY . .
 
-# Expõe a porta usada pela aplicação
+# Copia o script de entrada e dá permissão
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Expondo a porta da aplicação (ajuste conforme o .env se necessário)
 EXPOSE 3000
 
-# Comando padrão
-CMD ["npm", "start"]
+# Define o script de entrada
+ENTRYPOINT ["/entrypoint.sh"]

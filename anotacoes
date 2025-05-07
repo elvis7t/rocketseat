@@ -110,3 +110,49 @@ adicionar linha no /C:/Users/elvis/AppData/Roaming/Code/User/settings.json
  "[prisma]": {
         "editor.formatOnSave": "true"
 },
+
+npx prisma studio // para abrir o banco de dados
+
+PG
+docker exec -it pg_container psql -U user -h db -d apisolid
+
+
+docker exec -it app_container psql -U user -h db -d apisolid
+
+#Teste conexão dentro do container
+docker exec -it app_container psql -h pg_container -U user -d apisolid
+docker exec -it app_container nc -zv pg_container 5432
+
+
+docker exec -it pg_container psql -U postgres
+
+psql -U postgres -d apisolid
+
+psql -U postgres -h localhost -d apisolid
+docker exec -it pg_container service postgresql status
+
+docker exec -it pg_container service postgresql start
+docker exec -it pg_container pg_createcluster 17 main --start
+docker exec -it pg_container bash
+
+docker exec -it app_container psql -U user -h db -d apisolid
+ping pg_container
+
+
+npx prisma generate
+npx prisma migrate dev
+npx prisma migrate deploy
+
+#- Listar as tabelas dentro do banco PostgreSQL
+docker exec -it pg_container psql -U user -d apisolid -c "\dt"
+#- Listar os dados dentro da tabela users
+docker exec -it pg_container psql -U user -d apisolid -c "SELECT * FROM users;"
+#- Criar um novo usuário na tabela users
+docker exec -it pg_container psql -U user -d apisolid -c "INSERT INTO users (name, email) VALUES ('Elvis', 'elvis@example.com');"
+#
+npx prisma migrate dev --name add_autoincrement
+docker compose logs -f db
+docker exec -it pg_container psql -U user -d apisolid -c "SELECT * FROM users;"
+
+
+docker-compose up --build

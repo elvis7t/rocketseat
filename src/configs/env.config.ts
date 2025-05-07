@@ -16,6 +16,10 @@ export class EnvConfig {
   public readonly CORS_ORIGIN: string
   public readonly DATABASE_CLIENT: string
   public readonly DATABASE_URL: string
+  public readonly DATABASE_PORT: number
+  public readonly DATABASE_USERNAME: string
+  public readonly DATABASE_PASSWORD: string
+  public readonly DATABASE_NAME: string
 
   constructor() {
     const configSchema = z.object({
@@ -24,11 +28,13 @@ export class EnvConfig {
         .default('development'),
       API_PORT: z.coerce.number().default(3333),
       CORS_ORIGIN: z.string().default('*'),
-      DATABASE_CLIENT: z.string().default('sqlite3'),
-      DATABASE_URL: z.string().default('./db/app.db'),
+      DATABASE_CLIENT: z.string().default(''),
+      DATABASE_URL: z
+        .string()
+        .default('postgres://user:password@db:5432/apisolid'),
       DATABASE_PORT: z.coerce.number().default(5432),
       DATABASE_USERNAME: z.string().default('root'),
-      DATABASE_PASSWORD: z.string().default(''),
+      DATABASE_PASSWORD: z.string().min(1, 'DATABASE_PASSWORD é obrigatório'),
       DATABASE_NAME: z.string().default('apisolid'),
     })
 

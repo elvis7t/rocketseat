@@ -7,10 +7,21 @@ export class PrismaConfig {
   private prismaClient: PrismaClient
 
   constructor(@inject(EnvConfig) private envConfig: EnvConfig) {
-    this.prismaClient = new PrismaClient({})
+    this.prismaClient = new PrismaClient({
+      datasources: {
+        db: {
+          url: this.envConfig.DATABASE_URL,
+        },
+      },
+    })
+    console.log('DATABASE_URL:', this.envConfig.DATABASE_URL)
   }
 
   public getClient(): PrismaClient {
     return this.prismaClient
+  }
+
+  public async disconnect(): Promise<void> {
+    await this.prismaClient.$disconnect()
   }
 }

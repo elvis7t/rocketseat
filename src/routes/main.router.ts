@@ -122,46 +122,46 @@ export class MainRouter implements Router {
       },
     )
 
-    app.get(
-      '/meal/ondiet',
-      {
-        preHandler: [
-          (request, reply) =>
-            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
-          (request, reply) => this.authMiddleware.handle(request, reply),
-        ],
-      },
-      async (request, reply) => {
-        return this.mainController.getMealOnDietByUser(request, reply)
-      },
-    )
+    // app.get(
+    //   '/meal/ondiet',
+    //   {
+    //     preHandler: [
+    //       (request, reply) =>
+    //         this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+    //       (request, reply) => this.authMiddleware.handle(request, reply),
+    //     ],
+    //   },
+    //   async (request, reply) => {
+    //     return this.mainController.getMealOnDietByUser(request, reply)
+    //   },
+    // )
 
-    app.get(
-      '/meal/offdiet',
-      {
-        preHandler: [
-          (request, reply) =>
-            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
-          (request, reply) => this.authMiddleware.handle(request, reply),
-        ],
-      },
-      async (request, reply) => {
-        return this.mainController.getMealOffDietByUser(request, reply)
-      },
-    )
-    app.get(
-      '/meals/longest-diet-sequence',
-      {
-        preHandler: [
-          (request, reply) =>
-            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
-          (request, reply) => this.authMiddleware.handle(request, reply),
-        ],
-      },
-      async (request, reply) => {
-        return this.mainController.getLongestDietSequence(request, reply)
-      },
-    )
+    // app.get(
+    //   '/meal/offdiet',
+    //   {
+    //     preHandler: [
+    //       (request, reply) =>
+    //         this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+    //       (request, reply) => this.authMiddleware.handle(request, reply),
+    //     ],
+    //   },
+    //   async (request, reply) => {
+    //     return this.mainController.getMealOffDietByUser(request, reply)
+    //   },
+    // )
+    // app.get(
+    //   '/meals/longest-diet-sequence',
+    //   {
+    //     preHandler: [
+    //       (request, reply) =>
+    //         this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+    //       (request, reply) => this.authMiddleware.handle(request, reply),
+    //     ],
+    //   },
+    //   async (request, reply) => {
+    //     return this.mainController.getLongestDietSequence(request, reply)
+    //   },
+    // )
 
     if (done) {
       done()

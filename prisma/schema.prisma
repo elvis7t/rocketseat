@@ -9,91 +9,35 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String
-  email         String   @unique
+  email         String    @unique
   password_hash String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  checkIns      CheckIn[]
 
   @@map("users")
 }
 
 model CheckIn {
-  id          String    @id @default(uuid())
-  userId      String
-  checkInAt   DateTime  @default(now())
-  validatedAt DateTime?
+  id           String    @id @default(uuid())
+  checked_at   DateTime  @default(now())
+  validated_at DateTime?
+  gym_id       String?
+  user_id      String
+  user         User      @relation(fields: [user_id], references: [id])
+  Gym          Gym?      @relation(fields: [gym_id], references: [id])
 
   @@map("check_ins")
 }
 
 model Gym {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
   description String?
   phone       String?
   latitude    Decimal
   longitude   Decimal
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  checkIns    CheckIn[]
 
   @@map("gyms")
-}
-
-model CheckInGym {
-  id        String   @id @default(cuid())
-  checkInId String
-  gymId     String
-  createdAt DateTime @default(now())
-
-  @@map("check_in_gyms")
-}
-
-model UserGym {
-  id        String   @id @default(cuid())
-  userId    String
-  gymId     String
-  createdAt DateTime @default(now())
-
-  @@map("user_gyms")
-}
-
-model UserCheckIn {
-  id        String   @id @default(cuid())
-  userId    String
-  checkInId String
-  createdAt DateTime @default(now())
-
-  @@map("user_check_ins")
-}
-
-model UserGymCheckIn {
-  id        String   @id @default(cuid())
-  userId    String
-  gymId     String
-  checkInId String
-  createdAt DateTime @default(now())
-
-  @@map("user_gym_check_ins")
-}
-
-model UserGymCheckInHistory {
-  id        String   @id @default(uuid())
-  userId    String
-  gymId     String
-  checkInId String
-  createdAt DateTime @default(now())
-
-  @@map("user_gym_check_in_history")
-}
-
-model UserGymCheckInHistoryDetail {
-  id        String   @id @default(cuid())
-  userId    String
-  gymId     String
-  checkInId String
-  createdAt DateTime @default(now())
-
-  @@map("user_gym_check_in_history_detail")
 }

@@ -31,11 +31,11 @@ export class UserRouter implements Router {
     app.post(
       '/user',
       {
-        preHandler: [
-          (request, reply) =>
-            this.checkSessionMiddleware.checkSessionIdExists(request, reply),
-          (request, reply) => this.authMiddleware.handle(request, reply),
-        ],
+        // preHandler: [
+        //   (request, reply) =>
+        //     this.checkSessionMiddleware.checkSessionIdExists(request, reply),
+        //   (request, reply) => this.authMiddleware.handle(request, reply),
+        // ],
       },
       async (request, reply) => {
         return this.userController.create(request, reply)

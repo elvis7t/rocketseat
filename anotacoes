@@ -105,8 +105,8 @@ railway.com
 ```sh
 npm i prisma -D  # Instala Prisma como dependência de desenvolvimento
 npx prisma init  # Cria o arquivo de configuração do Prisma
-npx prisma generate  # Gera os tipos do Prisma
 npm i @prisma/client  # Instala o cliente do Prisma
+npx prisma generate  # Gera os tipos do Prisma
 ```
 
 #### **Migração do banco de dados**
@@ -168,6 +168,7 @@ ping pg_container
 npx prisma generate
 npx prisma migrate dev
 npx prisma migrate deploy
+npx prisma migrate reset  # Reseta todas as migrações e recria as tabelas
 ```
 
 #### **PostgreSQL - Consultas no banco**

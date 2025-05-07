@@ -43,7 +43,7 @@ export class UserService {
       const user = await this.userRepository.create(
         validatedInput.name,
         validatedInput.email,
-        validatedInput.password,
+        validatedInput.password_hash,
       )
 
       return user

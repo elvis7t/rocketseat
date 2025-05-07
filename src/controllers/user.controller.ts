@@ -39,7 +39,7 @@ export class UserController {
     const User = {
       name,
       email,
-      password,
+      password_hash: password,
     }
 
     await this.userService.create(User)

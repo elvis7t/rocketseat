@@ -15,4 +15,4 @@ npx prisma generate
 
 # Inicia o app (troque por como você inicia o servidor, por exemplo: `node dist/server.js`)
 echo "Iniciando aplicação..."
-npm run start
+npm run dev

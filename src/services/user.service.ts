@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe'
 import { UserRepository } from '@/repository/user.repository'
 import { User } from '@/interfaces'
-import { userSchema, UserInput } from '../validators'
+import { registerBodySchema, UserInput } from '../validators'
 import { ZodError } from 'zod'
 @injectable()
 export class UserService {
@@ -30,7 +30,7 @@ export class UserService {
 
   public async create(input: UserInput): Promise<User> {
     try {
-      const validatedInput = userSchema.parse(input)
+      const validatedInput = registerBodySchema.parse(input)
       const existingUser = await this.userRepository.findByEmail(
         validatedInput.email,
       )

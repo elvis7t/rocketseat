@@ -148,7 +148,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/elvis/devspace/rocketseat/src/generated/prisma",
+      "value": "/home/node/app/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -157,12 +157,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "linux-musl-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/elvis/devspace/rocketseat/prisma/schema.prisma",
+    "sourceFilePath": "/home/node/app/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -176,11 +176,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgres://user:password@localhost:5432/apisolid"
+        "value": null
       }
     }
   },

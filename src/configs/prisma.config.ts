@@ -13,8 +13,8 @@ export class PrismaConfig {
           url: this.envConfig.DATABASE_URL,
         },
       },
+      log: this.envConfig.NODE_ENV === 'development' ? ['query'] : [],
     })
-    console.log('DATABASE_URL:', this.envConfig.DATABASE_URL)
   }
 
   public getClient(): PrismaClient {

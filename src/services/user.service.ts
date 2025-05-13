@@ -34,6 +34,7 @@ export class UserService {
       const existingUser = await this.userRepository.findByEmail(
         validatedInput.email,
       )
+
       if (existingUser) {
         throw new Error(
           `User with email ${validatedInput.email} already exists`,

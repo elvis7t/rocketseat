@@ -7,7 +7,9 @@ export class UserRepository {
   constructor(
     @inject(PrismaConfig)
     private readonly prismaConfig: PrismaConfig,
-  ) {}
+  ) {
+    this.prismaConfig = prismaConfig
+  }
 
   private get prisma() {
     return this.prismaConfig.getClient()

@@ -127,6 +127,8 @@ Adicionar no arquivo `/C:/Users/elvis/AppData/Roaming/Code/User/settings.json`:
 #### **Gerenciamento do banco de dados**
 ```sh
 npx prisma studio  # Abre o banco de dados via Prisma Studio
+docker exec -it app_container sh
+npx prisma studio
 ```
 
 ---

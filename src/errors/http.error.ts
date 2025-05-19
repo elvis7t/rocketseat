@@ -1,18 +1,18 @@
-import type { HttpStatusCodeEnum } from '@/constants';
+import type { HttpStatusCodeEnum } from '@/constants'
 
 export type HttpErrorProps = {
-  statusCode: HttpStatusCodeEnum;
-  details?: unknown;
-  message: string;
-};
+  statusCode: HttpStatusCodeEnum
+  details?: unknown
+  message: string
+}
 
 export class HttpError extends Error {
-  public readonly statusCode: HttpErrorProps['statusCode'];
-  public readonly details?: HttpErrorProps['details'];
+  public readonly statusCode: HttpErrorProps['statusCode']
+  public readonly details?: HttpErrorProps['details']
 
   constructor({ statusCode, message, details }: HttpErrorProps) {
-    super(message);
-    this.statusCode = statusCode;
-    this.details = details;
+    super(message)
+    this.statusCode = statusCode
+    this.details = details
   }
 }

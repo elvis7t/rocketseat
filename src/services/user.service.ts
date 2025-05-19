@@ -3,6 +3,8 @@ import { UserRepository } from '@/repository/user.repository'
 import { User } from '@/interfaces'
 import { registerBodySchema, UserInput } from '../validators'
 import { ZodError } from 'zod'
+import { hash } from 'bcryptjs'
+
 @injectable()
 export class UserService {
   constructor(
@@ -41,10 +43,12 @@ export class UserService {
         )
       }
 
+      const passwordHash = await hash(validatedInput.password_hash, 6)
+
       const user = await this.userRepository.create(
         validatedInput.name,
         validatedInput.email,
-        validatedInput.password_hash,
+        passwordHash,
       )
 
       return user

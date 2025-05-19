@@ -22,10 +22,10 @@ export class UserRepository {
   public async create(
     name: string,
     email: string,
-    password_hash: string,
+    passwordHash: string,
   ): Promise<User> {
     return this.prisma.user.create({
-      data: { name, email, password_hash },
+      data: { name, email, password_hash: passwordHash },
     })
   }
 

@@ -124,7 +124,8 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
-  password_hash: 'password_hash'
+  password_hash: 'password_hash',
+  created_at: 'created_at'
 };
 
 exports.Prisma.CheckInScalarFieldEnum = {

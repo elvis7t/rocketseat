@@ -33,6 +33,7 @@ export class UserService {
   public async create(input: UserInput): Promise<User> {
     try {
       const validatedInput = registerBodySchema.parse(input)
+
       const existingUser = await this.userRepository.findByEmail(
         validatedInput.email,
       )
@@ -45,11 +46,11 @@ export class UserService {
 
       const passwordHash = await hash(validatedInput.password_hash, 6)
 
-      const user = await this.userRepository.create(
-        validatedInput.name,
-        validatedInput.email,
-        passwordHash,
-      )
+      const user = await this.userRepository.create({
+        name: validatedInput.name,
+        email: validatedInput.email,
+        password_hash: passwordHash,
+      })
 
       return user
     } catch (error) {

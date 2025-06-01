@@ -4,6 +4,7 @@ import { User } from '@/interfaces'
 import { registerBodySchema, UserInput } from '../validators'
 import { ZodError } from 'zod'
 import { hash } from 'bcryptjs'
+import { UserAlreadyExistsError } from '@/errors/user.already-exists-error'
 
 @injectable()
 export class UserService {
@@ -39,7 +40,7 @@ export class UserService {
       )
 
       if (existingUser) {
-        throw new Error(
+        throw new UserAlreadyExistsError(
           `User with email ${validatedInput.email} already exists`,
         )
       }

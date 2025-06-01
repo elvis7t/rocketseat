@@ -42,10 +42,23 @@ export class UserController {
       password_hash: password,
     }
 
-    await this.userService.create(User)
 
+
+    try {
+      await this.userService.create(User)
+
+
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('already exists')) {
+        reply
+          .code(HttpStatusCodeEnum.CONFLICT)
+          .send({ error: error.message })
+        return
+      }
+      reply
+    }
     const sessionId = randomUUID()
-    // Armazenar sessionId no cookie
+
     reply
       .setCookie('sessionId', sessionId, {
         path: '/',

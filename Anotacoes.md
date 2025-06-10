@@ -76,6 +76,11 @@ Tipos de testes:
 npm i vitest -D 
 npm i supertest -D 
 npm i @types/supertest -D --force
+npm install -D vitest@3.2.3
+
+npm i vitest vite-tsconfig-paths -D
+npm i vitest/coverage-v8
+npm i -D @vitest/ui
 ```
 
 ### Macetes
@@ -130,10 +135,25 @@ docker exec -it app_container sh
 npx prisma studio
 docker exec -it pg_container npx prisma studio
 ```
-
 ---
 
+### **Prisma - Migração e Listagem**
+```sh
+npx prisma generate
+npx prisma migrate dev
+npx prisma migrate deploy
+npx prisma migrate reset
+```
 ### **PostgreSQL (Docker)**
+#### **PostgreSQL - Consultas no banco**
+```sh
+docker exec -it pg_container psql -U user -d apisolid -c "\dt"
+docker exec -it pg_container psql -U user -d apisolid -c "SELECT * FROM users;"
+docker exec -it pg_container psql -U user -d apisolid -c "INSERT INTO users (name, email) VALUES ('Elvis', 'elvis@example.com');"
+npx prisma migrate dev --name add_autoincrement
+```
+
+
 #### **Acessar containers e banco de dados**
 ```sh
 docker exec -it pg_container psql -U user -h db -d apisolid
@@ -162,25 +182,6 @@ docker exec -it pg_container bash
 docker exec -it app_container psql -U user -h db -d apisolid
 ping pg_container
 ```
-
----
-
-### **Prisma - Migração e Listagem**
-```sh
-npx prisma generate
-npx prisma migrate dev
-npx prisma migrate deploy
-npx prisma migrate reset
-```
-
-#### **PostgreSQL - Consultas no banco**
-```sh
-docker exec -it pg_container psql -U user -d apisolid -c "\dt"
-docker exec -it pg_container psql -U user -d apisolid -c "SELECT * FROM users;"
-docker exec -it pg_container psql -U user -d apisolid -c "INSERT INTO users (name, email) VALUES ('Elvis', 'elvis@example.com');"
-npx prisma migrate dev --name add_autoincrement
-```
-
 #### **Gerenciar logs e serviços**
 ```sh
 docker compose logs -f db
@@ -194,3 +195,21 @@ Instale o `bcryptjs` e seus tipos:
 ```sh
 npm install bcryptjs
 npm install -D @types/bcrypt
+```
+## **InMemoryDatabase**
+
+#### **Definição**
+Um banco de dados que armazena os dados em memória, mas também utiliza o disco para armazenar os dados permanentemente.
+
+#### **Vantagens**
+- **Velocidade**: Operações em memória são mais rápidas do que no disco.
+- **Persistência**: Apesar de ser um banco em memória, os dados podem ser armazenados no disco para garantir que não sejam perdidos após reinicializações.
+
+#### **Casos de Uso**
+- **Testes e Desenvolvimento**: Ideal para ambientes onde a persistência completa não é necessária.
+- **Cache**: Pode ser usado como cache para melhorar o desempenho de aplicações.
+- **Aplicações Temporárias**: Sistemas que precisam de alta velocidade e não exigem armazenamento de longo prazo.
+
+#### **Exemplos de Ferramentas**
+- Redis
+- SQLite (modo in-memory)

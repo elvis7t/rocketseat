@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { main } from '@/app'
 
 const { app, env } = main()
@@ -11,6 +12,6 @@ app
     console.info(`🎉 API is running on port: ${address}`)
   })
   .catch((error) => {
-    console.error('❌ Error on starting application:', error)
+    console.error('❌ Error on starting application:', error.stack)
     process.exit(1)
   })

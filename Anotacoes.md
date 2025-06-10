@@ -87,9 +87,15 @@ npm i -D @vitest/ui
 - `it.skip` pula o teste
 - `it.todo` marca o teste como pendente
 - `it.only` executa apenas o teste marcado
-
+- `Interface gráfica` Para visualizar os testes em uma interface gráfica:
 ### Boas práticas
+
+
 Evitar dependência entre testes. Testes E2E devem ser isolados.
+
+InMemoryDatabase
+Um banco de dados que armazena os dados em memória, mas também utiliza o disco para armazenar os dados permanentemente.
+
 
 ## Compilar e Build
 ```sh

@@ -35,7 +35,7 @@ describe('UserService', () => {
 
     expect(isPasswordHashed).toBe(true)
   })
-  
+
   it('should not be able to register with same email twice', async () => {
     const userRepository = new InMemoryUsersRepository()
     const userService = new UserService(userRepository)
@@ -48,7 +48,7 @@ describe('UserService', () => {
       password_hash: '123456',
     })
 
-    expect(() =>
+    await expect(() =>
       userService.create({
         name: 'John Doe',
         email,

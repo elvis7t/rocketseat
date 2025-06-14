@@ -1,6 +1,8 @@
 import { injectable, inject } from 'tsyringe'
 import { UserRepository } from "@/repository";
 import { compare } from "bcryptjs";
+import { User } from '@/generated/prisma';
+import { UserInvalidCredentialsError } from '@/errors/user.invalid-credentials-error';
 
 interface AuthenticateUserServiceRequest {
     email: string;
@@ -8,8 +10,8 @@ interface AuthenticateUserServiceRequest {
 }
 
 interface AuthenticateServiceResponse {
-    user: UserRepository;
-    token: string;
+    user: User;
+    // token: string;
 }
 
 @injectable()
@@ -17,26 +19,23 @@ export class AuthenticateService {
     constructor(
         @inject("UserRepository")
         private userRepository: UserRepository
-    ) {}
+    ) { }
 
     async execute({ email, password }: AuthenticateUserServiceRequest): Promise<AuthenticateServiceResponse> {
         const user = await this.userRepository.findByEmail(email);
 
         if (!user) {
-            throw new Error("User not found");
+            throw new UserInvalidCredentialsError("User not found");
         }
 
-        const isValidPassword = await compare(password, user.password_hash);
+        const doesPasswordMatches = await compare(password, user.password_hash);
 
-        if (!isValidPassword) {
-            throw new Error("Invalid password");
+        if (!doesPasswordMatches) {
+            throw new UserInvalidCredentialsError("Invalid password");
         }
 
-        const token = sign({ id: user.id }, process.env.JWT_SECRET, {
-            expiresIn: "1d",
-        });
 
-        return { user: this.userRepository, token };
+        return { user };
     }
 }
 

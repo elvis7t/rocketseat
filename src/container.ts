@@ -7,7 +7,7 @@ import { MainRouter } from './routes/main.router'
 import { UserRouter } from './routes/user.router'
 import { CheckSessionMiddleware, AuthMiddleware } from './middlewares'
 import { UserRepository } from './repository'
-import { UserService } from './services'
+import { UserService, AuthenticateService } from './services'
 import { InMemoryUsersRepository } from './repository/in-memory-users-repository'
 
 container.registerSingleton<EnvConfig>('EnvConfig', EnvConfig)
@@ -26,6 +26,7 @@ container.registerSingleton<CheckSessionMiddleware>(
 container.registerSingleton<AuthMiddleware>('AuthMiddleware', AuthMiddleware)
 container.registerSingleton<UserRepository>('UserRepository', UserRepository)
 container.registerSingleton<UserService>('UserService', UserService)
+container.registerSingleton<AuthenticateService>('AuthenticateService', AuthenticateService)
 container.registerSingleton<InMemoryUsersRepository>(
   'InMemoryUsersRepository',
   InMemoryUsersRepository,

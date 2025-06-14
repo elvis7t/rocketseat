@@ -1,1 +1,5 @@
 export * from './http.error'
+export * from './user.already-exists-error'
+export * from './user.invalid-credentials-error'
+export * from './user.not-found-error'
+export * from './user.password-mismatch-error'

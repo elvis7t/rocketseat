@@ -2,7 +2,7 @@
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^11.0.1",
-    "@prisma/client": "^6.7.0",
+    "@prisma/client": "^6.10.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
@@ -25,7 +25,8 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "NODE_ENV='development' tsx watch src/index.ts",
+    "prod": "tsx watch src/index.ts",
     "knex": "node --import tsx ./node_modules/.bin/knex",
     "lint": "eslint src --ext .ts --fix",
     "build": "tsup src --out-dir build",
@@ -45,7 +46,7 @@
     "@vitest/coverage-v8": "^3.2.3",
     "@vitest/ui": "^3.2.3",
     "eslint": "^8.57.1",
-    "prisma": "^6.7.0",
+    "prisma": "^6.10.0",
     "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",

@@ -13,9 +13,11 @@ if (process.env.NODE_ENV === 'test') {
 export class EnvConfig {
   public readonly NODE_ENV: string
   public readonly API_PORT: number
+  public readonly DEV_PORT: number
   public readonly CORS_ORIGIN: string
   public readonly DATABASE_CLIENT: string
   public readonly DATABASE_URL: string
+  public readonly DATABASE_URL_LOCAL: string
   public readonly DATABASE_PORT: number
   public readonly DATABASE_USERNAME: string
   public readonly DATABASE_PASSWORD: string
@@ -27,9 +29,13 @@ export class EnvConfig {
         .enum(['development', 'test', 'production'])
         .default('development'),
       API_PORT: z.coerce.number().default(3333),
+      DEV_PORT: z.coerce.number().default(3007),
       CORS_ORIGIN: z.string().default('*'),
       DATABASE_CLIENT: z.string().default(''),
       DATABASE_URL: z
+        .string()
+        .default('postgres://user:password@db:5432/apisolid'),
+      DATABASE_URL_LOCAL: z
         .string()
         .default('postgres://user:password@db:5432/apisolid'),
       DATABASE_PORT: z.coerce.number().default(5432),
@@ -50,9 +56,14 @@ export class EnvConfig {
 
     this.NODE_ENV = envVars.data.NODE_ENV
     this.API_PORT = envVars.data.API_PORT
+    this.DEV_PORT = envVars.data.DEV_PORT
     this.CORS_ORIGIN = envVars.data.CORS_ORIGIN
     this.DATABASE_CLIENT = envVars.data.DATABASE_CLIENT
-    this.DATABASE_URL = envVars.data.DATABASE_URL
+    this.DATABASE_URL =
+      process.env.NODE_ENV === 'development'
+        ? envVars.data.DATABASE_URL_LOCAL
+        : envVars.data.DATABASE_URL
+    this.DATABASE_URL_LOCAL = envVars.data.DATABASE_URL_LOCAL
     this.DATABASE_PORT = envVars.data.DATABASE_PORT
     this.DATABASE_USERNAME = envVars.data.DATABASE_USERNAME
     this.DATABASE_PASSWORD = envVars.data.DATABASE_PASSWORD

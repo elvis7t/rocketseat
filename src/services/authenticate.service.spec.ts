@@ -8,9 +8,6 @@ import { UserInvalidCredentialsError } from '@/errors'
 
 describe('Authenticate UserService', () => {
 
-
-
-
   it('should be able to authenticate', async () => {
     const userRepository = new InMemoryUsersRepository()
     const sut = new AuthenticateService(userRepository)

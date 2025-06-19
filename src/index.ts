@@ -5,7 +5,7 @@ const { app, env } = main()
 
 app
   .listen({
-    port: env.API_PORT,
+    port: env.NODE_ENV === 'development' ? env.DEV_PORT : env.API_PORT,
     host: '0.0.0.0',
   })
   .then((address) => {

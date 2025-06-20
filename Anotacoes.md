@@ -139,7 +139,7 @@ Adicionar no arquivo `/C:/Users/elvis/AppData/Roaming/Code/User/settings.json`:
 npx prisma studio
 docker exec -it app_container sh
 npx prisma studio
-docker exec -it pg_container npx prisma studio
+docker exec -it app_container npx prisma studio
 ```
 ---
 

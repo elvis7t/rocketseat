@@ -1,4 +1,4 @@
-export class UserInvalidCredentialsError extends Error {
+export class ResourceNotFoundError extends Error {
   constructor(message: string) {
     super(message)
   }

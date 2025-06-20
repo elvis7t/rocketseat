@@ -1,7 +1,6 @@
 import 'reflect-metadata'
 import { InMemoryUsersRepository } from '@/repository/in-memory-users-repository'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { UserService } from './user.service'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { AuthenticateService } from './authenticate.service'
 import { hash } from 'bcryptjs'
 import { UserInvalidCredentialsError } from '@/errors'

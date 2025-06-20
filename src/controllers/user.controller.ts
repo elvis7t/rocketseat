@@ -42,17 +42,11 @@ export class UserController {
       password_hash: password,
     }
 
-
-
     try {
       await this.userService.create(User)
-
-
     } catch (error) {
       if (error instanceof Error && error.message.includes('already exists')) {
-        reply
-          .code(HttpStatusCodeEnum.CONFLICT)
-          .send({ error: error.message })
+        reply.code(HttpStatusCodeEnum.CONFLICT).send({ error: error.message })
         return
       }
       reply

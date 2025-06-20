@@ -14,17 +14,17 @@ export class InMemoryUsersRepository implements UserRepositoryInterface {
     const newUser: PrismaUser = {
       id: this.generateId(),
       ...data,
-    } as PrismaUser // use com cuidado; idealmente mapeie melhor os campos
+    } as PrismaUser
     this.users.push(newUser)
     return newUser
   }
 
   async findByEmail(email: string): Promise<PrismaUser | null> {
-    return this.users.find(user => user.email === email) || null
+    return this.users.find((user) => user.email === email) || null
   }
 
   async findById(id: string): Promise<PrismaUser | null> {
-    return this.users.find(user => user.id === id) || null
+    return this.users.find((user) => user.id === id) || null
   }
 
   private generateId(): string {

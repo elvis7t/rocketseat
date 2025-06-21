@@ -15,7 +15,7 @@ import {
   UserService,
   AuthenticateService,
   UserProfileService,
-  CheckinService,
+  CheckInService,
 } from './services'
 import { InMemoryUsersRepository } from './repository/in-memory-repository'
 
@@ -47,7 +47,7 @@ container.registerSingleton<UserProfileService>(
   'UserProfileService',
   UserProfileService,
 )
-container.registerSingleton<CheckinService>('CheckinService', CheckinService)
+container.registerSingleton<CheckInService>('CheckInService', CheckInService)
 container.registerSingleton<InMemoryUsersRepository>(
   'InMemoryUsersRepository',
   InMemoryUsersRepository,

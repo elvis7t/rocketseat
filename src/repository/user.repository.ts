@@ -1,11 +1,9 @@
 import { inject, injectable } from 'tsyringe'
 import { PrismaConfig } from '@/configs'
 import { UserRepositoryInterface } from '@/interfaces'
-import { Prisma, User as PrismaUser } from '@/generated/prisma' // ajuste o caminho se necessário
-
+import { Prisma, User as PrismaUser } from '@/generated/prisma'
 
 @injectable()
-
 export class UserRepository implements UserRepositoryInterface {
   constructor(
     @inject(PrismaConfig)
@@ -22,7 +20,7 @@ export class UserRepository implements UserRepositoryInterface {
     return this.prisma.user.findMany()
   }
 
-  public async create(data: Prisma.UserCreateInput){
+  public async create(data: Prisma.UserCreateInput) {
     return this.prisma.user.create({ data })
   }
 
@@ -32,7 +30,7 @@ export class UserRepository implements UserRepositoryInterface {
     })
   }
 
-  public async findById(id: string){
+  public async findById(id: string) {
     return this.prisma.user.findUnique({
       where: { id },
     })

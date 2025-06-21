@@ -5,6 +5,25 @@ import { randomUUID } from 'node:crypto'
 
 @injectable()
 export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
+  async findByUserIdOnDate(
+    userId: string,
+    date: Date,
+  ): Promise<CheckIn | null> {
+    const startOfDay = new Date(date)
+    startOfDay.setHours(0, 0, 0, 0)
+    const endOfDay = new Date(date)
+    endOfDay.setHours(23, 59, 59, 999)
+
+    return (
+      this.checkIns.find(
+        (checkIn) =>
+          checkIn.user_id === userId &&
+          checkIn.checked_at >= startOfDay &&
+          checkIn.checked_at <= endOfDay,
+      ) || null
+    )
+  }
+
   private checkIns: CheckIn[] = []
 
   async findAll(): Promise<CheckIn[]> {

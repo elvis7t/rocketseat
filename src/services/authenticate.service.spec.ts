@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { InMemoryUsersRepository } from '@/repository/in-memory-users-repository'
+import { InMemoryUsersRepository } from '@/repository/in-memory-repository'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { AuthenticateService } from './authenticate.service'
 import { hash } from 'bcryptjs'

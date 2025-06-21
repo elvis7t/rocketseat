@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { hash } from 'bcryptjs'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { InMemoryUsersRepository } from '@/repository/in-memory-users-repository'
+import { InMemoryUsersRepository } from '@/repository/in-memory-repository'
 import { UserProfileService } from './user.profile.service'
 import { UserAlreadyExistsError } from '@/errors/user.already-exists-error'
 let userRepository: InMemoryUsersRepository

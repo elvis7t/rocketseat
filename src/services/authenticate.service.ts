@@ -11,7 +11,6 @@ interface AuthenticateUserServiceRequest {
 
 interface AuthenticateServiceResponse {
   user: User
-  // token: string;
 }
 
 @injectable()

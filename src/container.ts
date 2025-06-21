@@ -11,8 +11,13 @@ import { MainRouter } from './routes/main.router'
 import { UserRouter } from './routes/user.router'
 import { CheckSessionMiddleware, AuthMiddleware } from './middlewares'
 import { UserRepository } from './repository'
-import { UserService, AuthenticateService } from './services'
-import { InMemoryUsersRepository } from './repository/in-memory-users-repository'
+import {
+  UserService,
+  AuthenticateService,
+  UserProfileService,
+  CheckinService,
+} from './services'
+import { InMemoryUsersRepository } from './repository/in-memory-repository'
 
 container.registerSingleton<EnvConfig>('EnvConfig', EnvConfig)
 container.registerSingleton<FastifyConfig>('FastifyConfig', FastifyConfig)
@@ -38,6 +43,11 @@ container.registerSingleton<AuthenticateService>(
   'AuthenticateService',
   AuthenticateService,
 )
+container.registerSingleton<UserProfileService>(
+  'UserProfileService',
+  UserProfileService,
+)
+container.registerSingleton<CheckinService>('CheckinService', CheckinService)
 container.registerSingleton<InMemoryUsersRepository>(
   'InMemoryUsersRepository',
   InMemoryUsersRepository,

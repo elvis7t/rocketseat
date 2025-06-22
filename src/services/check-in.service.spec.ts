@@ -46,16 +46,16 @@ describe('CheckIn Service', () => {
   })
 
   it('should not be able to check in twice but in different days', async () => {
-    vi.setSystemTime(new Date(2025, 5, 21, 10, 0, 0))
+    vi.setSystemTime(new Date(2025, 6, 21, 10, 0, 0))
     await sut.execute({
-      userId: 'user-1',
+      userId: 'user-2',
       gymId: 'gym-1',
     })
 
-    vi.setSystemTime(new Date(2025, 5, 22, 10, 0, 0))
+    vi.setSystemTime(new Date(2025, 6, 22, 10, 0, 0))
 
     const { checkIn } = await sut.execute({
-      userId: 'user-1',
+      userId: 'user-2',
       gymId: 'gym-1',
     })
 

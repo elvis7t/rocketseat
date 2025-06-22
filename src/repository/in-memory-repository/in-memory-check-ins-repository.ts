@@ -2,6 +2,7 @@ import { injectable } from 'tsyringe'
 import { CheckInsRepositoryInterface } from '@/interfaces'
 import { Prisma, CheckIn } from '@/generated/prisma'
 import { randomUUID } from 'node:crypto'
+import dayjs from 'dayjs'
 
 @injectable()
 export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
@@ -9,10 +10,8 @@ export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
     userId: string,
     date: Date,
   ): Promise<CheckIn | null> {
-    const startOfDay = new Date(date)
-    startOfDay.setHours(0, 0, 0, 0)
-    const endOfDay = new Date(date)
-    endOfDay.setHours(23, 59, 59, 999)
+    const startOfDay = dayjs(date).startOf('date').toDate()
+    const endOfDay = dayjs(date).endOf('date').toDate()
 
     return (
       this.checkIns.find(

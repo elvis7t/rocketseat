@@ -29,9 +29,11 @@ export class CheckInService {
       userId,
       new Date(),
     )
+
     if (checkInOnSameDay) {
       throw new ResourceNotFoundError('You can only check in once per day.')
     }
+
     const checkIn = await this.checkInsRepository.create({
       user_id: userId,
       gym_id: gymId,

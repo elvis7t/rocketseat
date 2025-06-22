@@ -219,3 +219,8 @@ Um banco de dados que armazena os dados em memória, mas também utiliza o disco
 #### **Exemplos de Ferramentas**
 - Redis
 - SQLite (modo in-memory)
+
+# DaysJs
+```sh
+ npm i dayjs
+```

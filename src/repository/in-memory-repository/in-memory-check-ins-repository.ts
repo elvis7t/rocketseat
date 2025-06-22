@@ -7,7 +7,12 @@ import { DefaultArgs } from '@/generated/prisma/runtime/library'
 
 @injectable()
 export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
-  prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>
+  private checkIns: CheckIn[] = []
+
+  async findAll(): Promise<CheckIn[]> {
+    return this.checkIns
+  }
+
   async findByUserIdOnDate(
     userId: string,
     date: Date,
@@ -25,22 +30,16 @@ export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
     )
   }
 
-  private checkIns: CheckIn[] = []
-
-  async findAll(): Promise<CheckIn[]> {
-    return this.checkIns
-  }
-
-  async create(data: Prisma.CheckInUncheckedCreateInput): Promise<CheckIn> {
+  async create(data: Prisma.CheckInCreateInput): Promise<CheckIn> {
     const checkIn: CheckIn = {
       id: randomUUID(),
-      user_id: data.user_id,
-      gym_id: data.gym_id ?? null,
+      user_id: (data as any).user_id,
+      gym_id: (data as any).gym_id ?? null,
       checked_at: new Date(),
-      validated_at: data.validated_at
-        ? typeof data.validated_at === 'string'
-          ? new Date(data.validated_at)
-          : data.validated_at
+      validated_at: (data as any).validated_at
+        ? typeof (data as any).validated_at === 'string'
+          ? new Date((data as any).validated_at)
+          : (data as any).validated_at
         : null,
     }
     this.checkIns.push(checkIn)
@@ -50,4 +49,6 @@ export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
   async findById(id: string): Promise<CheckIn | null> {
     return this.checkIns.find((checkIn) => checkIn.id === id) || null
   }
+
+  prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>
 }

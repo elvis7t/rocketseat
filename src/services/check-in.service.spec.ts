@@ -1,15 +1,27 @@
 import 'reflect-metadata'
-import { InMemoryCheckInsRepository } from '@/repository/in-memory-repository'
+import {
+  InMemoryCheckInsRepository,
+  InMemoryGymRepository,
+} from '@/repository/in-memory-repository'
 import { describe, it, vi, expect, beforeEach, afterEach } from 'vitest'
 import { CheckInService } from '@/services/check-in.service'
 import { ResourceNotFoundError } from '@/errors/resource-not-found-error'
 
 let checkInsRepository: InMemoryCheckInsRepository
+let gymRepository: InMemoryGymRepository
 let sut: CheckInService
 describe('CheckIn Service', () => {
   beforeEach(() => {
     checkInsRepository = new InMemoryCheckInsRepository()
-    sut = new CheckInService(checkInsRepository)
+    gymRepository = new InMemoryGymRepository()
+    sut = new CheckInService(checkInsRepository, gymRepository)
+    gymRepository.create({
+      id: 'gym-1',
+      title: 'Gym 1',
+      description: 'Description for Gym 1',
+      latitude: -23.4284103,
+      longitude: -46.5169565,
+    })
     vi.useFakeTimers()
   })
 
@@ -19,9 +31,12 @@ describe('CheckIn Service', () => {
 
   it('should be able to check in', async () => {
     vi.setSystemTime(new Date(2025, 5, 21, 10, 0, 0))
+
     const { checkIn } = await sut.execute({
       userId: 'user-1',
       gymId: 'gym-1',
+      userLatitude: -23.4284103,
+      userLongitude: -46.5169565,
     })
 
     expect(checkIn.id).toEqual(expect.any(String))
@@ -35,12 +50,16 @@ describe('CheckIn Service', () => {
     await sut.execute({
       userId: 'user-1',
       gymId: 'gym-1',
+      userLatitude: 0,
+      userLongitude: 0,
     })
 
     await expect(() =>
       sut.execute({
         userId: 'user-1',
         gymId: 'gym-1',
+        userLatitude: 0,
+        userLongitude: 0,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
@@ -50,6 +69,8 @@ describe('CheckIn Service', () => {
     await sut.execute({
       userId: 'user-2',
       gymId: 'gym-1',
+      userLatitude: 0,
+      userLongitude: 0,
     })
 
     vi.setSystemTime(new Date(2025, 6, 22, 10, 0, 0))
@@ -57,6 +78,8 @@ describe('CheckIn Service', () => {
     const { checkIn } = await sut.execute({
       userId: 'user-2',
       gymId: 'gym-1',
+      userLatitude: 0,
+      userLongitude: 0,
     })
 
     expect(checkIn.id).toEqual(expect.any(String))

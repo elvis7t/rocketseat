@@ -24,7 +24,7 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
     throw new Error('Method not implemented.')
   }
 
-  private get prisma() {
+  public get prisma() {
     return this.prismaConfig.getClient()
   }
 

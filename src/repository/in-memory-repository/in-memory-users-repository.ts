@@ -1,12 +1,12 @@
 import { injectable } from 'tsyringe'
 import { UserRepositoryInterface } from '@/interfaces'
-import { Prisma, User as PrismaUser } from '@/generated/prisma'
+import { Prisma, User as PrismaUser, PrismaClient } from '@/generated/prisma'
 import { randomUUID } from 'node:crypto'
-
+import { DefaultArgs } from '@/generated/prisma/runtime/library'
 @injectable()
 export class InMemoryUsersRepository implements UserRepositoryInterface {
   private users: PrismaUser[] = []
-
+  prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>
   async findAll(): Promise<PrismaUser[]> {
     return this.users
   }

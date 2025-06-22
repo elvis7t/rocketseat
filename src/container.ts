@@ -10,7 +10,7 @@ import {
 import { MainRouter } from './routes/main.router'
 import { UserRouter } from './routes/user.router'
 import { CheckSessionMiddleware, AuthMiddleware } from './middlewares'
-import { UserRepository } from './repository'
+import { UserRepository, GymRepository, CheckInsRepository } from './repository'
 import {
   UserService,
   AuthenticateService,
@@ -38,6 +38,11 @@ container.registerSingleton<CheckSessionMiddleware>(
 )
 container.registerSingleton<AuthMiddleware>('AuthMiddleware', AuthMiddleware)
 container.registerSingleton<UserRepository>('UserRepository', UserRepository)
+container.registerSingleton<GymRepository>('GymRepository', GymRepository)
+container.registerSingleton<CheckInsRepository>(
+  'CheckInsRepository',
+  CheckInsRepository,
+)
 container.registerSingleton<UserService>('UserService', UserService)
 container.registerSingleton<AuthenticateService>(
   'AuthenticateService',

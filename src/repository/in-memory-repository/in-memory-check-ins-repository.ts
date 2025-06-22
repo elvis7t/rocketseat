@@ -1,11 +1,13 @@
 import { injectable } from 'tsyringe'
 import { CheckInsRepositoryInterface } from '@/interfaces'
-import { Prisma, CheckIn } from '@/generated/prisma'
+import { Prisma, CheckIn, PrismaClient } from '@/generated/prisma'
 import { randomUUID } from 'node:crypto'
 import dayjs from 'dayjs'
+import { DefaultArgs } from '@/generated/prisma/runtime/library'
 
 @injectable()
 export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
+  prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>
   async findByUserIdOnDate(
     userId: string,
     date: Date,

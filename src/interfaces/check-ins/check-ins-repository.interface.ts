@@ -1,7 +1,7 @@
-import { CheckIn } from '@/generated/prisma'
-import { Prisma } from '@prisma/client'
+import { CheckIn, Prisma } from '@/generated/prisma'
+import { BaseRepositoryInterface } from '../base-repository.interface'
 
-export interface CheckInsRepositoryInterface {
+export interface CheckInsRepositoryInterface extends BaseRepositoryInterface {
   findAll(): Promise<CheckIn[]>
   create(data: Prisma.CheckInCreateInput): Promise<CheckIn>
   findById(id: string): Promise<CheckIn | null>

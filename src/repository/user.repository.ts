@@ -12,7 +12,7 @@ export class UserRepository implements UserRepositoryInterface {
     this.prismaConfig = prismaConfig
   }
 
-  private get prisma() {
+  public get prisma() {
     return this.prismaConfig.getClient()
   }
 

@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe'
 import { CheckInsRepository, GymRepository } from '@/repository'
 import { CheckIn } from '@/generated/prisma'
-import { ResourceNotFoundError } from '@/errors/resource-not-found-error'
+import { MaxDistanceError, ResourceNotFoundError } from '@/errors'
 import { Decimal } from '@/generated/prisma/runtime/library'
 
 interface CheckInServiceRequest {
@@ -79,9 +79,7 @@ export class CheckInService {
     const maxDistanceInKilometers = 0.1 // kilometers
 
     if (distance > maxDistanceInKilometers) {
-      throw new ResourceNotFoundError(
-        'You are too far from the gym to check in.',
-      )
+      throw new MaxDistanceError()
     }
     const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(
       userId,

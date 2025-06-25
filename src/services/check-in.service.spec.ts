@@ -5,18 +5,18 @@ import {
 } from '@/repository/in-memory-repository'
 import { describe, it, vi, expect, beforeEach, afterEach } from 'vitest'
 import { CheckInService } from '@/services/check-in.service'
-import { ResourceNotFoundError } from '@/errors/resource-not-found-error'
+import { MaxDistanceError, ResourceNotFoundError } from '@/errors'
 
 let checkInsRepository: InMemoryCheckInsRepository
 let gymRepository: InMemoryGymRepository
 let sut: CheckInService
 describe('CheckIn Service', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository()
     gymRepository = new InMemoryGymRepository()
     sut = new CheckInService(checkInsRepository, gymRepository)
 
-    gymRepository.create({
+    await gymRepository.create({
       id: 'gym-1',
       title: 'Gym 1',
       description: 'Description for Gym 1',
@@ -62,7 +62,7 @@ describe('CheckIn Service', () => {
         userLatitude: -27.0784103,
         userLongitude: -49.4169565,
       }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError)
+    ).rejects.toBeInstanceOf(MaxDistanceError)
   })
 
   it('should not be able to check in twice on the same day', async () => {

@@ -88,6 +88,7 @@ npm i -D @vitest/ui
 - `it.todo` marca o teste como pendente
 - `it.only` executa apenas o teste marcado
 - `Interface gráfica` Para visualizar os testes em uma interface gráfica:
+- `ctr + a` Roda todos os testes novamente
 ### Boas práticas
 
 

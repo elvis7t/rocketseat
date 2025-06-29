@@ -20,8 +20,10 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
     return this.prisma.checkIn.create({ data })
   }
 
-  findById(id: string): Promise<CheckIn | null> {
-    throw new Error('Method not implemented.')
+  async findById(id: string): Promise<CheckIn | null> {
+    return this.prisma.checkIn.findUnique({
+      where: { id },
+    })
   }
 
   public get prisma() {
@@ -40,6 +42,14 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
           lt: endOfDay(date),
         },
       },
+    })
+  }
+
+  async findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
+    return this.prisma.checkIn.findMany({
+      where: { user_id: userId },
+      skip: (page - 1) * 10,
+      take: 10,
     })
   }
 }

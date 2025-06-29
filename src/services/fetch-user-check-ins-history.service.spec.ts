@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { InMemoryCheckInsRepository } from '@/repository/in-memory-repository'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { FetchUserCheckInsHistoryService } from './fetch-user-check-ins-history-service'
+import { FetchUserCheckInsHistoryService } from './fetch-user-check-ins-history.service'
 
 let checkInsRepository: InMemoryCheckInsRepository
 let sut: FetchUserCheckInsHistoryService

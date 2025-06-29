@@ -52,6 +52,12 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
       take: 10,
     })
   }
+
+  async countByUserId(userId: string): Promise<number> {
+    return this.prisma.checkIn.count({
+      where: { user_id: userId },
+    })
+  }
 }
 
 function endOfDay(date: Date): Date {

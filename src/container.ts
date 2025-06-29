@@ -16,6 +16,9 @@ import {
   AuthenticateService,
   UserProfileService,
   CheckInService,
+  FetchUserCheckInsHistoryService,
+  GetUserMetricsService,
+  SearchGymsService,
 } from './services'
 import { InMemoryUsersRepository } from './repository/in-memory-repository'
 
@@ -51,6 +54,18 @@ container.registerSingleton<AuthenticateService>(
 container.registerSingleton<UserProfileService>(
   'UserProfileService',
   UserProfileService,
+)
+container.registerSingleton<FetchUserCheckInsHistoryService>(
+  'FetchUserCheckInsHistoryService',
+  FetchUserCheckInsHistoryService,
+)
+container.registerSingleton<GetUserMetricsService>(
+  'GetUserMetricsService',
+  GetUserMetricsService,
+)
+container.registerSingleton<SearchGymsService>(
+  'SearchGymsService',
+  SearchGymsService,
 )
 container.registerSingleton<CheckInService>('CheckInService', CheckInService)
 container.registerSingleton<InMemoryUsersRepository>(

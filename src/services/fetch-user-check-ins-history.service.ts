@@ -1,6 +1,5 @@
 import { inject, injectable } from 'tsyringe'
 import { CheckInsRepository } from '@/repository'
-import { ResourceNotFoundError } from '@/errors'
 import { CheckIn } from '@/generated/prisma'
 
 interface FetchUserCheckInsHistoryServiceRequest {
@@ -29,10 +28,6 @@ export class FetchUserCheckInsHistoryService {
       userId,
       page,
     )
-
-    // if (!checkIns) {
-    //   throw new ResourceNotFoundError('Check-ins not found.')
-    // }
 
     return {
       checkIns,

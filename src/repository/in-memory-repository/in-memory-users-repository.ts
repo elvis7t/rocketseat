@@ -3,6 +3,7 @@ import { UserRepositoryInterface } from '@/interfaces'
 import { Prisma, User as PrismaUser, PrismaClient } from '@/generated/prisma'
 import { randomUUID } from 'node:crypto'
 import { DefaultArgs } from '@/generated/prisma/runtime/library'
+
 @injectable()
 export class InMemoryUsersRepository implements UserRepositoryInterface {
   private users: PrismaUser[] = []

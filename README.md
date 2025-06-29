@@ -3,8 +3,8 @@
 - [X] Deve ser possível se cadastrar;
 - [X] Deve ser possível se autenticar;
 - [X] Deve ser possível obter o perfil de um usuário logado;
-- [ ] Deve ser possível obter o número de check-ins realizados pelo usuário logado;
-- [ ] Deve ser possível o usuário obter seu histórico de check-ins;
+- [X] Deve ser possível obter o número de check-ins realizados pelo usuário logado;
+- [X] Deve ser possível o usuário obter seu histórico de check-ins;
 - [ ] Deve ser possível o usuário buscar academias próximas;
 - [ ] Deve ser possível o usuário buscar academias pelo nome;
 - [X] Deve ser possível o usuário realizar check-in em uma academia;
@@ -22,5 +22,5 @@
 ### RNFs (Requisitos Não-Funcionais)
 - [x] A senha do usuário precisa estar criptografada;
 - [x] Os dados d aplicação precisam estar persistidos em um banco PostgresSQL;
-- [ ] Todas listas de dados precisam estar paginadas com 20 itens por página;
+- [X] Todas listas de dados precisam estar paginadas com 20 itens por página;
 - [ ] O usuario deve ser odentificado por um JWT;

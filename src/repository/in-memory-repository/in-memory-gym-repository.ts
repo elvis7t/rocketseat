@@ -33,5 +33,13 @@ export class InMemoryGymRepository implements GymsRepositoryInterface {
     return gym
   }
 
+  async searchMany(query: string, page: number): Promise<Gym[]> {
+    const gyms = this.gyms.filter((gym) =>
+      gym.title.toLowerCase().includes(query.toLowerCase()),
+    )
+    const start = (page - 1) * 20
+    return gyms.slice(start, start + 20)
+  }
+
   prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>
 }

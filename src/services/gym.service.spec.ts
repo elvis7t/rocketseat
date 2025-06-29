@@ -2,7 +2,6 @@ import 'reflect-metadata'
 import { InMemoryGymRepository } from '@/repository'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { GymService } from './gym.service'
-import { ResourceNotFoundError } from '@/errors'
 
 vi.mock('bcryptjs', () => ({
   hash: vi.fn(async (pw: string) => `hashed-${pw}`),

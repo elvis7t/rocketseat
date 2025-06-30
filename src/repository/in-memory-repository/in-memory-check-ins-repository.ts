@@ -7,7 +7,7 @@ import { DefaultArgs } from '@/generated/prisma/runtime/library'
 
 @injectable()
 export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
-  private checkIns: CheckIn[] = []
+  public checkIns: CheckIn[] = []
 
   async findAll(): Promise<CheckIn[]> {
     return this.checkIns
@@ -58,6 +58,15 @@ export class InMemoryCheckInsRepository implements CheckInsRepositoryInterface {
 
   async countByUserId(userId: string): Promise<number> {
     return this.checkIns.filter((checkIn) => checkIn.user_id === userId).length
+  }
+
+  async save(data: CheckIn): Promise<CheckIn> {
+    const index = this.checkIns.findIndex((checkIn) => checkIn.id === data.id)
+    if (index > 0) {
+      this.checkIns[index] = data
+    }
+    this.checkIns.push(data)
+    return data
   }
 
   prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>

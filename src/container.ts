@@ -3,23 +3,24 @@ import { EnvConfig, FastifyConfig, SqliteConfig, PrismaConfig } from './configs'
 import { Router as RouterInterface } from '@/interfaces'
 import { Router } from './routes/router'
 import {
+  AuthenticateController,
   MainController,
   UserController,
-  AuthenticateController,
 } from './controllers'
 import { MainRouter } from './routes/main.router'
 import { UserRouter } from './routes/user.router'
 import { CheckSessionMiddleware, AuthMiddleware } from './middlewares'
 import { UserRepository, GymRepository, CheckInsRepository } from './repository'
 import {
-  UserService,
+  FetchUserCheckInsHistoryService,
+  ValidateCheckInService,
+  FetchNearbyGymsService,
+  GetUserMetricsService,
   AuthenticateService,
   UserProfileService,
-  CheckInService,
-  FetchUserCheckInsHistoryService,
-  GetUserMetricsService,
   SearchGymsService,
-  FetchNearbyGymsService,
+  CheckInService,
+  UserService,
 } from './services'
 import { InMemoryUsersRepository } from './repository/in-memory-repository'
 
@@ -71,6 +72,10 @@ container.registerSingleton<SearchGymsService>(
 container.registerSingleton<FetchNearbyGymsService>(
   'FetchNearbyGymsService',
   FetchNearbyGymsService,
+)
+container.registerSingleton<ValidateCheckInService>(
+  'ValidateCheckInService',
+  ValidateCheckInService,
 )
 container.registerSingleton<CheckInService>('CheckInService', CheckInService)
 container.registerSingleton<InMemoryUsersRepository>(

@@ -58,6 +58,13 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
       where: { user_id: userId },
     })
   }
+
+  async save(data: CheckIn): Promise<CheckIn> {
+    return this.prisma.checkIn.update({
+      where: { id: data.id },
+      data,
+    })
+  }
 }
 
 function endOfDay(date: Date): Date {

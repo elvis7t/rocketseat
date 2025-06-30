@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import { PrismaConfig } from '@/configs'
 import { Prisma, Gym } from '@/generated/prisma'
-import { GymsRepositoryInterface } from '@/interfaces'
+import { GymsRepositoryInterface, FindManyNearbyParams } from '@/interfaces'
 
 @injectable()
 export class GymRepository implements GymsRepositoryInterface {
@@ -53,5 +53,21 @@ export class GymRepository implements GymsRepositoryInterface {
       return []
     }
     return gyms
+  }
+
+  async findManyNearby(params: FindManyNearbyParams): Promise<Gym[]> {
+    const { latitude, longitude } = params
+    return this.prisma.gym.findMany({
+      where: {
+        latitude: {
+          gte: latitude - 0.1,
+          lte: latitude + 0.1,
+        },
+        longitude: {
+          gte: longitude - 0.1,
+          lte: longitude + 0.1,
+        },
+      },
+    })
   }
 }

@@ -1,12 +1,26 @@
 import { injectable } from 'tsyringe'
-import { GymsRepositoryInterface } from '@/interfaces'
+import { GymsRepositoryInterface, FindManyNearbyParams } from '@/interfaces'
 import { Prisma, PrismaClient, Gym } from '@/generated/prisma'
 import { randomUUID } from 'node:crypto'
 import { DefaultArgs } from '@/generated/prisma/runtime/library'
+import { getDistanceBetweenCoordinates } from '@/utils'
 
 @injectable()
 export class InMemoryGymRepository implements GymsRepositoryInterface {
   private gyms: Gym[] = []
+
+  async findManyNearby(params: FindManyNearbyParams): Promise<Gym[]> {
+    return this.gyms.filter((gym) => {
+      const distance = getDistanceBetweenCoordinates(
+        { latitude: params.latitude, longitude: params.longitude },
+        {
+          latitude: gym.latitude.toNumber(),
+          longitude: gym.longitude.toNumber(),
+        },
+      )
+      return distance <= 10 // Example radius of 10 units
+    })
+  }
 
   async findAll(): Promise<Gym[]> {
     return this.gyms

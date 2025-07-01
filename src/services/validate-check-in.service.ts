@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe'
 import { CheckInsRepository } from '@/repository'
 import { CheckIn } from '@/generated/prisma'
 import { ResourceNotFoundError } from '@/errors'
+import dayjs from 'dayjs'
 
 interface ValidateCheckInServiceRequest {
   checkInId: string
@@ -27,6 +28,15 @@ export class ValidateCheckInService {
 
     if (!checkIn) {
       throw new ResourceNotFoundError('Check-in not found.')
+    }
+
+    const distanceInMinutesFromCheckInCreation = dayjs(new Date()).diff(
+      checkIn.checked_at,
+      'minutes',
+    )
+
+    if (distanceInMinutesFromCheckInCreation > 20) {
+      throw new Error('Check-in expired.')
     }
 
     checkIn.validated_at = new Date()

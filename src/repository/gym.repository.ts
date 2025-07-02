@@ -16,29 +16,29 @@ export class GymRepository implements GymsRepositoryInterface {
     return this.prismaConfig.getClient()
   }
 
-  async findAll(): Promise<Gym[]> {
-    return this.prisma.gym.findMany()
+  public async findAll(): Promise<Gym[]> {
+    return await this.prisma.gym.findMany()
   }
 
-  async findById(id: string): Promise<Gym | null> {
-    return this.prisma.gym.findUnique({
+  public async findById(id: string): Promise<Gym | null> {
+    return await this.prisma.gym.findUnique({
       where: { id },
     })
   }
 
-  async findByTitle(title: string): Promise<Gym | null> {
-    return this.prisma.gym.findUnique({
+  public async findByTitle(title: string): Promise<Gym | null> {
+    return await this.prisma.gym.findUnique({
       where: { title },
     })
   }
 
-  async create(data: Prisma.GymCreateInput): Promise<Gym> {
-    return this.prisma.gym.create({
+  public async create(data: Prisma.GymCreateInput): Promise<Gym> {
+    return await this.prisma.gym.create({
       data,
     })
   }
 
-  async searchMany(query: string, page: number): Promise<Gym[]> {
+  public async searchMany(query: string, page: number): Promise<Gym[]> {
     const gyms = await this.prisma.gym.findMany({
       where: {
         title: {
@@ -55,9 +55,9 @@ export class GymRepository implements GymsRepositoryInterface {
     return gyms
   }
 
-  async findManyNearby(params: FindManyNearbyParams): Promise<Gym[]> {
+  public async findManyNear(params: FindManyNearbyParams): Promise<Gym[]> {
     const { latitude, longitude } = params
-    return this.prisma.gym.findMany({
+    return await this.prisma.gym.findMany({
       where: {
         latitude: {
           gte: latitude - 0.1,
@@ -69,5 +69,15 @@ export class GymRepository implements GymsRepositoryInterface {
         },
       },
     })
+  }
+
+  public async findManyNearby({
+    latitude,
+    longitude,
+  }: FindManyNearbyParams): Promise<Gym[]> {
+    const gyms = await this.prisma.$queryRaw<Gym[]>`
+      SELECT * FROM gyms where ( 6371 * acos( cos( radians(${latitude}))* cos( radians(latitude))* cos( radians(longitude) - radians(${longitude}))+ sin( radians(${latitude})) * sin( radians(latitude)))) < 10
+    `
+    return gyms
   }
 }

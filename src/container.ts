@@ -19,10 +19,21 @@ import {
   AuthenticateService,
   UserProfileService,
   SearchGymsService,
-  CheckInService,
   UserService,
 } from './services'
 import { InMemoryUsersRepository } from './repository/in-memory-repository'
+import {
+  makeGetUserProfileServiceFactory,
+  makeCheckInServiceFactory,
+  makeAuthenticateServiceFactory,
+  makeFetchNearbyGymsServiceFactory,
+  makeFetchUserCheckInsHistoryServiceFactory,
+  makeGetUserMetricsServiceFactory,
+  makeGymServiceFactory,
+  makeSearchGymsServiceFactory,
+  makeUserServiceFactory,
+  makeValidateCheckInServiceFactory,
+} from './services/factories'
 
 container.registerSingleton<EnvConfig>('EnvConfig', EnvConfig)
 container.registerSingleton<FastifyConfig>('FastifyConfig', FastifyConfig)
@@ -77,8 +88,36 @@ container.registerSingleton<ValidateCheckInService>(
   'ValidateCheckInService',
   ValidateCheckInService,
 )
-container.registerSingleton<CheckInService>('CheckInService', CheckInService)
 container.registerSingleton<InMemoryUsersRepository>(
   'InMemoryUsersRepository',
   InMemoryUsersRepository,
 )
+
+container.register('CheckInService', { useFactory: makeCheckInServiceFactory })
+container.register('UserProfileService', {
+  useFactory: makeGetUserProfileServiceFactory,
+})
+container.register('AuthenticateService', {
+  useFactory: makeAuthenticateServiceFactory,
+})
+container.register('FetchNearbyGymsService', {
+  useFactory: makeFetchNearbyGymsServiceFactory,
+})
+container.register('FetchUserCheckInsHistoryService', {
+  useFactory: makeFetchUserCheckInsHistoryServiceFactory,
+})
+container.register('GetUserMetricsService', {
+  useFactory: makeGetUserMetricsServiceFactory,
+})
+container.register('GymService', {
+  useFactory: makeGymServiceFactory,
+})
+container.register('SearchGymsService', {
+  useFactory: makeSearchGymsServiceFactory,
+})
+container.register('UserService', {
+  useFactory: makeUserServiceFactory,
+})
+container.register('ValidateCheckInService', {
+  useFactory: makeValidateCheckInServiceFactory,
+})

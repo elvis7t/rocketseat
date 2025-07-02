@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe'
 import { PrismaConfig } from '@/configs'
 import { CheckInsRepositoryInterface } from '@/interfaces'
 import { Prisma, CheckIn } from '@/generated/prisma'
+import dayjs from 'dayjs'
 
 @injectable()
 export class CheckInsRepository implements CheckInsRepositoryInterface {
@@ -13,15 +14,15 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
   }
 
   async findAll(): Promise<CheckIn[]> {
-    return this.prisma.checkIn.findMany()
+    return await this.prisma.checkIn.findMany()
   }
 
   async create(data: Prisma.CheckInUncheckedCreateInput): Promise<CheckIn> {
-    return this.prisma.checkIn.create({ data })
+    return await this.prisma.checkIn.create({ data })
   }
 
   async findById(id: string): Promise<CheckIn | null> {
-    return this.prisma.checkIn.findUnique({
+    return await this.prisma.checkIn.findUnique({
       where: { id },
     })
   }
@@ -34,19 +35,22 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
     userId: string,
     date: Date,
   ): Promise<CheckIn | null> {
-    return this.prisma.checkIn.findFirst({
+    const startOfDay = dayjs(date).startOf('date')
+    const endOfDay = dayjs(date).endOf('date')
+
+    return await this.prisma.checkIn.findFirst({
       where: {
         user_id: userId,
         checked_at: {
-          gte: startOfDay(date),
-          lt: endOfDay(date),
+          gte: startOfDay.toDate(),
+          lt: endOfDay.toDate(),
         },
       },
     })
   }
 
   async findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
-    return this.prisma.checkIn.findMany({
+    return await this.prisma.checkIn.findMany({
       where: { user_id: userId },
       skip: (page - 1) * 10,
       take: 10,
@@ -54,27 +58,27 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
   }
 
   async countByUserId(userId: string): Promise<number> {
-    return this.prisma.checkIn.count({
+    return await this.prisma.checkIn.count({
       where: { user_id: userId },
     })
   }
 
   async save(data: CheckIn): Promise<CheckIn> {
-    return this.prisma.checkIn.update({
+    return await this.prisma.checkIn.update({
       where: { id: data.id },
       data,
     })
   }
 }
 
-function endOfDay(date: Date): Date {
-  const end = new Date(date)
-  end.setHours(23, 59, 59, 999)
-  return end
-}
+// function endOfDay(date: Date): Date {
+//   const end = new Date(date)
+//   end.setHours(23, 59, 59, 999)
+//   return end
+// }
 
-function startOfDay(date: Date): Date {
-  const start = new Date(date)
-  start.setHours(0, 0, 0, 0)
-  return start
-}
+// function startOfDay(date: Date): Date {
+//   const start = new Date(date)
+//   start.setHours(0, 0, 0, 0)
+//   return start
+// }

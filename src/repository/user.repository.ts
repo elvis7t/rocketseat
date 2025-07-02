@@ -17,21 +17,21 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   public async findAll(): Promise<PrismaUser[]> {
-    return this.prisma.user.findMany()
+    return await this.prisma.user.findMany()
   }
 
   public async create(data: Prisma.UserCreateInput) {
-    return this.prisma.user.create({ data })
+    return await this.prisma.user.create({ data })
   }
 
   public async findByEmail(email: string) {
-    return this.prisma.user.findUnique({
+    return await this.prisma.user.findUnique({
       where: { email },
     })
   }
 
   public async findById(id: string) {
-    return this.prisma.user.findUnique({
+    return await this.prisma.user.findUnique({
       where: { id },
     })
   }

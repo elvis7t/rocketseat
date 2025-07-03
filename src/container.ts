@@ -23,43 +23,47 @@ import {
 } from './services'
 import { InMemoryUsersRepository } from './repository/in-memory-repository'
 import {
-  makeGetUserProfileServiceFactory,
-  makeCheckInServiceFactory,
-  makeAuthenticateServiceFactory,
-  makeFetchNearbyGymsServiceFactory,
   makeFetchUserCheckInsHistoryServiceFactory,
-  makeGetUserMetricsServiceFactory,
-  makeGymServiceFactory,
-  makeSearchGymsServiceFactory,
-  makeUserServiceFactory,
+  makeFetchNearbyGymsServiceFactory,
   makeValidateCheckInServiceFactory,
+  makeGetUserMetricsServiceFactory,
+  makeGetUserProfileServiceFactory,
+  makeAuthenticateServiceFactory,
+  makeSearchGymsServiceFactory,
+  makeCheckInServiceFactory,
+  makeUserServiceFactory,
+  makeGymServiceFactory,
 } from './services/factories'
 
-container.registerSingleton<EnvConfig>('EnvConfig', EnvConfig)
+container.registerSingleton<MainController>('MainController', MainController)
+container.registerSingleton<UserController>('UserController', UserController)
+container.registerSingleton<AuthMiddleware>('AuthMiddleware', AuthMiddleware)
+container.registerSingleton<UserRepository>('UserRepository', UserRepository)
 container.registerSingleton<FastifyConfig>('FastifyConfig', FastifyConfig)
-container.registerSingleton<RouterInterface>('Router', Router)
+container.registerSingleton<GymRepository>('GymRepository', GymRepository)
+container.registerSingleton<SqliteConfig>('SqliteConfig', SqliteConfig)
+container.registerSingleton<PrismaConfig>('PrismaConfig', PrismaConfig)
 container.registerSingleton<RouterInterface>('MainRouter', MainRouter)
 container.registerSingleton<RouterInterface>('UserRouter', UserRouter)
-container.registerSingleton<MainController>('MainController', MainController)
+container.registerSingleton<UserService>('UserService', UserService)
+container.registerSingleton<EnvConfig>('EnvConfig', EnvConfig)
+container.registerSingleton<RouterInterface>('Router', Router)
 container.registerSingleton<AuthenticateController>(
   'AuthenticateController',
   AuthenticateController,
 )
-container.registerSingleton<UserController>('UserController', UserController)
-container.registerSingleton<SqliteConfig>('SqliteConfig', SqliteConfig)
-container.registerSingleton<PrismaConfig>('PrismaConfig', PrismaConfig)
 container.registerSingleton<CheckSessionMiddleware>(
   'CheckSessionMiddleware',
   CheckSessionMiddleware,
 )
-container.registerSingleton<AuthMiddleware>('AuthMiddleware', AuthMiddleware)
-container.registerSingleton<UserRepository>('UserRepository', UserRepository)
-container.registerSingleton<GymRepository>('GymRepository', GymRepository)
 container.registerSingleton<CheckInsRepository>(
   'CheckInsRepository',
   CheckInsRepository,
 )
-container.registerSingleton<UserService>('UserService', UserService)
+container.registerSingleton<FetchUserCheckInsHistoryService>(
+  'FetchUserCheckInsHistoryService',
+  FetchUserCheckInsHistoryService,
+)
 container.registerSingleton<AuthenticateService>(
   'AuthenticateService',
   AuthenticateService,
@@ -67,10 +71,6 @@ container.registerSingleton<AuthenticateService>(
 container.registerSingleton<UserProfileService>(
   'UserProfileService',
   UserProfileService,
-)
-container.registerSingleton<FetchUserCheckInsHistoryService>(
-  'FetchUserCheckInsHistoryService',
-  FetchUserCheckInsHistoryService,
 )
 container.registerSingleton<GetUserMetricsService>(
   'GetUserMetricsService',

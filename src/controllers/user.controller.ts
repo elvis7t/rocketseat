@@ -1,21 +1,16 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { injectable, inject } from 'tsyringe'
-import { UserRepository } from '@/repository/user.repository'
+import { injectable } from 'tsyringe'
 import { randomUUID } from 'crypto'
 import { CreateUserBody } from '@/interfaces/users/user.interface'
 import { UserService } from '@/services'
+import { makeUserServiceFactory } from '@/services/factories'
 import { HttpStatusCodeEnum } from '../constants'
 
 @injectable()
 export class UserController {
-  constructor(
-    @inject('UserRepository')
-    private readonly userRepository: UserRepository,
-    @inject('UserService')
-    private readonly userService: UserService,
-  ) {
-    this.userRepository = userRepository
-    this.userService = userService
+  private readonly userService: UserService
+  constructor() {
+    this.userService = makeUserServiceFactory()
   }
 
   async getAllUsers(
@@ -71,7 +66,8 @@ export class UserController {
       return
     }
 
-    const user = await this.userRepository.findById(sessionId)
+    // Agora usando o service para buscar o usuário
+    const user = await this.userService.findById(sessionId)
     if (!user) {
       reply.status(401).send({ error: 'Usuário não encontrado.' })
       return

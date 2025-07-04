@@ -225,3 +225,8 @@ Um banco de dados que armazena os dados em memória, mas também utiliza o disco
 ```sh
  npm i dayjs
 ```
+
+# JWT
+```sh
+  npm i @fastify/jwt 
+```

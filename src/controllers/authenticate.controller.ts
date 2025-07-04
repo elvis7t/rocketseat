@@ -30,7 +30,16 @@ export class AuthenticateController {
         password,
       })
 
-      reply.code(HttpStatusCodeEnum.OK).send({ user })
+      const token = await reply.jwtSign(
+        {},
+        {
+          sign: {
+            sub: user.id,
+          },
+        },
+      )
+
+      return reply.code(HttpStatusCodeEnum.OK).send({ token })
     } catch (error) {
       if (error instanceof UserInvalidCredentialsError) {
         return reply

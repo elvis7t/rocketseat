@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { inject, injectable } from 'tsyringe'
 import { Router } from '@/interfaces'
-import { UserController } from '@/controllers/user.controller'
+import { ProfileController, UserController } from '@/controllers'
 import { AuthMiddleware, CheckSessionMiddleware } from '@/middlewares'
 
 @injectable()
@@ -9,12 +9,15 @@ export class UserRouter implements Router {
   constructor(
     @inject('UserController')
     private readonly userController: UserController,
+    @inject('ProfileController')
+    private readonly profileController: ProfileController,
     @inject('AuthMiddleware')
     private readonly authMiddleware: AuthMiddleware,
     @inject('CheckSessionMiddleware')
     private readonly checkSessionMiddleware: CheckSessionMiddleware,
   ) {
     this.userController = userController
+    this.profileController = profileController
     this.authMiddleware = authMiddleware
     this.checkSessionMiddleware = checkSessionMiddleware
   }
@@ -42,9 +45,17 @@ export class UserRouter implements Router {
       },
     )
 
-    app.get('/users/profile', async (request, reply) => {
-      return this.userController.profile(request, reply)
-    })
+    app.get(
+      '/user/profile',
+      {
+        preHandler: [
+          (request, reply) => this.authMiddleware.handle(request, reply),
+        ],
+      },
+      async (request, reply) => {
+        return this.profileController.profile(request, reply)
+      },
+    )
 
     if (done) {
       done()

@@ -22,6 +22,7 @@ export class EnvConfig {
   public readonly DATABASE_USERNAME: string
   public readonly DATABASE_PASSWORD: string
   public readonly DATABASE_NAME: string
+  public readonly JWT_SECRET: string
 
   constructor() {
     const configSchema = z.object({
@@ -42,6 +43,7 @@ export class EnvConfig {
       DATABASE_USERNAME: z.string().default('root'),
       DATABASE_PASSWORD: z.string().min(1, 'DATABASE_PASSWORD é obrigatório'),
       DATABASE_NAME: z.string().default('apisolid'),
+      JWT_SECRET: z.string().min(1, 'JWT_SECRET é obrigatório'),
     })
 
     const envVars = configSchema.safeParse(process.env)
@@ -68,5 +70,6 @@ export class EnvConfig {
     this.DATABASE_USERNAME = envVars.data.DATABASE_USERNAME
     this.DATABASE_PASSWORD = envVars.data.DATABASE_PASSWORD
     this.DATABASE_NAME = envVars.data.DATABASE_NAME
+    this.JWT_SECRET = envVars.data.JWT_SECRET
   }
 }

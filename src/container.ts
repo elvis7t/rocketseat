@@ -4,6 +4,7 @@ import { Router as RouterInterface } from '@/interfaces'
 import { Router } from './routes/router'
 import {
   AuthenticateController,
+  ProfileController,
   MainController,
   UserController,
 } from './controllers'
@@ -52,6 +53,7 @@ container.registerSingleton<AuthenticateController>(
   'AuthenticateController',
   AuthenticateController,
 )
+
 container.registerSingleton<CheckSessionMiddleware>(
   'CheckSessionMiddleware',
   CheckSessionMiddleware,
@@ -63,6 +65,10 @@ container.registerSingleton<CheckInsRepository>(
 container.registerSingleton<FetchUserCheckInsHistoryService>(
   'FetchUserCheckInsHistoryService',
   FetchUserCheckInsHistoryService,
+)
+container.registerSingleton<ProfileController>(
+  'ProfileController',
+  ProfileController,
 )
 container.registerSingleton<AuthenticateService>(
   'AuthenticateService',

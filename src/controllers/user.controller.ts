@@ -58,21 +58,4 @@ export class UserController {
       .code(HttpStatusCodeEnum.CREATED)
       .send({ message: 'Usuário criado com sucesso.' })
   }
-
-  async profile(request: FastifyRequest, reply: FastifyReply): Promise<void> {
-    const sessionId = request.cookies?.sessionId
-    if (!sessionId) {
-      reply.status(401).send({ error: 'Não autenticado.' })
-      return
-    }
-
-    // Agora usando o service para buscar o usuário
-    const user = await this.userService.findById(sessionId)
-    if (!user) {
-      reply.status(401).send({ error: 'Usuário não encontrado.' })
-      return
-    }
-
-    reply.send({ user })
-  }
 }

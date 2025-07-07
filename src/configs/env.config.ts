@@ -62,9 +62,9 @@ export class EnvConfig {
     this.CORS_ORIGIN = envVars.data.CORS_ORIGIN
     this.DATABASE_CLIENT = envVars.data.DATABASE_CLIENT
     this.DATABASE_URL =
-      process.env.NODE_ENV === 'development'
-        ? envVars.data.DATABASE_URL_LOCAL
-        : envVars.data.DATABASE_URL
+      process.env.NODE_ENV === 'production'
+        ? envVars.data.DATABASE_URL
+        : envVars.data.DATABASE_URL_LOCAL
     this.DATABASE_URL_LOCAL = envVars.data.DATABASE_URL_LOCAL
     this.DATABASE_PORT = envVars.data.DATABASE_PORT
     this.DATABASE_USERNAME = envVars.data.DATABASE_USERNAME

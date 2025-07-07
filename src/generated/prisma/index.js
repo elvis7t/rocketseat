@@ -150,7 +150,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/node/app/src/generated/prisma",
+      "value": "/home/elvis/devspace/rocketseat/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -159,12 +159,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "linux-musl-openssl-3.0.x",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/node/app/prisma/schema.prisma",
+    "sourceFilePath": "/home/elvis/devspace/rocketseat/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -187,8 +187,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String    @id @default(cuid())\n  name          String\n  email         String    @unique\n  password_hash String\n  created_at    DateTime  @default(now())\n  checkIns      CheckIn[]\n\n  @@map(\"users\")\n}\n\nmodel CheckIn {\n  id           String    @id @default(uuid())\n  checked_at   DateTime  @default(now())\n  validated_at DateTime?\n  gym_id       String?\n  user_id      String\n  user         User      @relation(fields: [user_id], references: [id])\n  Gym          Gym?      @relation(fields: [gym_id], references: [id])\n\n  @@map(\"check_ins\")\n}\n\nmodel Gym {\n  id          String    @id @default(cuid())\n  title       String\n  description String?\n  phone       String?\n  latitude    Decimal\n  longitude   Decimal\n  checkIns    CheckIn[]\n\n  @@map(\"gyms\")\n}\n",
-  "inlineSchemaHash": "2bc947abcc27202e2438d4ae88b862d9306853a2a6e8744772881681aec79595",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  engineType    = \"library\"\n  binaryTargets = [\"native\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String    @id @default(cuid())\n  name          String\n  email         String    @unique\n  password_hash String\n  created_at    DateTime  @default(now())\n  checkIns      CheckIn[]\n\n  @@map(\"users\")\n}\n\nmodel CheckIn {\n  id           String    @id @default(uuid())\n  checked_at   DateTime  @default(now())\n  validated_at DateTime?\n  gym_id       String?\n  user_id      String\n  user         User      @relation(fields: [user_id], references: [id])\n  Gym          Gym?      @relation(fields: [gym_id], references: [id])\n\n  @@map(\"check_ins\")\n}\n\nmodel Gym {\n  id          String    @id @default(cuid())\n  title       String\n  description String?\n  phone       String?\n  latitude    Decimal\n  longitude   Decimal\n  checkIns    CheckIn[]\n\n  @@map(\"gyms\")\n}\n",
+  "inlineSchemaHash": "23238a3ec7d70476a269da09eb8d9946a44936d7a0c45847cdc618ecef7efd92",
   "copyEngine": true
 }
 
@@ -227,8 +227,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-linux-musl-openssl-3.0.x.so.node");
-path.join(process.cwd(), "src/generated/prisma/libquery_engine-linux-musl-openssl-3.0.x.so.node")
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/prisma/schema.prisma")

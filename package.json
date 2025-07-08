@@ -29,6 +29,8 @@
   "scripts": {
     "dev": "NODE_ENV='development' tsx watch src/index.ts",
     "prod": "tsx watch src/index.ts",
+    "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
+    "test:install-prisma-environment": "npm link vitest-environment-prisma",
     "lint": "eslint src --ext .ts --fix",
     "build": "tsup src --out-dir build",
     "start": "node build/index.js",

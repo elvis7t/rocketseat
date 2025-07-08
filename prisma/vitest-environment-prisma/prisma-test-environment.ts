@@ -1,11 +1,9 @@
 import 'reflect-metadata'
 import { execSync } from 'node:child_process'
 import { randomUUID } from 'node:crypto'
-import { join } from 'node:path'
 import type { Environment } from 'vitest/environments'
 import { container } from 'tsyringe'
 import { EnvConfig } from '../../src/configs/env.config'
-import { PrismaClient } from '../../src/generated/prisma'
 
 function generateDatabaseUrl(env: EnvConfig, schema: string) {
   console.log('Teste', env.DATABASE_URL)
@@ -35,10 +33,10 @@ export default <Environment>{
     const originalDatabaseUrl = process.env.DATABASE_URL
     process.env.DATABASE_URL = databaseUrl
     process.env.PRISMA_CLIENT_NO_HINTS = 'true'
-    
+
     // Limpar o cache do container para forçar novas instâncias com o novo DATABASE_URL
     container.clearInstances()
-    
+
     try {
       // Executa as migrações no schema de teste
       execSync('npx prisma generate', {
@@ -74,10 +72,10 @@ export default <Environment>{
           // Apaga o schema de teste
           await prisma.$executeRaw`DROP SCHEMA IF EXISTS "${schema}" CASCADE`
           await prisma.$disconnect()
-          
+
           // Limpar novamente o cache do container após os testes
           container.clearInstances()
-          
+
           console.log(`Schema de teste ${schema} removido com sucesso`)
         } catch (error) {
           console.error(`Erro ao limpar schema de teste ${schema}:`, error)

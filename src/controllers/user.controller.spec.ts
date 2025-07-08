@@ -23,7 +23,7 @@ describe('Register (e2e)', () => {
   test('should be able to register', async () => {
     const response = await request(app.server).post('/v1/user').send({
       name: 'John Doe',
-      email: 'john.does2@example.com',
+      email: 'john.does@example.com',
       password: '123456',
     })
 
@@ -34,14 +34,14 @@ describe('Register (e2e)', () => {
     // Primeiro cadastro com este email
     await request(app.server).post('/v1/user').send({
       name: 'John Doe',
-      email: 'john.does3@example.com',
+      email: 'john.does@example.com',
       password: '123456',
     })
 
     // Tentativa de cadastro com email já existente
     const response = await request(app.server).post('/v1/user').send({
       name: 'John Doe Duplicate',
-      email: 'john.does3@example.com',
+      email: 'john.does@example.com',
       password: '123456',
     })
 

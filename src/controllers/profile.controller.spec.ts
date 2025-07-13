@@ -29,6 +29,7 @@ describe('Profile (e2e)', () => {
     const profileResponse = await request(app.server)
       .get('/v1/user/profile')
       .set('Authorization', `Bearer ${token}`)
+      .send()
 
     expect(profileResponse.statusCode).toEqual(200)
     expect(profileResponse.body.user).toEqual(

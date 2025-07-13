@@ -12,11 +12,7 @@ declare module 'fastify' {
 
 @injectable()
 export class AuthMiddleware {
-  constructor(
-
-  ) {
-
-  }
+  constructor() {}
 
   public async handle(
     request: FastifyRequest,

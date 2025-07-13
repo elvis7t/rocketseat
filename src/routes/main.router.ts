@@ -28,13 +28,11 @@ export class MainRouter implements Router {
   ): FastifyInstance {
     app.post(
       '/session',
-      
+
       async (request, reply) => {
         return this.authenticateController.authenticate(request, reply)
       },
     )
-
-    
 
     if (done) {
       done()

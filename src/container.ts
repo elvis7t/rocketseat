@@ -1,11 +1,10 @@
 import { container } from 'tsyringe'
-import { EnvConfig, FastifyConfig, SqliteConfig, PrismaConfig } from './configs'
+import { EnvConfig, FastifyConfig, PrismaConfig } from './configs'
 import { Router as RouterInterface } from '@/interfaces'
 import { Router } from './routes/router'
 import {
   AuthenticateController,
   ProfileController,
-  MainController,
   UserController,
 } from './controllers'
 import { MainRouter } from './routes/main.router'
@@ -36,13 +35,11 @@ import {
   makeGymServiceFactory,
 } from './services/factories'
 
-container.registerSingleton<MainController>('MainController', MainController)
 container.registerSingleton<UserController>('UserController', UserController)
 container.registerSingleton<AuthMiddleware>('AuthMiddleware', AuthMiddleware)
 container.registerSingleton<UserRepository>('UserRepository', UserRepository)
 container.registerSingleton<FastifyConfig>('FastifyConfig', FastifyConfig)
 container.registerSingleton<GymRepository>('GymRepository', GymRepository)
-container.registerSingleton<SqliteConfig>('SqliteConfig', SqliteConfig)
 container.registerSingleton<PrismaConfig>('PrismaConfig', PrismaConfig)
 container.registerSingleton<RouterInterface>('MainRouter', MainRouter)
 container.registerSingleton<RouterInterface>('UserRouter', UserRouter)

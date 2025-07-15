@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { injectable, inject } from 'tsyringe'
 import { UserRepository } from '@/repository/user.repository'
 import { AuthenticateService } from '@/services'
-import { HttpStatusCodeEnum } from '../constants'
+import { HttpStatusCodeEnum } from '../../constants'
 import { UserInvalidCredentialsError } from '@/errors/user.invalid-credentials-error'
 import { AuthenticateBodySchema } from '@/validators'
 

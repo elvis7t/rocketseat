@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { inject, injectable } from 'tsyringe'
 import { Router } from '@/interfaces'
 import { ProfileController, UserController } from '@/controllers'
-import { AuthMiddleware, CheckSessionMiddleware } from '@/middlewares'
+import { AuthMiddleware} from '@/middlewares'
 
 @injectable()
 export class UserRouter implements Router {
@@ -13,13 +13,10 @@ export class UserRouter implements Router {
     private readonly profileController: ProfileController,
     @inject('AuthMiddleware')
     private readonly authMiddleware: AuthMiddleware,
-    @inject('CheckSessionMiddleware')
-    private readonly checkSessionMiddleware: CheckSessionMiddleware,
   ) {
     this.userController = userController
     this.profileController = profileController
     this.authMiddleware = authMiddleware
-    this.checkSessionMiddleware = checkSessionMiddleware
   }
 
   public registerRoutes(

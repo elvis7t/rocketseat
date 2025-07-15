@@ -5,12 +5,12 @@ import { Router as RouterInterface } from '@/interfaces'
 @injectable()
 export class Router implements RouterInterface {
   constructor(
-    @inject('MainRouter')
-    private mainRouter: RouterInterface,
+    @inject('GymRouter')
+    private GymRouter: RouterInterface,
     @inject('UserRouter')
     private userRouter: RouterInterface,
   ) {
-    this.mainRouter = mainRouter
+    this.GymRouter = GymRouter
     this.userRouter = userRouter
   }
 
@@ -19,7 +19,7 @@ export class Router implements RouterInterface {
     _options?: unknown,
     done?: (err?: Error) => void,
   ) {
-    app.register(this.mainRouter.registerRoutes.bind(this.mainRouter), {
+    app.register(this.GymRouter.registerRoutes.bind(this.GymRouter), {
       prefix: '/v1',
     })
 

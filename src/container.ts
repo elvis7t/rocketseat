@@ -7,9 +7,9 @@ import {
   ProfileController,
   UserController,
 } from './controllers'
-import { MainRouter } from './routes/main.router'
+import { GymRouter } from './routes/gym.router'
 import { UserRouter } from './routes/user.router'
-import { CheckSessionMiddleware, AuthMiddleware } from './middlewares'
+import { AuthMiddleware } from './middlewares'
 import { UserRepository, GymRepository, CheckInsRepository } from './repository'
 import {
   FetchUserCheckInsHistoryService,
@@ -41,7 +41,7 @@ container.registerSingleton<UserRepository>('UserRepository', UserRepository)
 container.registerSingleton<FastifyConfig>('FastifyConfig', FastifyConfig)
 container.registerSingleton<GymRepository>('GymRepository', GymRepository)
 container.registerSingleton<PrismaConfig>('PrismaConfig', PrismaConfig)
-container.registerSingleton<RouterInterface>('MainRouter', MainRouter)
+container.registerSingleton<RouterInterface>('GymRouter', GymRouter)
 container.registerSingleton<RouterInterface>('UserRouter', UserRouter)
 container.registerSingleton<UserService>('UserService', UserService)
 container.registerSingleton<EnvConfig>('EnvConfig', EnvConfig)
@@ -49,11 +49,6 @@ container.registerSingleton<RouterInterface>('Router', Router)
 container.registerSingleton<AuthenticateController>(
   'AuthenticateController',
   AuthenticateController,
-)
-
-container.registerSingleton<CheckSessionMiddleware>(
-  'CheckSessionMiddleware',
-  CheckSessionMiddleware,
 )
 container.registerSingleton<CheckInsRepository>(
   'CheckInsRepository',

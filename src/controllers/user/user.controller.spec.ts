@@ -1,9 +1,9 @@
 import { test, beforeAll, afterAll, describe, expect, beforeEach } from 'vitest'
 import { execSync } from 'node:child_process'
 import request from 'supertest'
-import { main } from '../app'
+import { main } from '../../app'
 import { container } from 'tsyringe'
-import { PrismaConfig } from '../configs/prisma.config'
+import { PrismaConfig } from '../../configs/prisma.config'
 
 const { app } = main()
 describe('Register (e2e)', () => {

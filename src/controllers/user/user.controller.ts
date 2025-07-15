@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto'
 import { CreateUserBody } from '@/interfaces/users/user.interface'
 import { UserService } from '@/services'
 import { makeUserServiceFactory } from '@/services/factories'
-import { HttpStatusCodeEnum } from '../constants'
+import { HttpStatusCodeEnum } from '../../constants'
 
 @injectable()
 export class UserController {

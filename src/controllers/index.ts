@@ -1,4 +1,3 @@
-export * from './main.controller'
-export * from './user.controller'
-export * from './authenticate.controller'
-export * from './profile.controller'
+export * from './user/user.controller'
+export * from './user/authenticate.controller'
+export * from './user/profile.controller'

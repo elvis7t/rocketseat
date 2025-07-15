@@ -1,9 +1,9 @@
 import { test, beforeAll, afterAll, describe, expect, beforeEach } from 'vitest'
 import request from 'supertest'
-import { main } from '../app'
+import { main } from '../../app'
 
 const { app } = main()
-describe('Authenticate (e2e)', () => {
+describe('Profile (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -12,7 +12,7 @@ describe('Authenticate (e2e)', () => {
     await app.close()
   })
 
-  test('should be able to authenticate', async () => {
+  test('should be able to user profile', async () => {
     await request(app.server).post('/v1/user').send({
       name: 'John Doe',
       email: 'john.does@example.com',
@@ -24,9 +24,18 @@ describe('Authenticate (e2e)', () => {
       password: '123456',
     })
 
-    expect(response.statusCode).toEqual(200)
-    expect(response.body).toEqual({
-      token: expect.any(String),
-    })
+    const { token } = response.body
+
+    const profileResponse = await request(app.server)
+      .get('/v1/user/profile')
+      .set('Authorization', `Bearer ${token}`)
+      .send()
+
+    expect(profileResponse.statusCode).toEqual(200)
+    expect(profileResponse.body.user).toEqual(
+      expect.objectContaining({
+        email: 'john.does@example.com',
+      }),
+    )
   })
 })

@@ -7,12 +7,9 @@ import { AuthMiddleware } from '@/middlewares'
 @injectable()
 export class GymRouter implements Router {
   constructor(
-    @inject('AuthenticateController')
-    private readonly authenticateController: AuthenticateController,    
     @inject('AuthMiddleware')
     private readonly authMiddleware: AuthMiddleware,
-  ) {
-  }
+  ) {}
 
   public registerRoutes(
     app: FastifyInstance,
@@ -22,13 +19,6 @@ export class GymRouter implements Router {
     app.addHook('onRequest', (request, reply) => {
       this.authMiddleware.handle(request, reply)
     })
-    app.post(
-      '/session',
-
-      async (request, reply) => {
-        return this.authenticateController.authenticate(request, reply)
-      },
-    )
 
     if (done) {
       done()

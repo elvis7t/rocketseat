@@ -1,6 +1,5 @@
 import { injectable, inject } from 'tsyringe'
 import { UserRepository } from '@/repository'
-import { compare } from 'bcryptjs'
 import { User } from '@/generated/prisma'
 import { UserAlreadyExistsError } from '@/errors/user.already-exists-error'
 

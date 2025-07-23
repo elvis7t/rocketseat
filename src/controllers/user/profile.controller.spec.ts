@@ -1,4 +1,4 @@
-import { test, beforeAll, afterAll, describe, expect, beforeEach } from 'vitest'
+import { test, beforeAll, afterAll, describe, expect } from 'vitest'
 import request from 'supertest'
 import { main } from '../../app'
 

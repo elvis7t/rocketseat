@@ -5,10 +5,13 @@ import { Router } from './routes/router'
 import {
   AuthenticateController,
   ProfileController,
+  CheckInController,
   UserController,
+  GymController,
 } from './controllers'
 import { GymRouter } from './routes/gym.router'
 import { UserRouter } from './routes/user.router'
+import { CheckInRouter } from './routes/check-in.router'
 import { AuthMiddleware } from './middlewares'
 import { UserRepository, GymRepository, CheckInsRepository } from './repository'
 import {
@@ -36,6 +39,7 @@ import {
 } from './services/factories'
 
 container.registerSingleton<UserController>('UserController', UserController)
+container.registerSingleton<GymController>('GymController', GymController)
 container.registerSingleton<AuthMiddleware>('AuthMiddleware', AuthMiddleware)
 container.registerSingleton<UserRepository>('UserRepository', UserRepository)
 container.registerSingleton<FastifyConfig>('FastifyConfig', FastifyConfig)
@@ -43,6 +47,7 @@ container.registerSingleton<GymRepository>('GymRepository', GymRepository)
 container.registerSingleton<PrismaConfig>('PrismaConfig', PrismaConfig)
 container.registerSingleton<RouterInterface>('GymRouter', GymRouter)
 container.registerSingleton<RouterInterface>('UserRouter', UserRouter)
+container.registerSingleton<RouterInterface>('CheckInRouter', CheckInRouter)
 container.registerSingleton<UserService>('UserService', UserService)
 container.registerSingleton<EnvConfig>('EnvConfig', EnvConfig)
 container.registerSingleton<RouterInterface>('Router', Router)
@@ -61,6 +66,10 @@ container.registerSingleton<FetchUserCheckInsHistoryService>(
 container.registerSingleton<ProfileController>(
   'ProfileController',
   ProfileController,
+)
+container.registerSingleton<CheckInController>(
+  'CheckInController',
+  CheckInController,
 )
 container.registerSingleton<AuthenticateService>(
   'AuthenticateService',
@@ -92,23 +101,23 @@ container.registerSingleton<InMemoryUsersRepository>(
 )
 
 container.register('CheckInService', { useFactory: makeCheckInServiceFactory })
-container.register('UserProfileService', {
-  useFactory: makeGetUserProfileServiceFactory,
-})
-container.register('AuthenticateService', {
-  useFactory: makeAuthenticateServiceFactory,
+container.register('FetchUserCheckInsHistoryService', {
+  useFactory: makeFetchUserCheckInsHistoryServiceFactory,
 })
 container.register('FetchNearbyGymsService', {
   useFactory: makeFetchNearbyGymsServiceFactory,
 })
-container.register('FetchUserCheckInsHistoryService', {
-  useFactory: makeFetchUserCheckInsHistoryServiceFactory,
+container.register('ValidateCheckInService', {
+  useFactory: makeValidateCheckInServiceFactory,
+})
+container.register('UserProfileService', {
+  useFactory: makeGetUserProfileServiceFactory,
 })
 container.register('GetUserMetricsService', {
   useFactory: makeGetUserMetricsServiceFactory,
 })
-container.register('GymService', {
-  useFactory: makeGymServiceFactory,
+container.register('AuthenticateService', {
+  useFactory: makeAuthenticateServiceFactory,
 })
 container.register('SearchGymsService', {
   useFactory: makeSearchGymsServiceFactory,
@@ -116,6 +125,6 @@ container.register('SearchGymsService', {
 container.register('UserService', {
   useFactory: makeUserServiceFactory,
 })
-container.register('ValidateCheckInService', {
-  useFactory: makeValidateCheckInServiceFactory,
+container.register('GymService', {
+  useFactory: makeGymServiceFactory,
 })

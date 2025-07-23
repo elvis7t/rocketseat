@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { injectable } from 'tsyringe'
 import { UserProfileService } from '@/services'
 import { makeGetUserProfileServiceFactory } from '@/services/factories'
-import { HttpStatusCodeEnum } from '../../constants'
+import { HttpStatusCodeEnum } from '@/constants'
 
 @injectable()
 export class ProfileController {

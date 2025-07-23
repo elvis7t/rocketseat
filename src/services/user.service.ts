@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe'
 import { UserRepository } from '@/repository/user.repository'
 import { User } from '@/interfaces'
-import { registerBodySchema, UserInput } from '../validators'
+import { registerBodySchema, UserInput } from '@/validators'
 import { ZodError } from 'zod'
 import { hash } from 'bcryptjs'
 import { UserAlreadyExistsError } from '@/errors/user.already-exists-error'
@@ -33,23 +33,19 @@ export class UserService {
 
   public async create(input: UserInput): Promise<User> {
     try {
-      const validatedInput = registerBodySchema.parse(input)
-
-      const existingUser = await this.userRepository.findByEmail(
-        validatedInput.email,
-      )
+      const existingUser = await this.userRepository.findByEmail(input.email)
 
       if (existingUser) {
         throw new UserAlreadyExistsError(
-          `User with email ${validatedInput.email} already exists`,
+          `User with email ${input.email} already exists`,
         )
       }
 
-      const passwordHash = await hash(validatedInput.password_hash, 6)
+      const passwordHash = await hash(input.password, 6)
 
       const user = await this.userRepository.create({
-        name: validatedInput.name,
-        email: validatedInput.email,
+        name: input.name,
+        email: input.email,
         password_hash: passwordHash,
       })
 

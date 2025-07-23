@@ -20,7 +20,7 @@ export class CheckInService {
   constructor(
     @inject('CheckInsRepository')
     private readonly checkInsRepository: CheckInsRepository,
-    @inject('GymsRepository')
+    @inject('GymRepository')
     private readonly gymRepository: GymRepository,
   ) {
     this.checkInsRepository = checkInsRepository

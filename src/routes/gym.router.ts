@@ -1,23 +1,40 @@
 import { FastifyInstance } from 'fastify'
 import { inject, injectable } from 'tsyringe'
 import { Router } from '@/interfaces'
-import { AuthenticateController } from '@/controllers'
+import { GymController } from '@/controllers'
 import { AuthMiddleware } from '@/middlewares'
 
 @injectable()
 export class GymRouter implements Router {
   constructor(
+    @inject('GymController')
+    private readonly gymController: GymController,
     @inject('AuthMiddleware')
     private readonly authMiddleware: AuthMiddleware,
-  ) {}
+  ) {
+    this.authMiddleware = authMiddleware
+    this.gymController = gymController
+  }
 
   public registerRoutes(
     app: FastifyInstance,
     _options?: unknown,
     done?: (err?: Error) => void,
   ): FastifyInstance {
-    app.addHook('onRequest', (request, reply) => {
-      this.authMiddleware.handle(request, reply)
+    app.addHook('onRequest', async (request, reply) => {
+      await this.authMiddleware.handle(request, reply)
+    })
+
+    app.post('/gym', async (request, reply) => {
+      return this.gymController.create(request, reply)
+    })
+
+    app.get('/gym/search', async (request, reply) => {
+      return this.gymController.search(request, reply)
+    })
+
+    app.get('/gym/nearby', async (request, reply) => {
+      return this.gymController.nearby(request, reply)
     })
 
     if (done) {

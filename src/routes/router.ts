@@ -6,12 +6,15 @@ import { Router as RouterInterface } from '@/interfaces'
 export class Router implements RouterInterface {
   constructor(
     @inject('GymRouter')
-    private GymRouter: RouterInterface,
+    private readonly GymRouter: RouterInterface,
     @inject('UserRouter')
-    private userRouter: RouterInterface,
+    private readonly userRouter: RouterInterface,
+    @inject('CheckInRouter')
+    private readonly checkInRouter: RouterInterface,
   ) {
     this.GymRouter = GymRouter
     this.userRouter = userRouter
+    this.checkInRouter = checkInRouter
   }
 
   public registerRoutes(
@@ -24,6 +27,10 @@ export class Router implements RouterInterface {
     })
 
     app.register(this.userRouter.registerRoutes.bind(this.userRouter), {
+      prefix: '/v1',
+    })
+
+    app.register(this.checkInRouter.registerRoutes.bind(this.checkInRouter), {
       prefix: '/v1',
     })
 

@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const registerCheckInBodySchema = z.object({
   userId: z.string(),
-  gymId: z.string().uuid(),
+  gymId: z.string(),
   latitude: z.number().refine((value) => {
     return Math.abs(value) < 90
   }),

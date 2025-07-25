@@ -31,8 +31,12 @@ export class CheckInController {
   }
 
   async create(request: FastifyRequest, reply: FastifyReply): Promise<void> {
-    const { gymId, latitude, longitude } = request.body as {
-      gymId: string
+    const createCheckInParamsSchema = z.object({
+      gymId: z.string(),
+    })
+
+    const { gymId } = createCheckInParamsSchema.parse(request.params)
+    const { latitude, longitude } = request.body as {
       latitude: number
       longitude: number
     }
@@ -76,12 +80,12 @@ export class CheckInController {
 
     const { page } = checkinHistoryQuerySchema.parse(request.query)
     const userId = request.user.sub
-    const checkInHistory = await this.fetchUserCheckInsHistoryService.execute({
+    const result = await this.fetchUserCheckInsHistoryService.execute({
       userId,
       page,
     })
 
-    return reply.code(HttpStatusCodeEnum.OK).send({ checkInHistory })
+    return reply.code(HttpStatusCodeEnum.OK).send(result)
   }
 
   async metrics(request: FastifyRequest, reply: FastifyReply): Promise<void> {

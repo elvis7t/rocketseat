@@ -29,8 +29,8 @@ describe('Fetch Nearby Gyms Service', () => {
     })
 
     const { gyms } = await sut.execute({
-      userLatitude: -1.2092052,
-      userLongitude: -5.01091,
+      latitude: -1.2092052,
+      longitude: -5.01091,
     })
 
     expect(gyms).toHaveLength(1)

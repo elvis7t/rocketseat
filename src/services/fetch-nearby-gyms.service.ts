@@ -3,8 +3,8 @@ import { Gym } from '@/generated/prisma'
 import { injectable, inject } from 'tsyringe'
 
 interface FetchNearbyGymsRequest {
-  userLatitude: number
-  userLongitude: number
+  latitude: number
+  longitude: number
 }
 
 interface FetchNearbyGymsResponse {
@@ -21,12 +21,12 @@ export class FetchNearbyGymsService {
   }
 
   async execute({
-    userLatitude,
-    userLongitude,
+    latitude,
+    longitude,
   }: FetchNearbyGymsRequest): Promise<FetchNearbyGymsResponse> {
     const gyms = await this.gymRepository.findManyNearby({
-      latitude: userLatitude,
-      longitude: userLongitude,
+      latitude,
+      longitude,
     })
     return { gyms }
   }

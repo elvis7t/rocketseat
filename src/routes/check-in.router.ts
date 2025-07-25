@@ -25,7 +25,7 @@ export class CheckInRouter implements Router {
       await this.authMiddleware.handle(request, reply)
     })
 
-    app.post('/check-in', async (request, reply) => {
+    app.post('/gym/:gymId/check-in', async (request, reply) => {
       return this.checkInController.create(request, reply)
     })
 

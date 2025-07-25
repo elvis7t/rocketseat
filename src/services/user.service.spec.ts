@@ -32,7 +32,7 @@ describe('UserService', () => {
     const user = await sut.create({
       name: 'John Doe',
       email: 'john.doe@example.com',
-      password_hash: '123456',
+      password: '123456',
     })
 
     const isPasswordHashed = await compare('123456', user.password_hash)

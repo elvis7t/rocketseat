@@ -62,15 +62,13 @@ export class GymController {
 
   async nearby(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const nearbyGymsQueryParams = z.object({
-      userLatitude: z.coerce.number().refine((value) => Math.abs(value) < 90),
-      userLongitude: z.coerce.number().refine((value) => Math.abs(value) < 180),
+      latitude: z.coerce.number().refine((value) => Math.abs(value) < 90),
+      longitude: z.coerce.number().refine((value) => Math.abs(value) < 180),
     })
-    const { userLatitude, userLongitude } = nearbyGymsQueryParams.parse(
-      request.query,
-    )
+    const { latitude, longitude } = nearbyGymsQueryParams.parse(request.query)
     const gyms = await this.fetchNearbyGymsService.execute({
-      userLatitude,
-      userLongitude,
+      latitude,
+      longitude,
     })
     reply.code(HttpStatusCodeEnum.OK).send({ gyms })
   }

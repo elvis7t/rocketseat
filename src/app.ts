@@ -11,6 +11,13 @@ export const main = () => {
   const router = container.resolve(Router)
   app.register(fastifyJwt, {
     secret: env.JWT_SECRET,
+    cookie: {
+      cookieName: 'refreshToken',
+      signed: false,
+    },
+    sign: {
+      expiresIn: '10m',
+    },
   })
   router.registerRoutes(app)
   return { app, env }

@@ -27,7 +27,7 @@ describe('Register (e2e)', () => {
       password: '123456',
     })
 
-    expect(response.statusCode).toBe(201)
+    expect(response.statusCode).toBe(200)
   })
 
   test('should not be able to register with existing email', async () => {

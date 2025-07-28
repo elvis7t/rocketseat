@@ -39,7 +39,25 @@ export class AuthenticateController {
         },
       )
 
-      return reply.code(HttpStatusCodeEnum.OK).send({ token })
+      const refreshToken = await reply.jwtSign(
+        {},
+        {
+          sign: {
+            sub: user.id,
+            expiresIn: '7d',
+          },
+        },
+      )
+
+      return reply
+        .code(HttpStatusCodeEnum.OK)
+        .setCookie('refreshToken', refreshToken, {
+          path: '/',
+          httpOnly: true,
+          secure: false,
+          sameSite: 'lax',
+        })
+        .send({ token })
     } catch (error) {
       if (error instanceof UserInvalidCredentialsError) {
         return reply

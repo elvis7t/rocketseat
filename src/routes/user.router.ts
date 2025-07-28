@@ -3,22 +3,25 @@ import { inject, injectable } from 'tsyringe'
 import { Router } from '@/interfaces'
 import {
   ProfileController,
-  UserController,
   AuthenticateController,
+  UserController,
+  RefreshController,
 } from '@/controllers'
 import { AuthMiddleware } from '@/middlewares'
 
 @injectable()
 export class UserRouter implements Router {
   constructor(
-    @inject('UserController')
-    private readonly userController: UserController,
-    @inject('ProfileController')
-    private readonly profileController: ProfileController,
     @inject('AuthenticateController')
     private readonly authenticateController: AuthenticateController,
+    @inject('ProfileController')
+    private readonly profileController: ProfileController,
+    @inject('UserController')
+    private readonly userController: UserController,
     @inject('AuthMiddleware')
     private readonly authMiddleware: AuthMiddleware,
+    @inject('RefreshController')
+    private readonly refreshController: RefreshController,
   ) {
     this.userController = userController
     this.profileController = profileController
@@ -60,6 +63,10 @@ export class UserRouter implements Router {
 
     app.post('/session', async (request, reply) => {
       return this.authenticateController.authenticate(request, reply)
+    })
+
+    app.patch('/token/refresh', async (request, reply) => {
+      return this.refreshController.refresh(request, reply)
     })
 
     if (done) {

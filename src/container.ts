@@ -6,6 +6,7 @@ import {
   AuthenticateController,
   ProfileController,
   CheckInController,
+  RefreshController,
   UserController,
   GymController,
 } from './controllers'
@@ -70,6 +71,10 @@ container.registerSingleton<ProfileController>(
 container.registerSingleton<CheckInController>(
   'CheckInController',
   CheckInController,
+)
+container.registerSingleton<RefreshController>(
+  'RefreshController',
+  RefreshController,
 )
 container.registerSingleton<AuthenticateService>(
   'AuthenticateService',

@@ -13,7 +13,7 @@ import {
 import { GymRouter } from './routes/gym.router'
 import { UserRouter } from './routes/user.router'
 import { CheckInRouter } from './routes/check-in.router'
-import { AuthMiddleware } from './middlewares'
+import { AuthMiddleware, AccessMiddleware } from './middlewares'
 import { UserRepository, GymRepository, CheckInsRepository } from './repository'
 import {
   FetchUserCheckInsHistoryService,
@@ -39,17 +39,21 @@ import {
   makeGymServiceFactory,
 } from './services/factories'
 
+container.registerSingleton<AccessMiddleware>(
+  'AccessMiddleware',
+  AccessMiddleware,
+)
 container.registerSingleton<UserController>('UserController', UserController)
-container.registerSingleton<GymController>('GymController', GymController)
 container.registerSingleton<AuthMiddleware>('AuthMiddleware', AuthMiddleware)
 container.registerSingleton<UserRepository>('UserRepository', UserRepository)
+container.registerSingleton<RouterInterface>('CheckInRouter', CheckInRouter)
+container.registerSingleton<GymController>('GymController', GymController)
 container.registerSingleton<FastifyConfig>('FastifyConfig', FastifyConfig)
 container.registerSingleton<GymRepository>('GymRepository', GymRepository)
 container.registerSingleton<PrismaConfig>('PrismaConfig', PrismaConfig)
-container.registerSingleton<RouterInterface>('GymRouter', GymRouter)
 container.registerSingleton<RouterInterface>('UserRouter', UserRouter)
-container.registerSingleton<RouterInterface>('CheckInRouter', CheckInRouter)
 container.registerSingleton<UserService>('UserService', UserService)
+container.registerSingleton<RouterInterface>('GymRouter', GymRouter)
 container.registerSingleton<EnvConfig>('EnvConfig', EnvConfig)
 container.registerSingleton<RouterInterface>('Router', Router)
 container.registerSingleton<AuthenticateController>(

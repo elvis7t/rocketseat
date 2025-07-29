@@ -41,27 +41,3 @@ export class AuthenticateService {
     return { user }
   }
 }
-
-// export class AuthenticateService implements AuthenticateUserService {
-//     constructor(private userRepository: UserRepository) { }
-
-//     async execute(email: string, password: string): Promise<AuthenticateServiceResponse> {
-//         const user = await this.userRepository.findByEmail(email);
-
-//         if (!user) {
-//             throw new Error("User not found");
-//         }
-
-//         const isValidPassword = await compare(password, user.password);
-
-//         if (!isValidPassword) {
-//             throw new Error("Invalid password");
-//         }
-
-//         const token = sign({ id: user.id }, process.env.JWT_SECRET, {
-//             expiresIn: "1d",
-//         });
-
-//         return { user, token };
-//     }
-// }

@@ -49,7 +49,6 @@ export class CheckInService {
         longitude: gym.longitude.toNumber(),
       },
     )
-    console.log('🚀 ~ CheckInService ~ execute ~ distance:', distance)
 
     const maxDistanceInKilometers = 0.1 // kilometers
 

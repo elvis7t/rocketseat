@@ -15,10 +15,14 @@ export class RefreshController {
   async refresh(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     await request.jwtVerify({ onlyCookie: true })
 
-    const userId = (request.user as any).sub
+    const userId = request.user.sub
+
+    const { role } = request.user
 
     const token = await reply.jwtSign(
-      {},
+      {
+        role,
+      },
       {
         sign: {
           sub: userId,
@@ -27,7 +31,9 @@ export class RefreshController {
     )
 
     const refreshToken = await reply.jwtSign(
-      {},
+      {
+        role,
+      },
       {
         sign: {
           sub: userId,

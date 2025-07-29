@@ -7,7 +7,7 @@ import {
   UserController,
   RefreshController,
 } from '@/controllers'
-import { AuthMiddleware } from '@/middlewares'
+import { AuthMiddleware, AccessMiddleware } from '@/middlewares'
 
 @injectable()
 export class UserRouter implements Router {
@@ -20,12 +20,15 @@ export class UserRouter implements Router {
     private readonly userController: UserController,
     @inject('AuthMiddleware')
     private readonly authMiddleware: AuthMiddleware,
+    @inject('AccessMiddleware')
+    private readonly AccessMiddleware: AccessMiddleware,
     @inject('RefreshController')
     private readonly refreshController: RefreshController,
   ) {
     this.userController = userController
     this.profileController = profileController
     this.authMiddleware = authMiddleware
+    this.AccessMiddleware = AccessMiddleware
   }
 
   public registerRoutes(

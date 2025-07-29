@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { inject, injectable } from 'tsyringe'
 import { Router } from '@/interfaces'
 import { GymController } from '@/controllers'
-import { AuthMiddleware } from '@/middlewares'
+import { AuthMiddleware, AccessMiddleware } from '@/middlewares'
 
 @injectable()
 export class GymRouter implements Router {
@@ -11,9 +11,12 @@ export class GymRouter implements Router {
     private readonly gymController: GymController,
     @inject('AuthMiddleware')
     private readonly authMiddleware: AuthMiddleware,
+    @inject('AccessMiddleware')
+    private readonly accessMiddleware: AccessMiddleware,
   ) {
     this.authMiddleware = authMiddleware
     this.gymController = gymController
+    this.accessMiddleware = accessMiddleware
   }
 
   public registerRoutes(
@@ -25,9 +28,15 @@ export class GymRouter implements Router {
       await this.authMiddleware.handle(request, reply)
     })
 
-    app.post('/gym', async (request, reply) => {
-      return this.gymController.create(request, reply)
-    })
+    app.post(
+      '/gym',
+      {
+        preHandler: this.accessMiddleware.verifyUserRole('ADMIN'),
+      },
+      async (request, reply) => {
+        return this.gymController.create(request, reply)
+      },
+    )
 
     app.get('/gym/search', async (request, reply) => {
       return this.gymController.search(request, reply)

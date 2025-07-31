@@ -22,7 +22,7 @@ describe('CheckinController (e2e)', () => {
 
   test('should be able to create a checkin', async () => {
     try {
-      const { token } = await createAndAuthenticateUser(app)
+      const { token, user } = await createAndAuthenticateUser(app, true)
 
       // Obtém a instância do Prisma configurada pelo ambiente de teste
       const prismaConfig = container.resolve(PrismaConfig)
@@ -83,7 +83,7 @@ describe('CheckinController (e2e)', () => {
   test('should be able to list the history of checkins', async () => {
     const prismaConfig = container.resolve(PrismaConfig)
     const prisma = prismaConfig.getClient()
-    const { token } = await createAndAuthenticateUser(app)
+    const { token, user } = await createAndAuthenticateUser(app)
     const gym = await prisma.gym.create({
       data: {
         title: 'Gym 13',
@@ -93,7 +93,7 @@ describe('CheckinController (e2e)', () => {
         longitude: '-49.6401091',
       },
     })
-    const user = await prisma.user.findFirstOrThrow()
+    
 
     await prisma.checkIn.createMany({
       data: [
@@ -129,7 +129,7 @@ describe('CheckinController (e2e)', () => {
   test('should be able to get the total count of check-ins', async () => {
     const prismaConfig = container.resolve(PrismaConfig)
     const prisma = prismaConfig.getClient()
-    const { token } = await createAndAuthenticateUser(app)
+    const { token, user } = await createAndAuthenticateUser(app, true)
     const gym = await prisma.gym.create({
       data: {
         title: 'Gym 13',
@@ -139,7 +139,7 @@ describe('CheckinController (e2e)', () => {
         longitude: '-49.6401091',
       },
     })
-    const user = await prisma.user.findFirstOrThrow()
+    
 
     await prisma.checkIn.createMany({
       data: [
@@ -164,10 +164,10 @@ describe('CheckinController (e2e)', () => {
   })
 
   test('should be able to validate a checkin', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token, user } = await createAndAuthenticateUser(app, true)
     const prismaConfig = container.resolve(PrismaConfig)
     const prisma = prismaConfig.getClient()
-    const user = await prisma.user.findFirstOrThrow()
+    
 
     const gym = await prisma.gym.create({
       data: {

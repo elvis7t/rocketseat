@@ -14,10 +14,9 @@ describe('Profile (e2e)', () => {
   })
 
   test('should be able to get user profile', async () => {
-    const token = await createAndAuthenticateUser(app)
+    const { token, user } = await createAndAuthenticateUser(app)
 
-    const tokenString =
-      typeof token === 'string' ? token : token?.token || String(token)
+    const tokenString = typeof token === 'string' ? token : token
 
     const profileResponse = await request(app.server)
       .get('/v1/user/profile')
@@ -27,7 +26,7 @@ describe('Profile (e2e)', () => {
     expect(profileResponse.statusCode).toEqual(200)
     expect(profileResponse.body.user).toEqual(
       expect.objectContaining({
-        email: 'john.does@example.com',
+        email: user.email,
       }),
     )
   })

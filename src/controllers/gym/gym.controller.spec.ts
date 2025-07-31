@@ -14,7 +14,7 @@ describe('GymController (e2e)', () => {
   })
 
   test('should be able to create a gym', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true)
 
     const response = await request(app.server)
       .post('/v1/gym')
@@ -31,7 +31,7 @@ describe('GymController (e2e)', () => {
   })
 
   test('should be able to search a gym', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true)
 
     await request(app.server)
       .post('/v1/gym')
@@ -77,7 +77,7 @@ describe('GymController (e2e)', () => {
     )
   })
   test('should be able to list nearby gyms', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true)
 
     await request(app.server)
       .post('/v1/gym')
@@ -109,7 +109,6 @@ describe('GymController (e2e)', () => {
       })
       .set('Authorization', `Bearer ${token}`)
       .send()
-    // expect(response.body.gyms) should point to the array inside the response
     const gyms = response.body.gyms?.gyms ?? response.body.gyms
 
     expect(response.statusCode).toEqual(200)

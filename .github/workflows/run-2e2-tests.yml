@@ -14,9 +14,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRESQL_USERNAME: docker
-          POSTGRESQL_PASSWORD: docker
-          POSTGRESQL_DATABASE: apisolid
+          POSTGRESQL_USERNAME: ${{ secrets.POSTGRESQL_USERNAME }}
+          POSTGRESQL_PASSWORD: ${{ secrets.POSTGRESQL_PASSWORD }}
+          POSTGRESQL_DATABASE: ${{ secrets.POSTGRESQL_DATABASE }}
         options: >-
           --health-cmd="pg_isready -U docker"
           --health-interval=10s
@@ -48,4 +48,4 @@ jobs:
         run: npm run test:e2e
         env:
           JWT_SECRET: testing
-          DATABASE_URL: postgresql://docker:docker@localhost:5432/apisolid?schema=public
+          DATABASE_URL: postgresql://${{ secrets.POSTGRESQL_USERNAME }}:${{ secrets.POSTGRESQL_PASSWORD }}@localhost:5432/${{ secrets.POSTGRESQL_DATABASE }}?schema=public

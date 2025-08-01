@@ -1,4 +1,4 @@
-name : Run E2E Tests
+name: Run E2E Tests
 
 on: [pull_request]
 
@@ -13,16 +13,16 @@ jobs:
       ports:
         - 5432:5432
       environment:
-        - POSTGRESQL_USERNAME=docker
-        - POSTGRESQL_PASSWORD=docker
-        - POSTGRESQL_DATABASE=apisolid
+        - POSTGRESQL_USERNAME: docker
+        - POSTGRESQL_PASSWORD: docker
+        - POSTGRESQL_DATABASE: apisolid
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 22.14.0
-          cache: 'npm'
+          cache: "npm"
       - run: npm ci
       - run: npm run test:e2e
         env:

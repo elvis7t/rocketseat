@@ -47,5 +47,16 @@ jobs:
       - name: Run E2E tests
         run: npm run test:e2e
         env:
-          JWT_SECRET: testing
-          DATABASE_URL: postgresql://${{ secrets.POSTGRESQL_USERNAME }}:${{ secrets.POSTGRESQL_PASSWORD }}@localhost:5432/${{ secrets.POSTGRESQL_DATABASE }}?schema=public
+          API_PORT: 3000
+          DEV_PORT: 3007
+          API_HOST: localhost
+          NODE_ENV: development
+          DATABASE_CLIENT: postgresql
+          DATABASE_PORT: 5432
+          DATABASE_USER: user
+          DATABASE_PASSWORD: password
+          DATABASE_NAME: apisolid
+          DATABASE_HOST: localhost
+          DATABASE_URL_LOCAL: postgres://user:password@localhost:5432/apisolid
+          DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}
+          JWT_SECRET: your_jwt_secret

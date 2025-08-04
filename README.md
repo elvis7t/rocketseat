@@ -17,7 +17,7 @@
 - [X] O usuário não pode fazer check-in se não estiver perto (100m) da academia;
 - [X] O check-in só pode ser validado até 20 minutos após criado;
 - [X] O check-in só deve ser validado por administradores;
-- [ ] A academia só pode ser cadastrada por administradores;
+- [X] A academia só pode ser cadastrada por administradores;
 
 ### RNFs (Requisitos Não-Funcionais)
 - [x] A senha do usuário precisa estar criptografada;

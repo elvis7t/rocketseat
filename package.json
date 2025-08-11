@@ -1,0 +1,31 @@
+{
+  "name": "rocketseat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.esm.json",
+    "test": "vitest run",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elvis7t/rocketseat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elvis7t/rocketseat/issues"
+  },
+  "homepage": "https://github.com/elvis7t/rocketseat#readme",
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "gitignore": "^0.7.0"
+  }
+}

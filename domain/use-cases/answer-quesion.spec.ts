@@ -1,14 +1,27 @@
 import { expect, test } from 'vitest';
 import { AnswerQuestionUseCase } from './answer-quesion';
+import { AnswersRepository } from "../repositories/answers-repositoty";
 
-test('create an answer', () => {
-    const answerQuestion = new AnswerQuestionUseCase()
+const fakeAnswersRepository: AnswersRepository = {
+    create: async (answer) => {
+        return Promise.resolve();
+    },
+    findById: async (id) => {
+        return Promise.resolve(null);
+    },
+    findByQuestionId: async (questionId) => {
+        return Promise.resolve([]);
+    }
+};
 
-    const answer = answerQuestion.execute({
+test('create an answer', async () => {
+    const answerQuestion = new AnswerQuestionUseCase(fakeAnswersRepository);
+
+    const answer = await answerQuestion.execute({
+        content: 'This is an answer',
         instructorId: '1-123',
         questionId: 'question-456',
-        content: 'This is an answer',
     })
-    
+
     expect(answer.content).toEqual('This is an answer');
 })

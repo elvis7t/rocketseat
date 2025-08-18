@@ -37,7 +37,7 @@ export class Answer extends Entity<AnswerProps> {
             .trimEnd()
             .concat('...')
     }
-    
+
     set content(content: string) {
         this.props.content = content
     }

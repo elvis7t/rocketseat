@@ -1,15 +1,9 @@
 import { AnswerQuestionUseCase } from './answer-quesion'
-import { AnswersRepository } from '@/domain/repositories/answers-repository'
+import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
 
 const fakeAnswersRepository: AnswersRepository = {
-  create: async (answer) => {
+  create: async () => {
     return Promise.resolve()
-  },
-  findById: async (id) => {
-    return Promise.resolve(null)
-  },
-  findByQuestionId: async (questionId) => {
-    return Promise.resolve([])
   },
 }
 

@@ -36,8 +36,8 @@
   ```
   src/
   ├── core/ # compartilhar código que pode ser usado em vários locais da aplicação.
-  │   ├── entities/ 
-  │   └── types/ 
+  │   ├── entities/
+  │   └── types/
   ├── domain/                     # Dominios
   │   ├── forum/         # Sundominio -
   │   │   ├── Application/ # Camada vermelha - Application Business Rules
@@ -47,3 +47,9 @@
   │   │         └── entities/
   │   │                   └── value-objects/ # são propriedades das nossas entidades que possuem regras de negócio associadas a essas propriedades.
   ```
+---
+# Faker
+  ```
+  npm i @faker-js/faker -D
+  ```
+

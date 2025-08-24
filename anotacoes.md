@@ -52,4 +52,12 @@
   ```
   npm i @faker-js/faker -D
   ```
-
+  ---
+  
+  ## O que é o override?
+  
+  O override é um parâmetro que permite sobrescrever (substituir) as propriedades padrão de um objeto quando você está criando uma instância.
+  
+  Tipos importantes:
+  * Partial<QuestionProps>: Significa que override pode conter algumas ou todas as propriedades de QuestionProps
+  * = {}: Valor padrão é um objeto vazio (nenhuma sobrescrita)

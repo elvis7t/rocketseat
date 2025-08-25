@@ -2,10 +2,10 @@ import { QuestionsRepository } from '@/domain/forum/application/repositories/que
 import { Question } from '../../enterprise/entities/question'
 
 interface EditQuestionUseCaseRequest {
-    authorId: string
-    questionId: string
-    title: string
-    content: string
+  authorId: string
+  questionId: string
+  title: string
+  content: string
 }
 
 interface EditQuestionUseCaseResponse {

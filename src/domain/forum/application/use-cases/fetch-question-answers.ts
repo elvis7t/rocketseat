@@ -11,7 +11,7 @@ interface FetchQuestionAnswersUseCaseRequestResponse {
 }
 
 export class FetchQuestionAnswersUseCase {
-  constructor(private answerRepository: AnswersRepository) { }
+  constructor(private answerRepository: AnswersRepository) {}
 
   async execute({
     questionId,

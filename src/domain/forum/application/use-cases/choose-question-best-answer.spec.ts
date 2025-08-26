@@ -13,7 +13,10 @@ describe('Choose Question Best Answer', () => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository()
     // system under test
-    sut = new ChooseQuestionBestAnswerUseCase(inMemoryQuestionsRepository, inMemoryAnswersRepository)
+    sut = new ChooseQuestionBestAnswerUseCase(
+      inMemoryQuestionsRepository,
+      inMemoryAnswersRepository,
+    )
   })
 
   it('should be able to choose a question best answer', async () => {

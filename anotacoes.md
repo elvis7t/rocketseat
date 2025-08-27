@@ -61,3 +61,12 @@
   Tipos importantes:
   * Partial<QuestionProps>: Significa que override pode conter algumas ou todas as propriedades de QuestionProps
   * = {}: Valor padrão é um objeto vazio (nenhuma sobrescrita)
+
+  ## Functional Error Handling
+  either.ts
+  
+  left-failure / Right-sucess
+  * Rigth - Correu tudo certo  ✅  
+  UI → CTRL → CASO DE USO → REPOSITÓRIO → BANCO DE DADOS
+  * left - Deu erro e voltou  ❌  
+  UI → CTRL ←→ CASO DE USO → REPOSITÓRIO → BANCO DE DADOS

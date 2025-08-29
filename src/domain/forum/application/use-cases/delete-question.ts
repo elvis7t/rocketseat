@@ -1,11 +1,17 @@
+import { Either, left, right } from '@/core/either'
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
+import { NotAllowedFondError } from './errors/not-allowed-error'
+import { ResourceNotFondError } from './errors/resource-not-found-error'
 
 interface DeleteQuestionUseCaseRequest {
   authorId: string
   questionId: string
 }
 
-interface DeleteQuestionUseCaseResponse {}
+type DeleteQuestionUseCaseResponse = Either<
+  ResourceNotFondError | NotAllowedFondError,
+  {}
+>
 
 export class DeleteQuestionUseCase {
   constructor(private questionRepository: QuestionsRepository) {}
@@ -17,14 +23,14 @@ export class DeleteQuestionUseCase {
     const question = await this.questionRepository.findById(questionId)
 
     if (!question) {
-      throw new Error('Question not found')
+      return left(new ResourceNotFondError())
     }
 
     if (question.authorId.toString() !== authorId) {
-      throw new Error('You are not the author of this question')
+      return left(new NotAllowedFondError())
     }
 
     await this.questionRepository.delete(question)
-    return {}
+    return right({})
   }
 }

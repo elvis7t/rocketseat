@@ -1,5 +1,8 @@
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
-import { Question } from '../../enterprise/entities/question'
+import { Question } from '@/domain/forum/enterprise/entities/question'
+import { Either, left, right } from '@/core/either'
+import { NotAllowedFondError } from './errors/not-allowed-error'
+import { ResourceNotFondError } from './errors/resource-not-found-error'
 
 interface EditQuestionUseCaseRequest {
   authorId: string
@@ -8,10 +11,12 @@ interface EditQuestionUseCaseRequest {
   content: string
 }
 
-interface EditQuestionUseCaseResponse {
-  question: Question
-}
-
+type EditQuestionUseCaseResponse = Either<
+  ResourceNotFondError | NotAllowedFondError,
+  {
+    question: Question
+  }
+>
 export class EditQuestionUseCase {
   constructor(private questionRepository: QuestionsRepository) {}
 
@@ -24,19 +29,19 @@ export class EditQuestionUseCase {
     const question = await this.questionRepository.findById(questionId)
 
     if (!question) {
-      throw new Error('Question not found')
+      return left(new ResourceNotFondError())
     }
 
     if (question.authorId.toString() !== authorId) {
-      throw new Error('You are not the author of this question')
+      return left(new NotAllowedFondError())
     }
 
     question.title = title
     question.content = content
 
     await this.questionRepository.save(question)
-    return {
+    return right({
       question,
-    }
+    })
   }
 }

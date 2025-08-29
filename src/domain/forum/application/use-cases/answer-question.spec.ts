@@ -10,15 +10,14 @@ describe('AnswerQuestionUseCase', () => {
     sut = new AnswerQuestionUseCase(inMemoryAnswersRepository)
   })
 
-  test('create an answer', async () => {
-    const { answer } = await sut.execute({
+  test('should be able to create an answer', async () => {
+    const result = await sut.execute({
       questionId: 'question-456',
       instructorId: '1-123',
       content: 'This is an answer',
     })
 
-    expect(answer.id).toBeTruthy()
-    expect(answer.content).toEqual('This is an answer')
-    expect(inMemoryAnswersRepository.items[0].id).toEqual(answer.id)
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryAnswersRepository.items[0]).toEqual(result.value?.answer)
   })
 })

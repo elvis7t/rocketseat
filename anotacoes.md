@@ -70,3 +70,13 @@
   UI → CTRL → CASO DE USO → REPOSITÓRIO → BANCO DE DADOS
   * left - Deu erro e voltou  ❌  
   UI → CTRL ←→ CASO DE USO → REPOSITÓRIO → BANCO DE DADOS
+
+
+  ## Aggregate
+ conjunto de entidades que são manipuladas ao mesmo tempo e elas juntas compõem algo maior, quando a gente tem duas ou mais entidades que são trabalhadas juntas, para persistir dados no banco ao mesmo tempo
+ Todo agregata tem uma entidade raiz"Pai"
+  ## Watchedlist
+  Watched List, ela é uma lista observada.
+  Editar 
+
+  uma classe, que permite a gente ter mais informações sobre itens contidos numa lista. Então, imagina que o WatchedList é um array como qualquer outro, porém cada item dentro desse array não tem apenas os dados do item em si. Tem também informações se aquilo é um item novo é um item que foi removido ou é um item que foi deletado. Para na hora que eu for salvar esta informação no banco de dados, eu saiba exatamente qual operação eu preciso fazer no banco de dados para cada item, para cada situação daquele item. a gente vai começar a trabalhar com relacionamentos

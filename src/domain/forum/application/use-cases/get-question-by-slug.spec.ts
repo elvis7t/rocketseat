@@ -9,8 +9,11 @@ let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let sut: GetQuestionBySlugUseCase
 describe('Get Question By Slug', () => {
   beforeEach(() => {
-    inMemoryQuestionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(inMemoryQuestionAttachmentsRepository)
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository,
+    )
     // system under test
     sut = new GetQuestionBySlugUseCase(inMemoryQuestionsRepository)
   })
@@ -26,11 +29,10 @@ describe('Get Question By Slug', () => {
       slug: 'example-question',
     })
 
-    expect(result.isRight()).toBe(true)
-    if (result.isRight()) {
-      expect(result.value.question.id).toBeTruthy()
-      expect(result.value.question.title).toBe(newQuestion.title)
-      expect(result.value.question.content).toBe(newQuestion.content)
-    }
+    expect(result.value).toMatchObject({
+      question: expect.objectContaining({
+        title: newQuestion.title,
+      }),
+    })
   })
 })

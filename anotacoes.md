@@ -80,3 +80,28 @@
   Editar 
 
   uma classe, que permite a gente ter mais informações sobre itens contidos numa lista. Então, imagina que o WatchedList é um array como qualquer outro, porém cada item dentro desse array não tem apenas os dados do item em si. Tem também informações se aquilo é um item novo é um item que foi removido ou é um item que foi deletado. Para na hora que eu for salvar esta informação no banco de dados, eu saiba exatamente qual operação eu preciso fazer no banco de dados para cada item, para cada situação daquele item. a gente vai começar a trabalhar com relacionamentos
+
+  ---
+  # Subdomínios
+
+Os subdomínios de um sistema podem ser classificados em três categorias principais:
+
+- **Core**: O que dá dinheiro  
+- **Supporting**: Dá suporte para o core funcionar  
+- **Generic**: Você precisa, mas não são tão importantes  
+
+## Exemplos
+
+### Core
+- Compra  
+- Catálogo  
+- Pagamento  
+- Entrega  
+
+### Supporting
+- Estoque  
+
+### Generic
+- Notificação ao cliente  
+- Promoções  
+- Chat  

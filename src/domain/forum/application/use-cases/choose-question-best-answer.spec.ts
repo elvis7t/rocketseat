@@ -1,10 +1,10 @@
 import { InMemoryAnswersRepository } from '@test/repositories/in-memory-answers-repository'
 import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questions-repository'
-import { ChooseQuestionBestAnswerUseCase } from './choose-question-best-answer'
+import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/use-cases/choose-question-best-answer'
 import { makeAnswer } from '@test/factory/make-answer'
 import { makeQuestion } from '@test/factory/make-question'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { NotAllowedFondError } from './errors/not-allowed-error'
+import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 import { InMemoryAnswerAttachmentsRepository } from '@test/repositories/in-memory-answer-attachments-repository'
 import { InMemoryQuestionAttachmentsRepository } from '@test/repositories/in-memory-question-attachments-repository'
 
@@ -15,10 +15,16 @@ let inMemoryAnswersRepository: InMemoryAnswersRepository
 let sut: ChooseQuestionBestAnswerUseCase
 describe('Choose Question Best Answer', () => {
   beforeEach(() => {
-    inMemoryQuestionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(inMemoryQuestionAttachmentsRepository)
-    inMemoryAnswerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
-    inMemoryAnswersRepository = new InMemoryAnswersRepository(inMemoryAnswerAttachmentsRepository)
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository,
+    )
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository()
+    inMemoryAnswersRepository = new InMemoryAnswersRepository(
+      inMemoryAnswerAttachmentsRepository,
+    )
     // system under test
     sut = new ChooseQuestionBestAnswerUseCase(
       inMemoryQuestionsRepository,

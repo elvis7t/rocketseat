@@ -4,8 +4,8 @@ import { Optional } from '@/core/types/optional'
 
 export interface NotificationProps {
   recipientId: UniqueEntityId
-  content: string
-  category: string
+  title: string
+  content: string  
   readAt?: Date | null
   createdAt: Date
 }
@@ -19,6 +19,10 @@ export class Notification extends Entity<NotificationProps> {
     return this.props.content
   }
 
+  get title() {
+    return this.props.title
+  }
+
   get category() {
     return this.props.category
   }
@@ -29,6 +33,10 @@ export class Notification extends Entity<NotificationProps> {
 
   get createdAt() {
     return this.props.createdAt
+  }
+
+  read() {
+    this.props.readAt = new Date()
   }
 
   static create(

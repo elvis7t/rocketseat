@@ -2,7 +2,7 @@ import { InMemoryAnswersRepository } from '@test/repositories/in-memory-answers-
 import { DeleteAnswerUseCase } from './delete-answer'
 import { makeAnswer } from '@test/factory/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { NotAllowedFondError } from './errors/not-allowed-error'
+import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 import { makeAnswerAttachment } from '@test/factory/make-anser-attachment'
 import { InMemoryAnswerAttachmentsRepository } from '@test/repositories/in-memory-answer-attachments-repository'
 
@@ -11,8 +11,11 @@ let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let sut: DeleteAnswerUseCase
 describe('Delete Answer', () => {
   beforeEach(() => {
-    inMemoryAnswerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
-    inMemoryAnswersRepository = new InMemoryAnswersRepository(inMemoryAnswerAttachmentsRepository)
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository()
+    inMemoryAnswersRepository = new InMemoryAnswersRepository(
+      inMemoryAnswerAttachmentsRepository,
+    )
     // system under test
     sut = new DeleteAnswerUseCase(inMemoryAnswersRepository)
   })
@@ -29,12 +32,12 @@ describe('Delete Answer', () => {
     inMemoryAnswerAttachmentsRepository.items.push(
       makeAnswerAttachment({
         answerId: newAnswer.id,
-        attachmentId: new UniqueEntityId('1')
+        attachmentId: new UniqueEntityId('1'),
       }),
       makeAnswerAttachment({
         answerId: newAnswer.id,
-        attachmentId: new UniqueEntityId('2')
-      })
+        attachmentId: new UniqueEntityId('2'),
+      }),
     )
 
     await sut.execute({

@@ -2,19 +2,24 @@ import { NotificationsRepository } from '@/domain/notification/application/repos
 import { Notification } from '@/domain/notification/enterprise/entities/notification'
 
 export class InMemoryNotificationsRepository
-  implements NotificationsRepository
-{
+  implements NotificationsRepository {
   public items: Notification[] = []
 
-  // async findById(id: string): Promise<Notification | null> {
-  //   const notification = this.items.find((item) => item.id.toString() === id)
-  //   if (!notification) {
-  //     return null
-  //   }
-  //   return notification
-  // }
+  async findById(id: string) {
+    const notification = this.items.find((item) => item.id.toString() === id)
+    return notification ?? null
+  }
 
-  async create(notification: Notification): Promise<void> {
+  async save(notification: Notification) {
+    const index = this.items.findIndex(
+      (item) => item.id.toString() === notification.id.toString(),
+    )
+    if (index !== -1) {
+      this.items[index] = notification
+    }
+  }
+
+  async create(notification: Notification) {
     this.items.push(notification)
   }
 }

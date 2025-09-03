@@ -2,8 +2,8 @@ import { QuestionsRepository } from '@/domain/forum/application/repositories/que
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Either, right } from '@/core/either'
-import { QuestionAttachment } from '../../enterprise/entities/question-attachment'
-import { QuestionAttachmentList } from '../../enterprise/entities/question-attachment-list'
+import { QuestionAttachment } from '@/domain/forum/enterprise/entities/question-attachment'
+import { QuestionAttachmentList } from '@/domain/forum/enterprise/entities/question-attachment-list'
 
 interface CreateQuestionUseCaseRequest {
   authorId: string
@@ -20,7 +20,7 @@ type CreateQuestionUseCaseResponse = Either<
 >
 
 export class CreateQuestionUseCase {
-  constructor(private questionRepository: QuestionsRepository) { }
+  constructor(private questionRepository: QuestionsRepository) {}
 
   async execute({
     authorId,
@@ -31,7 +31,7 @@ export class CreateQuestionUseCase {
     const question = Question.create({
       authorId: new UniqueEntityId(authorId),
       title,
-      content
+      content,
     })
 
     const questionAttachments = attachmentsIds.map((attachmentId) => {

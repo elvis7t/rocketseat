@@ -2,7 +2,7 @@ import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questi
 import { DeleteQuestionUseCase } from './delete-question'
 import { makeQuestion } from '@test/factory/make-question'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { NotAllowedFondError } from './errors/not-allowed-error'
+import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 import { InMemoryQuestionAttachmentsRepository } from '@test/repositories/in-memory-question-attachments-repository'
 import { makeQuestionAttachment } from '@test/factory/make-question-attachment'
 

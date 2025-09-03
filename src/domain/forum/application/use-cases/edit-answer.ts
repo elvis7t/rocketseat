@@ -1,12 +1,12 @@
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { Either, left, right } from '@/core/either'
-import { NotAllowedFondError } from './errors/not-allowed-error'
-import { ResourceNotFondError } from './errors/resource-not-found-error'
+import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
+import { ResourceNotFondError } from '@/core/errors/resource-not-found-error'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { AnswerAttachment } from '../../enterprise/entities/answer-attachment'
-import { AnswerAttachmentList } from '../../enterprise/entities/answer-attachment-list'
-import { AnswerAttachmentsRepository } from '../repositories/answer-attachments-repository'
+import { AnswerAttachment } from '@/domain/forum/enterprise/entities/answer-attachment'
+import { AnswerAttachmentList } from '@/domain/forum/enterprise/entities/answer-attachment-list'
+import { AnswerAttachmentsRepository } from '@/domain/forum/application/repositories/answer-attachments-repository'
 
 interface EditAnswerUseCaseRequest {
   authorId: string
@@ -22,8 +22,8 @@ type EditAnswerUseCaseResponse = Either<
 export class EditAnswerUseCase {
   constructor(
     private answerRepository: AnswersRepository,
-    private answerAttachmentsRepository: AnswerAttachmentsRepository
-  ) { }
+    private answerAttachmentsRepository: AnswerAttachmentsRepository,
+  ) {}
 
   async execute({
     authorId,
@@ -45,7 +45,7 @@ export class EditAnswerUseCase {
       await this.answerAttachmentsRepository.findManyByAnswerId(answerId)
 
     const answerAttachmentList = new AnswerAttachmentList(
-      currentAnswerAttachments
+      currentAnswerAttachments,
     )
 
     const answerAttachments = attachmentIds.map((attachmentdId) => {
@@ -59,7 +59,6 @@ export class EditAnswerUseCase {
 
     answer.content = content
     answer.attachments = answerAttachmentList
-    
 
     await this.answerRepository.save(answer)
     return right({

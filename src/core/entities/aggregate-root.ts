@@ -1,19 +1,21 @@
+import { DomainEvent } from '../events/domain-event'
+import { DomainEvents } from '../events/domain-events'
 import { Entity } from './entity'
 
 export abstract class AggregateRoot<Props> extends Entity<Props> {
-  // private _id: string
-  // private _props: Props
+    private _domainEvents: DomainEvent[] = []
 
-  // constructor(id: string, props: Props) {
-  //   this._id = id
-  //   this._props = props
-  // }
+    get domainEvents(): DomainEvent[] {
+        return this._domainEvents
+    }
 
-  // get id(): string {
-  //   return this._id
-  // }
+    protected addDomainEvent(domainEvent: DomainEvent): void {
+        this._domainEvents.push(domainEvent)
+        DomainEvents.markAggregateForDispatch(this)
+    }
 
-  // get props(): Props {
-  //   return this._props
-  // }
+    public clearEvents(): void {
+        this._domainEvents = []
+    }
+
 }

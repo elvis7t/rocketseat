@@ -105,3 +105,11 @@ Os subdomínios de um sistema podem ser classificados em três categorias princi
 - Notificação ao cliente  
 - Promoções  
 - Chat  
+---
+
+#  Fluxo de Domain Events
+![alt text](doc/pubsub.png)
+que é uma técnica utilizada para lidar com a comunicação e ações entre domínios na arquitetura de software. Vamos entender como os eventos de domínio são gerados, propagados e consumidos, permitindo uma comunicação assíncrona e desacoplada entre diferentes partes da aplicação 
+
+Essa estrutura garante uma ortogonalidade,
+Se é preciso disparar um evento sempre que for criado uma resposta, então separamos essa lojica, no metodo create eu crio um objto com dados e adiciono uma classe para escutar eventos, como eu preciso garantir a atomicidade dos dados então, quando o evento for salvo no banco eu altero um status dos dados para garantir essa atomicidade

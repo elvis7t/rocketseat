@@ -113,3 +113,9 @@ que é uma técnica utilizada para lidar com a comunicação e ações entre dom
 
 Essa estrutura garante uma ortogonalidade,
 Se é preciso disparar um evento sempre que for criado uma resposta, então separamos essa lojica, no metodo create eu crio um objto com dados e adiciono uma classe para escutar eventos, como eu preciso garantir a atomicidade dos dados então, quando o evento for salvo no banco eu altero um status dos dados para garantir essa atomicidade
+
+---
+### Uso do bind()
+Então, isso aqui é um hackzinho que a gente usa no JavaScript desde muito tempo, que é usar o bind. O bind aqui funciona da seguinte forma, eu estou falando que quando essa função for chamada, Dentro dela, o this tem que significar o mesmo this deste momento aqui que eu estou passando pra ela. Ou seja, o this nesse caso aqui é esta classe. Ou seja, não importa quando essa função for chamada, o this dela sempre vai ser a referência pra essa classe. Só que é importante porque...
+
+add Answer-comments e Question-comments

@@ -3,13 +3,13 @@ import { Either, right } from '@/core/either'
 import { Notification } from '@/domain/notification/enterprise/entities/notification'
 import { NotificationsRepository } from '@/domain/notification/application/repositories/notifications-repository'
 
-interface SendNotificationUseCaseRequest {
+export interface SendNotificationUseCaseRequest {
   recipientId: string
   title: string
   content: string
 }
 
-type SendNotificationUseCaseResponse = Either<
+export type SendNotificationUseCaseResponse = Either<
   null,
   {
     notification: Notification

@@ -1,6 +1,6 @@
 - Eu tenho que responder os alunos e eu me perco em quais dúvidas já foram respondidas
 
-# insructor - use-case - students
+# instructor - use-case - students
 
 - Entidades traduzem tudo que for mantido na aplicação - não precisa ser tablelas no banco - podem compor uma tabela
 
@@ -113,6 +113,123 @@ que é uma técnica utilizada para lidar com a comunicação e ações entre dom
 
 Essa estrutura garante uma ortogonalidade,
 Se é preciso disparar um evento sempre que for criado uma resposta, então separamos essa lojica, no metodo create eu crio um objto com dados e adiciono uma classe para escutar eventos, como eu preciso garantir a atomicidade dos dados então, quando o evento for salvo no banco eu altero um status dos dados para garantir essa atomicidade
+
+## Fluxo
+ O evento é criado, armazenado no agregado, e quando é despachado no repositório. Abaixo está o fluxo completo passo a passo, com os pontos de entrada e execução do handler.
+
+### Fluxo completo (fim-a-fim)
+
+1) Criação do evento no agregado
+- **Quando** uma `Answer` é criada e identificada como nova, o agregado adiciona o evento de domínio.
+```74:76:/home/elvis/devspace/rocketseat/src/domain/forum/enterprise/entities/answer.ts
+    if (isNewAnswer) {
+      answer.addDomainEvent(new AnswerCreatedEvent(answer))
+    }
+```
+
+2) Armazenar o evento e marcar o agregado para dispatch
+- `addDomainEvent` guarda o evento na lista interna do agregado e marca o agregado para futura publicação.
+```12:15:/home/elvis/devspace/rocketseat/src/core/entities/aggregate-root.ts
+  protected addDomainEvent(domainEvent: DomainEvent): void {
+    this._domainEvents.push(domainEvent)
+    DomainEvents.markAggregateForDispatch(this)
+  }
+```
+
+3) Repositório persiste e dispara os eventos do agregado
+- Após `create`/`save`, o repositório chama o dispatch para o agregado recém-persistido.
+```42:46:/home/elvis/devspace/rocketseat/test/repositories/in-memory-answers-repository.ts
+  async create(answer: Answer): Promise<void> {
+    this.items.push(answer)
+
+    DomainEvents.dispatchEventsForAggregate(answer.id)
+  }
+```
+- O mecanismo de eventos encontra o agregado marcado, despacha todos os seus eventos e limpa a fila.
+```37:45:/home/elvis/devspace/rocketseat/src/core/events/domain-events.ts
+  public static dispatchEventsForAggregate(id: UniqueEntityId) {
+    const aggregate = this.findMarkedAggregateByID(id)
+
+    if (aggregate) {
+      this.dispatchAggregateEvents(aggregate)
+      aggregate.clearEvents()
+      this.removeAggregateFromMarkedDispatchList(aggregate)
+    }
+  }
+```
+
+4) Dispatcher resolve handlers registrados por nome do evento
+- O dispatcher identifica handlers registrados com o nome da classe do evento e os executa.
+```68:79:/home/elvis/devspace/rocketseat/src/core/events/domain-events.ts
+  private static dispatch(event: DomainEvent) {
+    const eventClassName: string = event.constructor.name
+
+    const isEventRegistered = eventClassName in this.handlersMap
+
+    if (isEventRegistered) {
+      const handlers = this.handlersMap[eventClassName]
+
+      for (const handler of handlers) {
+        handler(event)
+      }
+    }
+  }
+```
+
+5) Definição do evento de domínio
+- O evento carrega a `answer` e o `ocurredAt`, e expõe o `getAggregateId`.
+```5:16:/home/elvis/devspace/rocketseat/src/domain/forum/enterprise/events/answer-created-event.ts
+export class AnswerCreatedEvent implements DomainEvent {
+  public ocurredAt: Date
+  public answer: Answer
+
+  constructor(answer: Answer) {
+    this.answer = answer
+    this.ocurredAt = new Date()
+  }
+
+  getAggregateId(): UniqueEntityId {
+    return this.answer.id
+  }
+}
+```
+
+6) Registro da assinatura (listener) do evento
+- Ao instanciar o subscriber, ele se registra para escutar `AnswerCreatedEvent` no barramento.
+```15:19:/home/elvis/devspace/rocketseat/src/domain/notification/subscribers/on-answer-created.ts
+  setupSubscriptions(): void {
+    DomainEvents.register(
+      this.sendNewAnswerNotification.bind(this),
+      AnswerCreatedEvent.name,
+    )
+  }
+```
+
+7) Execução do handler: carregar dados e disparar caso de uso
+- O handler busca a `Question` da `Answer`, e dispara o `SendNotificationUseCase`.
+```22:31:/home/elvis/devspace/rocketseat/src/domain/notification/subscribers/on-answer-created.ts
+  private async sendNewAnswerNotification({ answer }: AnswerCreatedEvent) {
+    const question = await this.quesTionsRepository.findById(
+      answer.questionId.toString(),
+    )
+    if (question) {
+      await this.sendNotification.execute({
+        recipientId: question.authorId.toString(),
+        title: `Nova resposta em "${question.title.substring(0, 40).concat('...')}"`,
+        content: answer.excerpt,
+      })
+    }
+  }
+```
+
+8) Resultado
+- O autor da pergunta recebe uma notificação com título e trecho da resposta, logo após o repositório persistir a `Answer` e o domínio despachar os eventos.
+
+Resumo
+- Evento criado: `AnswerCreatedEvent` é adicionado à `Answer` via `addDomainEvent`.
+- Agendado para dispatch: agregado marcado em `DomainEvents.markAggregateForDispatch`.
+- Despacho: repositório chama `DomainEvents.dispatchEventsForAggregate(answer.id)` após persistência.
+- Listener: `OnAnswerCreated` registrado com `AnswerCreatedEvent.name`, busca `Question` e envia notificação via `SendNotificationUseCase`.
 
 ---
 ### Uso do bind()

@@ -23,6 +23,7 @@ export class AnswerComment extends Comment<AnswerCommentProps> {
       },
       id,
     )
+
     const isNewAnswerComment = !id
 
     if (isNewAnswerComment) {
@@ -30,6 +31,7 @@ export class AnswerComment extends Comment<AnswerCommentProps> {
         new CommentOnAnswerEvent(answerComment, answerComment.answerId),
       )
     }
+
     return answerComment
   }
 }

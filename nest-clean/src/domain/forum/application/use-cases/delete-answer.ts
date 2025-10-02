@@ -31,6 +31,6 @@ export class DeleteAnswerUseCase {
     }
 
     await this.answerRepository.delete(answer)
-    return right({})
+    return right(null)
   }
 }

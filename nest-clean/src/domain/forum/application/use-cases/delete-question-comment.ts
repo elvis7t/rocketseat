@@ -32,6 +32,6 @@ export class DeleteQuestionCommentUseCase {
     }
 
     await this.questionCommentRepository.delete(questionComment)
-    return right({})
+    return right(null)
   }
 }

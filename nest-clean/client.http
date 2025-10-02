@@ -28,7 +28,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "title": "How to learn NestJS? 2",
+  "title": "How to learn NestJS? 3",
   "content": "I want to learn NestJS, any tips?"
 }
 ###

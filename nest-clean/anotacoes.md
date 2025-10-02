@@ -5,6 +5,12 @@ pode ser aplicado numa classe como ele tá aqui ó em cima diretamente do nome d
 
 Ou seja, os decorators são basicamente isso, funções que recebem a linha de baixo, a próxima instrução JavaScript abaixo, e modificam ela de alguma forma para que ela tenha algum comportamento diferente. Então, o que a gente pode ver é que o Nest usa desses decorators aqui dentro dos controllers, principalmente dentro dos controllers que a gente vai usar decorators, para indicar.
 
+### Modulos
+Se eu quero deixar o Prisma Service ou qualquer outro provider disponível para todo o módulo que importar o meu Database Module, eu vou usar a propriedade exports e aí eu uso Prisma Service. Ou seja, agora quando eu uso exports, todo o módulo que importar o Database Module também vai ter acesso ao Prisma Service.
+
+### Mappers
+Preciso ter mais de uma representação da classe e nesse caso é muito comum a gente precisar fazer uso de algo que a gente chama de uma forma mais genérica de mappers os mappers são classes responsáveis por converter uma entidade em um formato de uma camada para o formato de outra camada então aqui olha só eu vou criar aqui o prisma question mapper
+
 ### Dicas
 
 Toda classe que for um provider aqui no Nest precisa ter o injectable, senão o Nest não vai conseguir utilizar daquela classe, porque ele não vai conseguir fazer a injeção dessa dependência

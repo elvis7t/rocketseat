@@ -6,10 +6,10 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common'
-import { PrismaService } from '@/prisma/prisma.service'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { hash } from 'bcryptjs'
 import { z } from 'zod'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipes'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipes'
 
 const createAccountBodySchema = z.object({
   email: z.string().email(),

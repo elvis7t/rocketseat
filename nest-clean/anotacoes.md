@@ -14,6 +14,9 @@ Preciso ter mais de uma representação da classe e nesse caso é muito comum a 
 ### Presenter
 Vamos utilizar de dentro da Clean Architecture, o Presenter. O Presenter justamente vai fazer o papel de formatar os dados, apresentar os dados de como eles estão vindo da camada de domínio para dentro da camada HTTP de volta, para dentro de como o front-end espera esses dados.
 
+### Stubs
+Stub, dentro do contexto de testes, é quando você cria uma classe que implementa um contrato, porém ela faz uma implementação fictícia, algo que é irreal feito só para os testes.
+
 ### Dicas
 
 Toda classe que for um provider aqui no Nest precisa ter o injectable, senão o Nest não vai conseguir utilizar daquela classe, porque ele não vai conseguir fazer a injeção dessa dependência

@@ -41,7 +41,7 @@ export class RegisterStudentUseCase {
         const student = Student.create({
             name,
             email,
-            password
+            password: hashedPassword
         })
 
         await this.studentsRepository.create(student)

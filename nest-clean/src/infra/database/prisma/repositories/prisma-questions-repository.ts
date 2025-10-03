@@ -43,7 +43,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
                 createdAt: 'desc'
             },
             take: 20,
-            skip: (page - 20) * 20
+            skip: (page - 1) * 20,
         })
 
         return questions.map(PrismaQuestionMapper.toDomain)

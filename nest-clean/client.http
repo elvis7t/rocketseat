@@ -28,12 +28,12 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "title": "How to learn NestJS? 3",
+  "title": "How to learn NestJS? 7",
   "content": "I want to learn NestJS, any tips?"
 }
 ###
 # @name FetchRecentQuestion
-GET {{baseUrl}}/questions?page=3
+GET {{baseUrl}}/questions?page=1
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 

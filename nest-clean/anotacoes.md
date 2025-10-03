@@ -11,6 +11,9 @@ Se eu quero deixar o Prisma Service ou qualquer outro provider disponível para 
 ### Mappers
 Preciso ter mais de uma representação da classe e nesse caso é muito comum a gente precisar fazer uso de algo que a gente chama de uma forma mais genérica de mappers os mappers são classes responsáveis por converter uma entidade em um formato de uma camada para o formato de outra camada então aqui olha só eu vou criar aqui o prisma question mapper
 
+### Presenter
+Vamos utilizar de dentro da Clean Architecture, o Presenter. O Presenter justamente vai fazer o papel de formatar os dados, apresentar os dados de como eles estão vindo da camada de domínio para dentro da camada HTTP de volta, para dentro de como o front-end espera esses dados.
+
 ### Dicas
 
 Toda classe que for um provider aqui no Nest precisa ter o injectable, senão o Nest não vai conseguir utilizar daquela classe, porque ele não vai conseguir fazer a injeção dessa dependência

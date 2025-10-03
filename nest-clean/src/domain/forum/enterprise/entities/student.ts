@@ -2,9 +2,9 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 
 export interface StudentProps {
-  name: String
-  email: String
-  password: String
+  name: string
+  email: string
+  password: string
 }
 
 export class Student extends Entity<StudentProps> {

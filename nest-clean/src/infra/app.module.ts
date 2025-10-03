@@ -1,8 +1,8 @@
+import { envSchema } from '@/infra/env'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { PrismaService } from './database/prisma/prisma.service'
 import { AuthModule } from './auth/auth.module'
-import { envSchema } from '@/infra/env'
+import { EnvModule } from './env/env.module'
 import { HttpModule } from './http/http.module'
 
 @Module({
@@ -13,6 +13,7 @@ import { HttpModule } from './http/http.module'
     }),
     AuthModule,
     HttpModule,
+    EnvModule
   ],
 })
 export class AppModule { }

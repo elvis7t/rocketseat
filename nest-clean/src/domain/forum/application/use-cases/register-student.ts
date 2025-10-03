@@ -6,9 +6,9 @@ import { HashGenerator } from '@/domain/forum/application/cryptography/hasher-ge
 import { StudentAlreadyExistsError } from './errors/student-already-exists-error'
 
 interface RegisterStudentUseCaseRequest {
-    name: String
-    email: String
-    password: String
+    name: string
+    email: string
+    password: string
 }
 
 type RegisterStudentUseCaseResponse = Either<

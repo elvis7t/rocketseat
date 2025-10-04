@@ -4,7 +4,7 @@ import { makeAnswer } from '@test/factory/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 import { InMemoryAnswerAttachmentsRepository } from '@test/repositories/in-memory-answer-attachments-repository'
-import { makeAnswerAttachment } from '@test/factory/make-anser-attachment'
+import { makeAnswerAttachment } from '@test/factory/make-anser-attachments'
 
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository

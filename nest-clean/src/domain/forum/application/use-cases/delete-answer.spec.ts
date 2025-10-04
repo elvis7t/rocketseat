@@ -3,7 +3,7 @@ import { DeleteAnswerUseCase } from './delete-answer'
 import { makeAnswer } from '@test/factory/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
-import { makeAnswerAttachment } from '@test/factory/make-anser-attachment'
+import { makeAnswerAttachment } from '@test/factory/make-anser-attachments'
 import { InMemoryAnswerAttachmentsRepository } from '@test/repositories/in-memory-answer-attachments-repository'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository

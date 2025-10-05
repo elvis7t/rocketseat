@@ -7,13 +7,14 @@ import { QuestionAttachmentsRepository } from '@/domain/forum/application/reposi
 import { QuestionAttachmentList } from '@/domain/forum/enterprise/entities/question-attachment-list'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { QuestionAttachment } from '@/domain/forum/enterprise/entities/question-attachment'
+import { Injectable } from '@nestjs/common'
 
 interface EditQuestionUseCaseRequest {
   authorId: string
   questionId: string
   title: string
   content: string
-  attachmentIds: string[]
+  attachmentIds?: string[]
 }
 
 type EditQuestionUseCaseResponse = Either<
@@ -22,6 +23,8 @@ type EditQuestionUseCaseResponse = Either<
     question: Question
   }
 >
+
+@Injectable()
 export class EditQuestionUseCase {
   constructor(
     private questionRepository: QuestionsRepository,
@@ -33,7 +36,7 @@ export class EditQuestionUseCase {
     questionId,
     title,
     content,
-    attachmentIds,
+    attachmentIds = [],
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
     const question = await this.questionRepository.findById(questionId)
 

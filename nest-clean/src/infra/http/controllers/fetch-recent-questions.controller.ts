@@ -1,5 +1,5 @@
 import { FetchRecentQuestionsUseCase } from '@/domain/forum/application/use-cases/fetch-recent-questions'
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipes'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { QuestionPresenter } from '@/infra/http/presenter/question-presenter'
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common'
 import { z } from 'zod'

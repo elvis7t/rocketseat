@@ -4,7 +4,6 @@ import { makeAnswer } from '@test/factory/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 import { InMemoryAnswerAttachmentsRepository } from '@test/repositories/in-memory-answer-attachments-repository'
-import { makeAnswerAttachment } from '@test/factory/make-anser-attachments'
 
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository
@@ -35,16 +34,7 @@ describe('Edit Answer', () => {
 
     await inMemoryAnswersRepository.create(newAnswer)
 
-    inMemoryAnswerAttachmentsRepository.items.push(
-      makeAnswerAttachment({
-        answerId: newAnswer.id,
-        attachmentId: new UniqueEntityId('1'),
-      }),
-      makeAnswerAttachment({
-        answerId: newAnswer.id,
-        attachmentId: new UniqueEntityId('2'),
-      }),
-    )
+
 
     await sut.execute({
       answerId: newAnswer.id.toValue(),

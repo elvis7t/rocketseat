@@ -1,7 +1,7 @@
 import { StudentAlreadyExistsError } from '@/domain/forum/application/use-cases/errors/student-already-exists-error'
 import { RegisterStudentUseCase } from '@/domain/forum/application/use-cases/register-student'
 import { Public } from '@/infra/auth/public'
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipes'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import {
   BadRequestException,
   Body, ConflictException, Controller,

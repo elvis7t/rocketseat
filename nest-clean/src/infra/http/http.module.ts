@@ -1,6 +1,9 @@
 import { AuthenticateStudentUseCase } from "@/domain/forum/application/use-cases/authenticate-student";
 import { CreateQuestionUseCase } from "@/domain/forum/application/use-cases/create-question";
+import { EditAnswerUseCase } from "@/domain/forum/application/use-cases/edit-answer";
+import { EditQuestionUseCase } from "@/domain/forum/application/use-cases/edit-question";
 import { FetchRecentQuestionsUseCase } from "@/domain/forum/application/use-cases/fetch-recent-questions";
+import { GetQuestionBySlugUseCase } from "@/domain/forum/application/use-cases/get-question-by-slug";
 import { RegisterStudentUseCase } from "@/domain/forum/application/use-cases/register-student";
 import { CryptographyModule } from "@/infra/cryptography/cryptography.module";
 import { DatabaseModule } from "@/infra/database/prisma/database.module";
@@ -8,9 +11,14 @@ import { Module } from "@nestjs/common";
 import { AuthenticateController } from "./controllers/authenticate.controller";
 import { CreateAccountController } from "./controllers/create-account.controller";
 import { CreateQuestionController } from "./controllers/create-question.controller";
+import { EditAnswerController } from "./controllers/edit-answer.controller";
+import { EditQuestionController } from "./controllers/edit-question.controller";
 import { FetchRecentQuestionController } from "./controllers/fetch-recent-questions.controller";
 import { GetQuestionBySlugController } from "./controllers/get-questions-by-slug.controller";
-import { GetQuestionBySlugUseCase } from "@/domain/forum/application/use-cases/get-question-by-slug";
+import { DeleteQuestionController } from "./controllers/delete-question.controller";
+import { DeleteQuestionUseCase } from "@/domain/forum/application/use-cases/delete-question";
+import { DeleteAnswerController } from "./controllers/delete-answer.controller";
+import { DeleteAnswerUseCase } from "@/domain/forum/application/use-cases/delete-answer";
 
 @Module({
     imports: [
@@ -22,15 +30,22 @@ import { GetQuestionBySlugUseCase } from "@/domain/forum/application/use-cases/g
         AuthenticateController,
         CreateQuestionController,
         FetchRecentQuestionController,
-        GetQuestionBySlugController
+        GetQuestionBySlugController,
+        EditQuestionController,
+        EditAnswerController,
+        DeleteQuestionController,
+        DeleteAnswerController,
     ],
     providers: [
-
         CreateQuestionUseCase,
         FetchRecentQuestionsUseCase,
         RegisterStudentUseCase,
         AuthenticateStudentUseCase,
-        GetQuestionBySlugUseCase
+        GetQuestionBySlugUseCase,
+        EditQuestionUseCase,
+        EditAnswerUseCase,
+        DeleteQuestionUseCase,
+        DeleteAnswerUseCase
     ],
 })
 export class HttpModule { }

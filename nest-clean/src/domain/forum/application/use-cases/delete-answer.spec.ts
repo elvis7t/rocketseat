@@ -3,7 +3,6 @@ import { DeleteAnswerUseCase } from './delete-answer'
 import { makeAnswer } from '@test/factory/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
-import { makeAnswerAttachment } from '@test/factory/make-anser-attachments'
 import { InMemoryAnswerAttachmentsRepository } from '@test/repositories/in-memory-answer-attachments-repository'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
@@ -29,16 +28,7 @@ describe('Delete Answer', () => {
     )
 
     await inMemoryAnswersRepository.create(newAnswer)
-    inMemoryAnswerAttachmentsRepository.items.push(
-      makeAnswerAttachment({
-        answerId: newAnswer.id,
-        attachmentId: new UniqueEntityId('1'),
-      }),
-      makeAnswerAttachment({
-        answerId: newAnswer.id,
-        attachmentId: new UniqueEntityId('2'),
-      }),
-    )
+
 
     await sut.execute({
       authorId: 'author-1',

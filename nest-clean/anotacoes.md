@@ -17,6 +17,10 @@ Vamos utilizar de dentro da Clean Architecture, o Presenter. O Presenter justame
 ### Stubs
 Stub, dentro do contexto de testes, é quando você cria uma classe que implementa um contrato, porém ela faz uma implementação fictícia, algo que é irreal feito só para os testes.
 
+
+### Nest Interfaces
+O Nest, quando ele compila o código de TypeScript para JavaScript, tudo que é apenas TypeScript, como por exemplo as interfaces dos outros repositórios, elas são eliminadas do código e aí o nest perde referência para o nome das interfaces, ele não consegue fazer a injeção de dependência, porque ele depende desse nome. Por isso que a gente mudou para classes, porque o JavaScript entende classes, então o código compilado continua tendo essas classes em si. Então, aqui, o que a gente vai fazer é ir nos outros repositórios e trocar interfaces por classes abstratas
+
 ### Dicas
 
 Toda classe que for um provider aqui no Nest precisa ter o injectable, senão o Nest não vai conseguir utilizar daquela classe, porque ele não vai conseguir fazer a injeção dessa dependência

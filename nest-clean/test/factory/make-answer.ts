@@ -33,6 +33,15 @@ export class AnswerFactory {
       data: PrismaAnswerMapper.toPrisma(answer),
     })
 
+    await this.prisma.attachment.createMany({
+      data: Array.from({ length: 2 }).map(() => ({
+        id: new UniqueEntityId().toString(),
+        title: faker.lorem.words(4),
+        url: faker.internet.url(),
+        answerId: answer.id.toString(),
+      })),
+    })
+
     return answer
   }
 }

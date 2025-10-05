@@ -53,6 +53,9 @@ pnpm i vitest-tsconfig-paths -D
 pnpm i dotenv -D // Apenas para configurar no setup-e2e.ts pois não esta no porjeto nest
 pnpm i supertest -D
 pnpm i @types/supertest -D
+pnpm i @types/multer -D
+pnpm i @nestjs/common@latest
+pnpm i @aws-sdk/client-s3
 ```
 
 ```
@@ -62,6 +65,7 @@ pnpm i
 http localhost:3000
 pnpm prisma init
 pnpm prisma migrate dev // create user and question
+pnpm prisma generate
 pnpm prisma studio
 http POST http://localhost:3333/api/hello
 openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048

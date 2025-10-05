@@ -21,6 +21,13 @@ Stub, dentro do contexto de testes, é quando você cria uma classe que implemen
 ### Nest Interfaces
 O Nest, quando ele compila o código de TypeScript para JavaScript, tudo que é apenas TypeScript, como por exemplo as interfaces dos outros repositórios, elas são eliminadas do código e aí o nest perde referência para o nome das interfaces, ele não consegue fazer a injeção de dependência, porque ele depende desse nome. Por isso que a gente mudou para classes, porque o JavaScript entende classes, então o código compilado continua tendo essas classes em si. Então, aqui, o que a gente vai fazer é ir nos outros repositórios e trocar interfaces por classes abstratas
 
+
+### Rest X GraphQL
+O GraphQL surgiu como resposta às limitações do REST, que, embora amplamente utilizado, apresenta dois problemas principais:
+- Overfetching: ocorre quando a API retorna mais dados do que o necessário, como trazer autor e respostas de uma pergunta quando só se quer os dados da pergunta. Isso aumenta o volume de dados trafegados, o tempo de resposta e o processamento.
+- Underfetching: acontece quando a API fornece dados de menos, exigindo várias requisições para compor uma única tela, como buscar separadamente os dados da pergunta, do autor e das respostas.
+Por isso, ao usar REST, é importante buscar um equilíbrio entre excesso e escassez de dados retornados.
+
 ### Dicas
 
 Toda classe que for um provider aqui no Nest precisa ter o injectable, senão o Nest não vai conseguir utilizar daquela classe, porque ele não vai conseguir fazer a injeção dessa dependência

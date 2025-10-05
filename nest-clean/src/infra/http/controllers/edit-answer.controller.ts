@@ -14,7 +14,7 @@ import { EditAnswerUseCase } from '@/domain/forum/application/use-cases/edit-ans
 
 const editAnswerBodySchema = z.object({
   content: z.string(),
-  attachments: z.array(z.string().uuid()).optional(),
+  attachments: z.array(z.uuid()).default([]),
 })
 
 const bodyValidationPipe = new ZodValidationPipe(editAnswerBodySchema)
@@ -23,7 +23,7 @@ type EditAnswerBodySchema = z.infer<typeof editAnswerBodySchema>
 
 @Controller('/answers/:id')
 export class EditAnswerController {
-  constructor(private editAnswer: EditAnswerUseCase) {}
+  constructor(private editAnswer: EditAnswerUseCase) { }
 
   @Put()
   @HttpCode(204)

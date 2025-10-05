@@ -1,4 +1,4 @@
-import { makeQuestion } from '@test/factory/make-question'
+import { makeQuestion } from '@test/factories/make-question'
 import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questions-repository'
 import { InMemoryQuestionAttachmentsRepository } from '@test/repositories/in-memory-question-attachments-repository'
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository'
@@ -7,7 +7,7 @@ import { vi, type MockInstance } from 'vitest'
 import { waitFor } from '@test/utils/wait-for'
 import { OnQuestionComment } from './on-question-comment'
 import { InMemoryQuestionCommentsRepository } from '@test/repositories/in-memory-question-comment-repository'
-import { makeQuestionComment } from '@test/factory/make-question-comment'
+import { makeQuestionComment } from '@test/factories/make-question-comment'
 
 let inMemoryQuestionsAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository

@@ -4,8 +4,8 @@ import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
-import { QuestionFactory } from '@test/factory/make-question'
-import { StudentFactory } from '@test/factory/make-student'
+import { QuestionFactory } from '@test/factories/make-question'
+import { StudentFactory } from '@test/factories/make-student'
 import request from 'supertest'
 
 

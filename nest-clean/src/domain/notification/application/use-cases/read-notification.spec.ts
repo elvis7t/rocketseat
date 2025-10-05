@@ -1,6 +1,6 @@
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository'
 import { ReadNotificationUseCase } from './read-notification'
-import { makeNotification } from '@test/factory/make-notification'
+import { makeNotification } from '@test/factories/make-notification'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 

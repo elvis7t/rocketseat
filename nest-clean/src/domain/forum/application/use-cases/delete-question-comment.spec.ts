@@ -1,6 +1,6 @@
 import { InMemoryQuestionCommentsRepository } from '@test/repositories/in-memory-question-comment-repository'
 import { DeleteQuestionCommentUseCase } from './delete-question-comment'
-import { makeQuestionComment } from '@test/factory/make-question-comment'
+import { makeQuestionComment } from '@test/factories/make-question-comment'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 

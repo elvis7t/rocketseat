@@ -4,9 +4,9 @@ import { DatabaseModule } from "@/infra/database/prisma/database.module"
 import { INestApplication } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
 import { Test } from "@nestjs/testing"
-import { AnswerFactory } from "@test/factory/make-answer"
-import { QuestionFactory } from "@test/factory/make-question"
-import { StudentFactory } from "@test/factory/make-student"
+import { AnswerFactory } from "@test/factories/make-answer"
+import { QuestionFactory } from "@test/factories/make-question"
+import { StudentFactory } from "@test/factories/make-student"
 import request from 'supertest'
 
 describe('Edit answer (E2E)', () => {

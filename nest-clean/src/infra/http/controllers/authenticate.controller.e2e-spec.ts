@@ -2,7 +2,7 @@ import { AppModule } from '@/infra/app.module'
 import { DatabaseModule } from '@/infra/database/prisma/database.module'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
-import { StudentFactory } from '@test/factory/make-student'
+import { StudentFactory } from '@test/factories/make-student'
 import { hash } from 'bcryptjs'
 import request from 'supertest'
 

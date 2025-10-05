@@ -3,7 +3,7 @@ import { AnswersRepository } from '@/domain/forum/application/repositories/answe
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFondError } from '@/core/errors/resource-not-found-error'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { Injectable } from '@nestjs/common'
 
 interface ChooseQuestionBestAnswerCaseRequest {
@@ -12,7 +12,7 @@ interface ChooseQuestionBestAnswerCaseRequest {
 }
 
 type ChooseQuestionBestAnswerCaseResponse = Either<
-  ResourceNotFondError | NotAllowedFondError,
+  ResourceNotFondError | NotAllowedError,
   {
     answer: Answer
   }
@@ -44,7 +44,7 @@ export class ChooseQuestionBestAnswerUseCase {
     }
 
     if (authorId !== question.authorId.toString()) {
-      return left(new NotAllowedFondError())
+      return left(new NotAllowedError())
     }
 
     question.bestAnswerId = answer.id

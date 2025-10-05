@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository'
 import { ResourceNotFondError } from '@/core/errors/resource-not-found-error'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { Injectable } from '@nestjs/common'
 
 interface DeleteQuestionCommentUseCaseRequest {
@@ -10,7 +10,7 @@ interface DeleteQuestionCommentUseCaseRequest {
 }
 
 type DeleteQuestionCommentUseCaseResponse = Either<
-  ResourceNotFondError | NotAllowedFondError,
+  ResourceNotFondError | NotAllowedError,
   null
 >
 
@@ -30,7 +30,7 @@ export class DeleteQuestionCommentUseCase {
     }
 
     if (questionComment.authorId.toString() !== authorId) {
-      return left(new NotAllowedFondError())
+      return left(new NotAllowedError())
     }
 
     await this.questionCommentRepository.delete(questionComment)

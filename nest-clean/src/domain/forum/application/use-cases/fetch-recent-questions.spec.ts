@@ -2,22 +2,30 @@ import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questi
 import { FetchRecentQuestionsUseCase } from './fetch-recent-questions'
 import { makeQuestion } from '@test/factories/make-question'
 import { InMemoryQuestionAttachmentsRepository } from '@test/repositories/in-memory-question-attachments-repository'
+import { InMemoryAttachmentsRepository } from '@test/repositories/in-memory-attachments-repository'
+import { InMemoryStudentsRepository } from '@test/repositories/in-memory-students-repository'
 
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 let sut: FetchRecentQuestionsUseCase
-describe('Fetch Recent Question', () => {
+
+describe('Fetch Recent Questions', () => {
   beforeEach(() => {
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionAttachmentsRepository()
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository,
     )
-    // system under test
     sut = new FetchRecentQuestionsUseCase(inMemoryQuestionsRepository)
   })
 
-  it('should be able to fetch recent question', async () => {
+  it('should be able to fetch recent questions', async () => {
     await inMemoryQuestionsRepository.create(
       makeQuestion({ createdAt: new Date(2022, 0, 20) }),
     )
@@ -40,7 +48,7 @@ describe('Fetch Recent Question', () => {
   })
 
   it('should be able to fetch paginated recent questions', async () => {
-    for (let i = 0; i < 22; i++) {
+    for (let i = 1; i <= 22; i++) {
       await inMemoryQuestionsRepository.create(makeQuestion())
     }
 

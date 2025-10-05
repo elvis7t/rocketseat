@@ -3,46 +3,59 @@ import { InMemoryAnswersRepository } from '@test/repositories/in-memory-answers-
 import { InMemoryAnswerAttachmentsRepository } from '@test/repositories/in-memory-answer-attachments-repository'
 import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questions-repository'
 import { InMemoryQuestionAttachmentsRepository } from '@test/repositories/in-memory-question-attachments-repository'
-import { SendNotificationUseCase } from '@/domain/notification/application/use-cases/send-notification'
+import { SendNotificationUseCase, SendNotificationUseCaseRequest, SendNotificationUseCaseResponse } from '@/domain/notification/application/use-cases/send-notification'
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository'
 import { makeQuestion } from '@test/factories/make-question'
-import { vi, type MockInstance } from 'vitest'
+import { SpyInstance } from 'vitest'
 import { waitFor } from '@test/utils/wait-for'
 import { OnQuestionBestAnswerChosen } from './on-question-best-answer-chosen'
+import { InMemoryAttachmentsRepository } from '@test/repositories/in-memory-attachments-repository'
+import { InMemoryStudentsRepository } from '@test/repositories/in-memory-students-repository'
 
-let inMemoryQuestionsAttachmentsRepository: InMemoryQuestionAttachmentsRepository
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
-let inMemoryAnswersAttachmentsRepository: InMemoryAnswerAttachmentsRepository
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
 let sendNotificationUseCase: SendNotificationUseCase
-let sendNotificationExecuteSpy: MockInstance<
-  typeof sendNotificationUseCase.execute
+
+let sendNotificationExecuteSpy: SpyInstance<
+  [SendNotificationUseCaseRequest],
+  Promise<SendNotificationUseCaseResponse>
 >
 
 describe('On Question Best Answer Chosen', () => {
   beforeEach(() => {
-    inMemoryQuestionsAttachmentsRepository =
+    inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
-      inMemoryQuestionsAttachmentsRepository,
+      inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository,
     )
-    inMemoryAnswersAttachmentsRepository =
+    inMemoryAnswerAttachmentsRepository =
       new InMemoryAnswerAttachmentsRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
-      inMemoryAnswersAttachmentsRepository,
+      inMemoryAnswerAttachmentsRepository,
     )
     inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
     sendNotificationUseCase = new SendNotificationUseCase(
       inMemoryNotificationsRepository,
     )
+
     sendNotificationExecuteSpy = vi.spyOn(sendNotificationUseCase, 'execute')
+
     new OnQuestionBestAnswerChosen(
       inMemoryAnswersRepository,
       sendNotificationUseCase,
     )
   })
-  it('should send a notification when has new best answer chosen', async () => {
+
+  it('should send a notification when topic has new best answer chosen', async () => {
     const question = makeQuestion()
     const answer = makeAnswer({ questionId: question.id })
 
@@ -50,6 +63,7 @@ describe('On Question Best Answer Chosen', () => {
     inMemoryAnswersRepository.create(answer)
 
     question.bestAnswerId = answer.id
+
     inMemoryQuestionsRepository.save(question)
 
     await waitFor(() => {

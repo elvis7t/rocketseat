@@ -1,7 +1,7 @@
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { Either, left, right } from '@/core/either'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { ResourceNotFondError } from '@/core/errors/resource-not-found-error'
 import { QuestionAttachmentsRepository } from '@/domain/forum/application/repositories/question-attachments-repository'
 import { QuestionAttachmentList } from '@/domain/forum/enterprise/entities/question-attachment-list'
@@ -18,7 +18,7 @@ interface EditQuestionUseCaseRequest {
 }
 
 type EditQuestionUseCaseResponse = Either<
-  ResourceNotFondError | NotAllowedFondError,
+  ResourceNotFondError | NotAllowedError,
   {
     question: Question
   }
@@ -45,7 +45,7 @@ export class EditQuestionUseCase {
     }
 
     if (question.authorId.toString() !== authorId) {
-      return left(new NotAllowedFondError())
+      return left(new NotAllowedError())
     }
 
     const currentQuestionAttachments =

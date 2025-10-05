@@ -1,7 +1,9 @@
 import { Question as PrismaQuestion, Prisma } from "@prisma/client"
 import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import { Question } from "@/domain/forum/enterprise/entities/question"
+import { QuestionDetails } from "@/domain/forum/enterprise/entities/values-objects/question-details"
 import { Slug } from "@/domain/forum/enterprise/entities/values-objects/slug"
+import { PrismaAttachmentMapper } from "@/infra/database/prisma/mappers/prisma-attachment-mapper"
 
 export class PrismaQuestionMapper {
     static toDomain(raw: PrismaQuestion): Question {
@@ -28,5 +30,31 @@ export class PrismaQuestionMapper {
             createdAt: question.createdAt,
             updatedAt: question.updatedAt
         }
+    }
+
+    static toDomainDetails(
+        raw: Prisma.QuestionGetPayload<{
+            include: {
+                author: true
+                attachments: true
+            }
+        }> 
+    ): QuestionDetails {
+        return QuestionDetails.create({
+            questionId: new UniqueEntityId(raw.id),
+            authorId: new UniqueEntityId(raw.authorId),
+            author: raw.author.name,
+            title: raw.title,
+            content: raw.content,
+            slug: Slug.create(raw.slug),
+            attachments: raw.attachments.map((attachment) =>
+                PrismaAttachmentMapper.toDomain(attachment),
+            ),
+            bestAnswerId: raw.bestAnswerId
+                ? new UniqueEntityId(raw.bestAnswerId)
+                : null,
+            createdAt: raw.createdAt,
+            updatedAt: raw.updatedAt,
+        })
     }
 }

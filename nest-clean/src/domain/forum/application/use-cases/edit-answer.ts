@@ -1,7 +1,7 @@
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { Either, left, right } from '@/core/either'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { ResourceNotFondError } from '@/core/errors/resource-not-found-error'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { AnswerAttachment } from '@/domain/forum/enterprise/entities/answer-attachment'
@@ -16,7 +16,7 @@ interface EditAnswerUseCaseRequest {
 }
 
 type EditAnswerUseCaseResponse = Either<
-  ResourceNotFondError | NotAllowedFondError,
+  ResourceNotFondError | NotAllowedError,
   { answer: Answer }
 >
 
@@ -40,7 +40,7 @@ export class EditAnswerUseCase {
     }
 
     if (answer.authorId.toString() !== authorId) {
-      return left(new NotAllowedFondError())
+      return left(new NotAllowedError())
     }
 
     answer.content = content

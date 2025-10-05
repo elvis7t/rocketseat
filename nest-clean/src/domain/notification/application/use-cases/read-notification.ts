@@ -2,7 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { Notification } from '@/domain/notification/enterprise/entities/notification'
 import { NotificationsRepository } from '@/domain/notification/application/repositories/notifications-repository'
 import { ResourceNotFondError } from '@/core/errors/resource-not-found-error'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 
 interface ReadNotificationUseCaseRequest {
   recipientId: string
@@ -10,7 +10,7 @@ interface ReadNotificationUseCaseRequest {
 }
 
 type ReadNotificationUseCaseResponse = Either<
-  ResourceNotFondError | NotAllowedFondError,
+  ResourceNotFondError | NotAllowedError,
   {
     notification: Notification
   }
@@ -31,7 +31,7 @@ export class ReadNotificationUseCase {
     }
 
     if (notification.recipientId.toString() !== recipientId) {
-      return left(new NotAllowedFondError())
+      return left(new NotAllowedError())
     }
 
     notification.read()

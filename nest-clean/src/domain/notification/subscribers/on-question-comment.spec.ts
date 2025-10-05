@@ -1,57 +1,52 @@
+import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/comment-on-question'
 import { makeQuestion } from '@test/factories/make-question'
-import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questions-repository'
+import { InMemoryAttachmentsRepository } from '@test/repositories/in-memory-attachments-repository'
 import { InMemoryQuestionAttachmentsRepository } from '@test/repositories/in-memory-question-attachments-repository'
-import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository'
-import { SendNotificationUseCase } from '@/domain/notification/application/use-cases/send-notification'
-import { vi, type MockInstance } from 'vitest'
-import { waitFor } from '@test/utils/wait-for'
-import { OnQuestionComment } from './on-question-comment'
-import { InMemoryQuestionCommentsRepository } from '@test/repositories/in-memory-question-comment-repository'
-import { makeQuestionComment } from '@test/factories/make-question-comment'
+import { InMemoryQuestionCommentsRepository } from '@test/repositories/in-memory-question-comments-repository'
+import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questions-repository'
+import { InMemoryStudentsRepository } from '@test/repositories/in-memory-students-repository'
 
-let inMemoryQuestionsAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
-let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionCommentsRepository: InMemoryQuestionCommentsRepository
-let sendNotificationUseCase: SendNotificationUseCase
-let sendNotificationExecuteSpy: MockInstance<
-  typeof sendNotificationUseCase.execute
->
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
+let sut: CommentOnQuestionUseCase
 
-describe('On Comment Question ', () => {
+describe('Comment on Question', () => {
   beforeEach(() => {
-    inMemoryQuestionsAttachmentsRepository =
+    inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionAttachmentsRepository()
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
-      inMemoryQuestionsAttachmentsRepository,
+      inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository,
     )
-    inMemoryQuestionCommentsRepository =
-      new InMemoryQuestionCommentsRepository()
-    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
-    sendNotificationUseCase = new SendNotificationUseCase(
-      inMemoryNotificationsRepository,
+    inMemoryQuestionCommentsRepository = new InMemoryQuestionCommentsRepository(
+      inMemoryStudentsRepository,
     )
-    sendNotificationExecuteSpy = vi.spyOn(sendNotificationUseCase, 'execute')
-    new OnQuestionComment(
+
+    sut = new CommentOnQuestionUseCase(
+      inMemoryQuestionsRepository,
       inMemoryQuestionCommentsRepository,
-      sendNotificationUseCase,
     )
   })
-  it('should send a notification when an question is commented', async () => {
+
+  it('should be able to comment on question', async () => {
     const question = makeQuestion()
 
-    inMemoryQuestionsRepository.create(question)
-    const questionComment = makeQuestionComment({
-      questionId: question.id,
-      content: 'Test comment',
-    })
-    inMemoryQuestionCommentsRepository.create(questionComment)
+    await inMemoryQuestionsRepository.create(question)
 
-    await waitFor(() => {
-      expect(sendNotificationExecuteSpy).toHaveBeenCalled()
+    await sut.execute({
+      questionId: question.id.toString(),
+      authorId: question.authorId.toString(),
+      content: 'Comentário teste',
     })
+
     expect(inMemoryQuestionCommentsRepository.items[0].content).toEqual(
-      'Test comment',
+      'Comentário teste',
     )
   })
 })

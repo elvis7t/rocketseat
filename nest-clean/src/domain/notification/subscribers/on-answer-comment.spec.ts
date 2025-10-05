@@ -8,12 +8,14 @@ import { waitFor } from '@test/utils/wait-for'
 import { OnAnswerComment } from './on-answer-comment'
 import { InMemoryAnswerCommentsRepository } from '@test/repositories/in-memory-answer-comment-repository'
 import { makeAnswerComment } from '@test/factories/make-answer-comment'
+import { InMemoryStudentsRepository } from '@test/repositories/in-memory-students-repository'
 
 let inMemoryAnswersAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let inMemoryAnswerCommentsRepository: InMemoryAnswerCommentsRepository
 let sendNotificationUseCase: SendNotificationUseCase
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 let sendNotificationExecuteSpy: MockInstance<
   typeof sendNotificationUseCase.execute
 >
@@ -25,7 +27,11 @@ describe('On Comment Answer ', () => {
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
       inMemoryAnswersAttachmentsRepository,
     )
-    inMemoryAnswerCommentsRepository = new InMemoryAnswerCommentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+
+    inMemoryAnswerCommentsRepository = new InMemoryAnswerCommentsRepository(
+      inMemoryStudentsRepository,
+    )
     inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
     sendNotificationUseCase = new SendNotificationUseCase(
       inMemoryNotificationsRepository,

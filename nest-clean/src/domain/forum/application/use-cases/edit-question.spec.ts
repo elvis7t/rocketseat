@@ -1,22 +1,31 @@
-import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questions-repository'
-import { InMemoryQuestionAttachmentsRepository } from '@test/repositories/in-memory-question-attachments-repository'
-import { EditQuestionUseCase } from './edit-question'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { makeQuestion } from '@test/factories/make-question'
-import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 import { makeQuestionAttachment } from '@test/factories/make-question-attachments'
+import { InMemoryAttachmentsRepository } from '@test/repositories/in-memory-attachments-repository'
+import { InMemoryQuestionAttachmentsRepository } from '@test/repositories/in-memory-question-attachments-repository'
+import { InMemoryQuestionsRepository } from '@test/repositories/in-memory-questions-repository'
+import { InMemoryStudentsRepository } from '@test/repositories/in-memory-students-repository'
+import { EditQuestionUseCase } from './edit-question'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 let sut: EditQuestionUseCase
+
 describe('Edit Question', () => {
   beforeEach(() => {
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionAttachmentsRepository()
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository,
     )
-    // system under test
+
     sut = new EditQuestionUseCase(
       inMemoryQuestionsRepository,
       inMemoryQuestionAttachmentsRepository,
@@ -32,6 +41,7 @@ describe('Edit Question', () => {
     )
 
     await inMemoryQuestionsRepository.create(newQuestion)
+
     inMemoryQuestionAttachmentsRepository.items.push(
       makeQuestionAttachment({
         questionId: newQuestion.id,
@@ -46,19 +56,19 @@ describe('Edit Question', () => {
     await sut.execute({
       questionId: newQuestion.id.toValue(),
       authorId: 'author-1',
-      title: 'New title',
-      content: 'New content',
+      title: 'Pergunta teste',
+      content: 'Conteúdo teste',
       attachmentIds: ['1', '3'],
     })
 
     expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
-      title: 'New title',
-      content: 'New content',
+      title: 'Pergunta teste',
+      content: 'Conteúdo teste',
     })
+
     expect(
       inMemoryQuestionsRepository.items[0].attachments.currentItems,
     ).toHaveLength(2)
-
     expect(
       inMemoryQuestionsRepository.items[0].attachments.currentItems,
     ).toEqual([
@@ -76,16 +86,17 @@ describe('Edit Question', () => {
     )
 
     await inMemoryQuestionsRepository.create(newQuestion)
+
     const result = await sut.execute({
       questionId: newQuestion.id.toValue(),
       authorId: 'author-2',
-      title: 'New title',
-      content: 'New content',
+      title: 'Pergunta teste',
+      content: 'Conteúdo teste',
       attachmentIds: [],
     })
 
     expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(NotAllowedFondError)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 
   it('should sync new and removed attachment when editing a question', async () => {

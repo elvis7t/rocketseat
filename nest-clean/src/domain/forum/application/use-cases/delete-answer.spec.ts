@@ -2,7 +2,7 @@ import { InMemoryAnswersRepository } from '@test/repositories/in-memory-answers-
 import { DeleteAnswerUseCase } from './delete-answer'
 import { makeAnswer } from '@test/factories/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { InMemoryAnswerAttachmentsRepository } from '@test/repositories/in-memory-answer-attachments-repository'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
@@ -52,6 +52,6 @@ describe('Delete Answer', () => {
       answerId: 'answer-1',
     })
     expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(NotAllowedFondError)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

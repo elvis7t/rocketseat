@@ -2,7 +2,7 @@ import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-no
 import { ReadNotificationUseCase } from './read-notification'
 import { makeNotification } from '@test/factories/make-notification'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let sut: ReadNotificationUseCase
@@ -41,6 +41,6 @@ describe('Read Notification', () => {
       notificationId: notification.id.toString(),
     })
     expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(NotAllowedFondError)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

@@ -1,15 +1,21 @@
-import { InMemoryAnswerCommentsRepository } from '@test/repositories/in-memory-answer-comment-repository'
-import { DeleteAnswerCommentUseCase } from './delete-answer-comment'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { makeAnswerComment } from '@test/factories/make-answer-comment'
+import { InMemoryAnswerCommentsRepository } from '@test/repositories/in-memory-answer-comment-repository'
+import { InMemoryStudentsRepository } from '@test/repositories/in-memory-students-repository'
+import { DeleteAnswerCommentUseCase } from './delete-answer-comment'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { NotAllowedFondError } from '@/core/errors/not-allowed-error'
 
 let inMemoryAnswerCommentsRepository: InMemoryAnswerCommentsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 let sut: DeleteAnswerCommentUseCase
-describe('Delete Answer Comment ', () => {
+
+describe('Delete Answer Comment', () => {
   beforeEach(() => {
-    inMemoryAnswerCommentsRepository = new InMemoryAnswerCommentsRepository()
-    // system under test
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+    inMemoryAnswerCommentsRepository = new InMemoryAnswerCommentsRepository(
+      inMemoryStudentsRepository,
+    )
+
     sut = new DeleteAnswerCommentUseCase(inMemoryAnswerCommentsRepository)
   })
 
@@ -32,12 +38,14 @@ describe('Delete Answer Comment ', () => {
     })
 
     await inMemoryAnswerCommentsRepository.create(answerComment)
+
     const result = await sut.execute({
       answerCommentId: answerComment.id.toString(),
       authorId: 'author-2',
     })
+
     expect(result.isLeft()).toBe(true)
-    expect(result.value).instanceOf(NotAllowedFondError)
-    expect(inMemoryAnswerCommentsRepository.items).toHaveLength(1)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })
+

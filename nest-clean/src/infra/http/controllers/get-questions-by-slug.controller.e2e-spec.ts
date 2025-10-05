@@ -1,6 +1,6 @@
 import { Slug } from '@/domain/forum/enterprise/entities/values-objects/slug'
 import { AppModule } from '@/infra/app.module'
-import { DatabaseModule } from '@/infra/database/prisma/database.module'
+import { DatabaseModule } from '@/infra/database/database.module'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'

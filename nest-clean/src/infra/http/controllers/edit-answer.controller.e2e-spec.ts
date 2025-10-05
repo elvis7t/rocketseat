@@ -1,6 +1,6 @@
 import { AppModule } from "@/infra/app.module"
 import { PrismaService } from "@/infra/database/prisma/prisma.service"
-import { DatabaseModule } from "@/infra/database/prisma/database.module"
+import { DatabaseModule } from "@/infra/database/database.module"
 import { INestApplication } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
 import { Test } from "@nestjs/testing"
@@ -54,11 +54,6 @@ describe('Edit answer (E2E)', () => {
       authorId: user.id,
     })
 
-
-
-
-
-
     const answerId = answer.id.toString()
 
     const response = await request(app.getHttpServer())
@@ -66,7 +61,6 @@ describe('Edit answer (E2E)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         content: 'New answer content',
-
       })
 
     expect(response.statusCode).toBe(204)

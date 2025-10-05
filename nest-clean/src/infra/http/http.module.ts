@@ -6,7 +6,7 @@ import { FetchRecentQuestionsUseCase } from "@/domain/forum/application/use-case
 import { GetQuestionBySlugUseCase } from "@/domain/forum/application/use-cases/get-question-by-slug";
 import { RegisterStudentUseCase } from "@/domain/forum/application/use-cases/register-student";
 import { CryptographyModule } from "@/infra/cryptography/cryptography.module";
-import { DatabaseModule } from "@/infra/database/prisma/database.module";
+import { DatabaseModule } from "@/infra/database/database.module";
 import { Module } from "@nestjs/common";
 import { AuthenticateController } from "./controllers/authenticate.controller";
 import { CreateAccountController } from "./controllers/create-account.controller";
@@ -19,6 +19,10 @@ import { DeleteQuestionController } from "./controllers/delete-question.controll
 import { DeleteQuestionUseCase } from "@/domain/forum/application/use-cases/delete-question";
 import { DeleteAnswerController } from "./controllers/delete-answer.controller";
 import { DeleteAnswerUseCase } from "@/domain/forum/application/use-cases/delete-answer";
+import { AnswerQuestionController } from "./controllers/answer-question.controller";
+import { AnswerQuestionUseCase } from "@/domain/forum/application/use-cases/answer-question";
+import { FetchQuestionAnswersController } from "./controllers/fetch-question-answers.controller";
+import { FetchQuestionAnswersUseCase } from "@/domain/forum/application/use-cases/fetch-question-answers";
 
 @Module({
     imports: [
@@ -35,6 +39,8 @@ import { DeleteAnswerUseCase } from "@/domain/forum/application/use-cases/delete
         EditAnswerController,
         DeleteQuestionController,
         DeleteAnswerController,
+        AnswerQuestionController,
+        FetchQuestionAnswersController
     ],
     providers: [
         CreateQuestionUseCase,
@@ -45,7 +51,9 @@ import { DeleteAnswerUseCase } from "@/domain/forum/application/use-cases/delete
         EditQuestionUseCase,
         EditAnswerUseCase,
         DeleteQuestionUseCase,
-        DeleteAnswerUseCase
+        DeleteAnswerUseCase,
+        AnswerQuestionUseCase,
+        FetchQuestionAnswersUseCase
     ],
 })
 export class HttpModule { }

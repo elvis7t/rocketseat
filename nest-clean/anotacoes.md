@@ -13,7 +13,7 @@ Preciso ter mais de uma representação da classe e nesse caso é muito comum a 
 
 ### Presenter
 Vamos utilizar de dentro da Clean Architecture, o Presenter. O Presenter justamente vai fazer o papel de formatar os dados, apresentar os dados de como eles estão vindo da camada de domínio para dentro da camada HTTP de volta, para dentro de como o front-end espera esses dados.
-
+quando eu tenho uma listagem de uma informação ou trago um dado, um GET, o melhor aqui é a gente ter um presenter.
 ### Stubs
 Stub, dentro do contexto de testes, é quando você cria uma classe que implementa um contrato, porém ela faz uma implementação fictícia, algo que é irreal feito só para os testes.
 

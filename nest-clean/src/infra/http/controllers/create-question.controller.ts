@@ -9,7 +9,7 @@ import { z } from 'zod'
 const createQuestionBodySchema = z.object({
   title: z.string(),
   content: z.string(),
-  attachments: z.array(z.uuid()),
+  attachments: z.array(z.uuid()).default([]),
 })
 
 const bodyValidationPipe = new ZodValidationPipe(createQuestionBodySchema)

@@ -81,6 +81,7 @@ base64 public_key.pem > arquivo_base64.txt
 pnpm tsc --noEmit// faz type checking de typedcript
 pnpm i -D @faker-js/faker
 pnpm i dayjs
+pnpm run test:e2e src/infra/events/on-question-best-answer-chosen.e2e-spec.ts
 ```
 
 ```

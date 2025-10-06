@@ -22,7 +22,7 @@ Content-Type: application/json
   "password": "securepassword"
 }
 ###
-# @name Question
+# @name create_question
 POST {{baseUrl}}/questions
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
@@ -32,7 +32,7 @@ Authorization: Bearer {{authToken}}
   "content": "I want to learn NestJS, any tips?"
 }
 ###
-# @name FetchRecentQuestion
+# @name fetch_recent_questions
 GET {{baseUrl}}/questions?page=1
 Content-Type: application/json
 Authorization: Bearer {{authToken}}

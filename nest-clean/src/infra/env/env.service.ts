@@ -4,9 +4,9 @@ import { Env } from '@/infra/env'
 
 @Injectable()
 export class EnvService {
-    constructor(private configService: ConfigService<Env, true>) { }
+    constructor(private configService: ConfigService<Env, true>) {}
 
-    get<T extends keyof Env>(key: T) {
-        return this.configService.get<T>(key, { infer: true })
+    get<Key extends keyof Env>(key: Key): Env[Key] {
+        return this.configService.get(key, { infer: true })
     }
 }

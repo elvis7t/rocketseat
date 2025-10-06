@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "public"."notifications" (
+CREATE TABLE "notifications" (
     "id" TEXT NOT NULL,
     "recipient_id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -11,4 +11,4 @@ CREATE TABLE "public"."notifications" (
 );
 
 -- AddForeignKey
-ALTER TABLE "public"."notifications" ADD CONSTRAINT "notifications_recipient_id_fkey" FOREIGN KEY ("recipient_id") REFERENCES "public"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "notifications" ADD CONSTRAINT "notifications_recipient_id_fkey" FOREIGN KEY ("recipient_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

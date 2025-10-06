@@ -8,14 +8,37 @@ import { QuestionAttachmentsRepository } from "@/domain/forum/application/reposi
 import { DomainEvents } from '@/core/events/domain-events'
 import { QuestionDetails } from "@/domain/forum/enterprise/entities/values-objects/question-details";
 import { PrismaQuestionDetailsMapper } from "./prisma-question-details-mapper";
+import { CacheRepository } from "@/infra/cache/cache-repository";
+import {
+  Attachment as PrismaAttachment,
+  Question as PrismaQuestion,
+  User as PrismaUser,
+} from '@prisma/client'
 
 @Injectable()
 export class PrismaQuestionsRepository implements QuestionsRepository {
   constructor(
     private prisma: PrismaService,
-    // private cache: CacheRepository,
+    private cache: CacheRepository,
     private questionAttachmentsRepository: QuestionAttachmentsRepository,
-  ) {}
+  ) { }
+
+  private toDomainFromCache(cacheHit: string): QuestionDetails {
+    type CachedQuestionDetails = PrismaQuestion & {
+      author: PrismaUser
+      attachments: PrismaAttachment[]
+      createdAt: string
+      updatedAt: string | null
+    }
+
+    const cacheData = JSON.parse(cacheHit) as CachedQuestionDetails
+
+    return PrismaQuestionDetailsMapper.toDomain({
+      ...cacheData,
+      createdAt: new Date(cacheData.createdAt),
+      updatedAt: cacheData.updatedAt ? new Date(cacheData.updatedAt) : null,
+    })
+  }
 
   async findById(id: string): Promise<Question | null> {
     const question = await this.prisma.question.findUnique({
@@ -46,13 +69,11 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }
 
   async findDetailsBySlug(slug: string): Promise<QuestionDetails | null> {
-    // const cacheHit = await this.cache.get(`question:${slug}:details`)
+    const cacheHit = await this.cache.get(`question:${slug}:details`)
 
-    // if (cacheHit) {
-    //   const cacheData = JSON.parse(cacheHit)
-
-    //   return cacheData
-    // }
+    if (cacheHit) {
+      return this.toDomainFromCache(cacheHit)
+    }
 
     const question = await this.prisma.question.findUnique({
       where: {
@@ -68,12 +89,13 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
       return null
     }
 
-    const questionDetails = PrismaQuestionDetailsMapper.toDomain(question)
 
-    // await this.cache.set(
-    //   `question:${slug}:details`,
-    //   JSON.stringify(questionDetails),
-    // )
+    await this.cache.set(
+      `question:${slug}:details`,
+      JSON.stringify(question),
+    )
+
+    const questionDetails = PrismaQuestionDetailsMapper.toDomain(question)
 
     return questionDetails
   }
@@ -120,7 +142,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
       this.questionAttachmentsRepository.deleteMany(
         question.attachments.getRemovedItems(),
       ),
-    //   this.cache.delete(`question:${data.slug}:details`),
+      this.cache.delete(`question:${data.slug}:details`),
     ])
 
     DomainEvents.dispatchEventsForAggregate(question.id)
@@ -136,4 +158,3 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
     })
   }
 }
-

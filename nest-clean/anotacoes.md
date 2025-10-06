@@ -63,6 +63,7 @@ pnpm i @types/supertest -D
 pnpm i @types/multer -D
 pnpm i @nestjs/common@latest
 pnpm i @aws-sdk/client-s3
+pnpm i ioredis
 ```
 
 ```
